@@ -19,9 +19,46 @@
 .item-form {
     width: 100%;
     display: flex;
-    margin-bottom: 0rem;
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 1rem;
+    gap: .4rem;
+}
+
+.header-form {
+    width: 100%;
+    min-height: 250px;
+    background: var(--bg-gradient-2);
+    gap: .5rem;
+    position: relative;
+    border-radius: var(--b-radius);
+}
+
+.form-title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.form-subtitle {
+    font-weight: 400;
+    color: var(--gray-500);
+    font-size: 2.2rem;
+    text-align: center;
+}
+
+.form-icon {
+    box-sizing: content-box;
+    width: 6rem;
+    padding: 1rem;
+}
+
+.footer-form {
+    padding: 4rem 0;
+    border-top: var(--border-standard);
+}
+
+.footer-form__title {
+    color: var(--gray-500);
+    font-size: 1.6rem;
 }

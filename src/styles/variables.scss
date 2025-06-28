@@ -14,10 +14,11 @@
     --main-800: #5edd38;
     --red-1000: #ff0000;
     --red-900: #df2a2a;
-    --red-800: #FF4444;
+    --red-800: #f35b5b;
     --green-1000: #0bbb14;
     --yellow-1000: #ce9e00;
     --b-radius: 1rem;
-    --bg-gradient: linear-gradient(90deg, var(--principal-500) 0%, var(--principal-800) 100%);
+    --bg-gradient: linear-gradient(90deg, var(--main-500) 0%, var(--main-800) 100%);
     --bg-gradient-2: linear-gradient(135deg, rgba(5, 98, 204, 0.2) 0%, rgba(9, 233, 110, 0.2) 100%);
+    --border-standard: 1.3px solid var(--gray-600);
 }

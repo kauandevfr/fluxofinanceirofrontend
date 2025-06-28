@@ -20,7 +20,7 @@
     box-shadow: 1px 0 50px 0.5rem rgba(0, 0, 0, 0.226);
 }
 
-.botao:disabled {
+.button:disabled {
     background: var(--gray-500);
     cursor: not-allowed;
 }

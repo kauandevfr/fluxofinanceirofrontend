@@ -83,6 +83,10 @@
     cursor: pointer;
 }
 
+.w5rem {
+    width: 5rem;
+}
+
 .w83 {
     width: 83%;
 }
@@ -175,6 +179,130 @@
     background-color: var(--yellow-1000);
 }
 
+.text-xs {
+    font-size: 0.75rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-base {
+    font-size: 1rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+}
+
+.text-2xl {
+    font-size: 1.6rem;
+}
+
+.text-3xl {
+    font-size: 1.9rem;
+}
+
+.text-4xl {
+    font-size: 2.25rem;
+}
+
+.text-5xl {
+    font-size: 3rem;
+}
+
+.text-6xl {
+    font-size: 3.75rem;
+}
+
+.text-7xl {
+    font-size: 4.5rem;
+}
+
+.text-8xl {
+    font-size: 6rem;
+}
+
+.text-9xl {
+    font-size: 8rem;
+}
+
+.text-gray-1000 {
+    color: var(--gray-1000);
+}
+
+.text-gray-900 {
+    color: var(--gray-900);
+}
+
+.text-gray-850 {
+    color: var(--gray-850);
+}
+
+.text-gray-800 {
+    color: var(--gray-800);
+}
+
+.text-gray-700 {
+    color: var(--gray-700);
+}
+
+.text-gray-600 {
+    color: var(--gray-600);
+}
+
+.text-gray-500 {
+    color: var(--gray-500);
+}
+
+.text-gray-300 {
+    color: var(--gray-300);
+}
+
+.text-gray-200 {
+    color: var(--gray-200);
+}
+
+.text-gray-100 {
+    color: var(--gray-100);
+}
+
+.text-white {
+    color: var(--white);
+}
+
+.text-main-500 {
+    color: var(--main-500);
+}
+
+.text-main-800 {
+    color: var(--main-800);
+}
+
+.text-red-1000 {
+    color: var(--red-1000);
+}
+
+.text-red-900 {
+    color: var(--red-900);
+}
+
+.text-red-800 {
+    color: var(--red-800);
+}
+
+.text-green-1000 {
+    color: var(--green-1000);
+}
+
+.text-yellow-1000 {
+    color: var(--yellow-1000);
+}
+
 .text-left {
     text-align: left;
 }
@@ -193,4 +321,51 @@
 
 .br-circle {
     border-radius: 50%;
+}
+
+.min-w-100vw {
+    min-width: 100vw;
+}
+
+.min-h-100vh {
+    min-height: 100vh;
+}
+
+.span-message {
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-top: .5rem;
+    font-size: 1.6rem;
+    transition: all .2s;
+    color: var(--gray-500);
+}
+
+.span-message.error {
+    color: var(--red-800);
+}
+
+.span-message.success {
+    color: var(--green-1000);
+}
+
+.link {
+    text-decoration: none;
+    color: var(--main-800);
+    font-size: 2rem;
+}
+
+.animated-gradient {
+    background: linear-gradient(90deg, var(--gray-700), var(--gray-900));
+    background-size: 200% 200%;
+    animation: gradientMove 2s ease infinite alternate;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
 }

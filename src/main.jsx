@@ -3,23 +3,23 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './styles/global.scss'
 import MainRoutes from './routes'
-import { GlobalProvider } from './providers/globalContext'
-import { ExpenseProvider } from './providers/expenseContext'
-import { IncomeProvider } from './providers/incomeContext'
-import { UserProvider } from './providers/userContext'
+import { GlobalContextProvider } from './providers/globalContext'
+import { ExpenseContextProvider } from './providers/expenseContext'
+import { IncomeContextProvider } from './providers/incomeContext'
+import { UserContextProvider } from './providers/userContext'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <BrowserRouter>
-            <GlobalProvider>
-                <ExpenseProvider>
-                    <IncomeProvider>
-                        <UserProvider>
+            <GlobalContextProvider>
+                <ExpenseContextProvider>
+                    <IncomeContextProvider>
+                        <UserContextProvider>
                             <MainRoutes />
-                        </UserProvider>
-                    </IncomeProvider>
-                </ExpenseProvider>
-            </GlobalProvider>
+                        </UserContextProvider>
+                    </IncomeContextProvider>
+                </ExpenseContextProvider>
+            </GlobalContextProvider>
         </BrowserRouter>
     </React.StrictMode>
 )
