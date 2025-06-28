@@ -12,7 +12,7 @@ import User from "../pages/User";
 import Home from "../pages/Home";
 import Settings from "../pages/Settings";
 
-export default function Route() {
+export default function MainRoutes() {
     function PrivateRoutes({ redirectTo }) {
         const isAuthenticated = localStorage.getItem("token");
         if (!isAuthenticated) localStorage.clear();

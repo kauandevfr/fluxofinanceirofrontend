@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './styles/global.scss'
-import Route from './routes'
+import MainRoutes from './routes'
 import { GlobalProvider } from './providers/globalContext'
 import { ExpenseProvider } from './providers/expenseContext'
 import { IncomeProvider } from './providers/incomeContext'
@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 <ExpenseProvider>
                     <IncomeProvider>
                         <UserProvider>
-                            <Route />
+                            <MainRoutes />
                         </UserProvider>
                     </IncomeProvider>
                 </ExpenseProvider>
