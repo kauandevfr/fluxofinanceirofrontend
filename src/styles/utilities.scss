@@ -1,0 +1,196 @@
+.vertical-align {
+    display: flex;
+    flex-direction: column;
+}
+
+.horizontal-align {
+    display: flex;
+    flex-direction: row;
+}
+
+.center-align {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.jc-between {
+    justify-content: space-between;
+}
+
+.jc-end {
+    justify-content: end;
+}
+
+.jc-center {
+    justify-content: center;
+}
+
+.ai-start {
+    align-items: start;
+}
+
+.gap1 {
+    gap: 1rem;
+}
+
+.gap2 {
+    gap: 2rem;
+}
+
+.gap4 {
+    gap: 4rem;
+}
+
+.gap6 {
+    gap: 6rem;
+}
+
+.p1 {
+    padding: 1rem;
+}
+
+.p2 {
+    padding: 2rem;
+}
+
+.p4 {
+    padding: 4rem;
+}
+
+.p6 {
+    padding: 6rem;
+}
+
+.m1 {
+    margin: 1rem;
+}
+
+.m2 {
+    margin: 2rem;
+}
+
+.m4 {
+    margin: 4rem;
+}
+
+.m6 {
+    margin: 6rem;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.w83 {
+    width: 83%;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.h100 {
+    height: 100%;
+}
+
+.m0auto {
+    margin: 0 auto;
+}
+
+.bg-gray-1000 {
+    background-color: var(--gray-1000);
+}
+
+.bg-gray-900 {
+    background-color: var(--gray-900);
+}
+
+.bg-gray-850 {
+    background-color: var(--gray-850);
+}
+
+.bg-gray-800 {
+    background-color: var(--gray-800);
+}
+
+.bg-gray-700 {
+    background-color: var(--gray-700);
+}
+
+.bg-gray-600 {
+    background-color: var(--gray-600);
+}
+
+.bg-gray-500 {
+    background-color: var(--gray-500);
+}
+
+.bg-gray-300 {
+    background-color: var(--gray-300);
+}
+
+.bg-gray-200 {
+    background-color: var(--gray-200);
+}
+
+.bg-gray-100 {
+    background-color: var(--gray-100);
+}
+
+.bg-gradient {
+    background: var(--bg-gradient);
+}
+
+.bg-gradient-2 {
+    background: var(--bg-gradient-2);
+}
+
+.bg-main-500 {
+    background-color: var(--main-500);
+}
+
+.bg-main-800 {
+    background-color: var(--main-800);
+}
+
+.bg-red-1000 {
+    background-color: var(--red-1000);
+}
+
+.bg-red-900 {
+    background-color: var(--red-900);
+}
+
+.bg-red-800 {
+    background-color: var(--red-800);
+}
+
+.bg-green-1000 {
+    background-color: var(--green-1000);
+}
+
+.bg-yellow-1000 {
+    background-color: var(--yellow-1000);
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.br {
+    border-radius: var(--b-radius);
+}
+
+.br-circle {
+    border-radius: 50%;
+}

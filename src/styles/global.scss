@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Blinker:wght@100;300;400;600;700;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("./button.scss");
+@import url("./form.scss");
+@import url("./input.scss");
+@import url("./listing.scss");
+@import url("./utilities.scss");
+@import url("./variables.scss");
+@import url("./responsiveness.scss");
+@import url("./theme.scss");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    transition: all .1s;
+    font-family: "Blinker", sans-serif !important;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: var(--b-radius);
+    background-color: var(--white);
+}
+
+*::-webkit-scrollbar {
+    background-color: transparent;
+    width: 6px;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    letter-spacing: .5px;
+    background-color: var(--gray-900);
+    color: var(--white);
+    display: flex;
+    flex-direction: row;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+}
+
+#root {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+}

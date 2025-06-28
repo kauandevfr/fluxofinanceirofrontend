@@ -1,0 +1,37 @@
+.button {
+    all: unset;
+    background: var(--bg-gradient);
+    padding: 1.5rem 3rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--b-radius);
+    transition: all 1s;
+    gap: .6rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.button:hover {
+    box-shadow: 1px 0 50px 0.5rem rgba(0, 0, 0, 0.226);
+}
+
+.botao:disabled {
+    background: var(--gray-500);
+    cursor: not-allowed;
+}
+
+.button img,
+.button svg {
+    width: var(--width-icon);
+    display: block;
+    flex-shrink: 0;
+}
+
+.button.bg-gradient-red {
+    background: linear-gradient(90deg, var(--cor-vermelho) 0%, rgba(207, 23, 23, 1) 100%);
+}
