@@ -36,7 +36,8 @@
     gap: 1rem;
 }
 
-.list-cell img {
+.list-row img,
+.list-row svg {
     width: 2rem;
     cursor: pointer;
 }
