@@ -8,7 +8,7 @@ import { useUserContext } from '../../providers/userContext';
 import Header from '../Header';
 import Footer from '../Footer';
 
-export default function Container() {
+export default function Container({ children }) {
     const [viewAside, setViewAside] = useState(false)
     const [selectPeriod, setSelectPeriod] = useState({ mes: "", ano: "" })
     const { currentMonthYear, queryParams, redirect } = useGlobalContext()
@@ -328,7 +328,32 @@ export default function Container() {
 
             <main className="vertical-align w100 min-h-100vh">
                 <Header tag={page} />
-                <section className='w83 m0auto horizontal-align gap1 jc-between'>
+                <section className='main-content w83 m0auto vertical-align gap1 jc-between'>
+                    <div className="financial-summary horizontal-align gap4 w100">
+                        <div className="financial-summary__sum">
+                            <div className="vertical-align">
+                                <h1 className="financial-summary__sum-title text-gray-500 fontw-500 text-5xl">Receita mensal</h1>
+                                <h2 className="financial-summary__sum-value fontw-500 text-5xl">R$ 100.000,00</h2>
+                            </div>
+                            <img className='bg-green-1000' src="https://fluxofinanceiro.site/assets/receitas.png" alt="income icon" />
+                        </div>
+                        <div className="financial-summary__sum">
+                            <div className="vertical-align">
+                                <h1 className="financial-summary__sum-title text-gray-500 fontw-500 text-5xl">Despesas totais</h1>
+                                <h2 className="financial-summary__sum-value fontw-500 text-5xl">R$ 100.000,00</h2>
+                            </div>
+                            <img className='bg-red-900' src="https://fluxofinanceiro.site/assets/despesa.png" alt="expense icon" />
+                        </div>
+                        <div className="financial-summary__sum">
+                            <div className="vertical-align">
+                                <h1 className="financial-summary__sum-title text-gray-500 fontw-500 text-5xl">Saldo restante</h1>
+                                <h2 className="financial-summary__sum-value fontw-500 text-5xl">R$ 100.000,00</h2>
+                            </div>
+                            <img className='bg-main-500' src="https://fluxofinanceiro.site/assets/carteira.png" alt="wallet icon" />
+                        </div>
+                    </div>
+                    {children}
+
                 </section>
                 <Footer />
             </main>

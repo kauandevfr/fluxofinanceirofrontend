@@ -61,3 +61,31 @@
         margin: 0;
     }
 }
+
+.main-content {
+    padding: 4rem 0;
+}
+
+.financial-summary {}
+
+.financial-summary__sum {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: var(--b-radius);
+    padding: 2rem;
+    background-color: var(--gray-800);
+}
+
+.financial-summary__sum img {
+    width: 6rem;
+    height: 6rem;
+    box-sizing: content-box;
+    padding: 1rem;
+    border-radius: var(--b-radius);
+}
+
+.financial-summary__sum-value {}
+
+.financial-summary__sum-value {}

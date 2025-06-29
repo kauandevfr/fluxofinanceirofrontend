@@ -5,7 +5,7 @@ import Container from "../../components/Container";
 export default function Dashboard() {
   return (
     <Container>
-
+      <h1 className="page-title">Test</h1>
     </Container>
   );
 }
