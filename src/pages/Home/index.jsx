@@ -24,6 +24,20 @@ export default function Home() {
   const timelineFeatures = gsap.timeline();
   const timelineEtapas = gsap.timeline();
 
+  const redirectToLogin = () => {
+    setContentPrev(true)
+    gsap.timeline({
+      onComplete: () => redirect("/login")
+    }).set('.apresentation__preview', {
+      justifyContent: 'center'
+    })
+      .to('.apresentation__preview > *', { opacity: 0, duration: 0.3 })
+      .to('.apresentation__preview', { zIndex: '10', x: '-50%', duration: 0.6 })
+      .to('.apresentation__preview', {
+        scale: 4
+      })
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       setScroll(window.scrollY > 0);
@@ -168,7 +182,7 @@ export default function Home() {
               </li>
             </ul>
           </nav>
-          <Link className="button" to="/login">Acesse a sua conta</Link>
+          <button className="button" type="button" onClick={redirectToLogin}>Acesse a sua conta</button>
         </div>
       </header>
       <section className="apresentation horizontal-align">
@@ -179,7 +193,7 @@ export default function Home() {
             <h1 className="text-7xl fontw-600">Controle o seu <span className="text-main-500">Fluxo Financeiro</span> de forma simples e <br /><span className="text-main-800" ref={wordRef}></span></h1>
             <p className="text-3xl">Com o Fluxo Financeiro, você pode gerenciar suas finanças pessoais de maneira eficiente, mantendo o controle de receitas e despesas em um só lugar.</p>
             <div className="horizontal-align gap4">
-              <Link className="button" to="/login">Comece agora</Link>
+              <button className="button" type="button" onClick={redirectToLogin}>Comece agora</button>
               <a className="button" href="/#howitworks">Veja como funciona</a>
             </div>
           </div>
