@@ -1,7 +1,11 @@
-.list-item {
-    border-radius: var(--b-radius);
-    gap: 2rem;
+.list-header,
+.list-row {
     padding: 2rem;
+    gap: 1rem;
+}
+
+.list-row {
+    border-radius: var(--b-radius);
     background-color: var(--gray-700);
 
     display: flex;
@@ -9,13 +13,30 @@
     align-items: center;
 }
 
-.list-item__title {
+.list-row__title {
     font-size: 1.8rem;
     font-weight: 600;
 }
 
-.list-item__subtitle {
+.list-row__subtitle {
     font-size: 1.6rem;
     font-weight: 500;
     color: var(--gray-500);
+}
+
+.list-header {
+    background-color: var(--main-500);
+    border-radius: var(--b-radius);
+    display: flex;
+}
+
+.list-cell {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.list-cell img {
+    width: 2rem;
+    cursor: pointer;
 }

@@ -8,7 +8,7 @@ import { useUserContext } from '../../providers/userContext';
 import Header from '../Header';
 import Footer from '../Footer';
 
-export default function Container({ children }) {
+export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
     const [selectPeriod, setSelectPeriod] = useState({ mes: "", ano: "" })
     const { currentMonthYear, queryParams, redirect } = useGlobalContext()
@@ -327,7 +327,7 @@ export default function Container({ children }) {
             </aside>
 
             <main className="vertical-align w100 min-h-100vh">
-                <Header tag={page} />
+                <Header tag={page} amount={amount} />
                 <section className='main-content w83 m0auto vertical-align gap4 jc-between'>
                     <div className="financial-summary horizontal-align gap4 w100">
                         <div className="financial-summary__sum">

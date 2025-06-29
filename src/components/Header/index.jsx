@@ -1,6 +1,6 @@
 import './style.scss';
 
-export default function Header({ tag }) {
+export default function Header({ tag, amount }) {
     const data = [
         {
             tag: 'user-accont',
@@ -45,7 +45,7 @@ export default function Header({ tag }) {
                 {header.icon}
                 <div className="vertical-align gap1 jc-center">
                     <h3 className="page-title">{header.title}</h3>
-                    <span className="page-subtitle">{header.subtitle}</span>
+                    <span className="page-subtitle">{header.subtitle} {amount > 1 ? `(${amount})` : ''} </span>
                 </div>
             </div>
         </header>

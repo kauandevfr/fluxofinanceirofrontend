@@ -6,7 +6,7 @@ export default function CardCategory({ title, color }) {
             <div className="color-dot"
                 style={{ backgroundColor: color }}
             ></div>
-            <span className="list-item__title">{title}</span>
+            <span className="list-row__title">{title}</span>
         </div>
     );
 }
