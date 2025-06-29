@@ -4,9 +4,15 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import CardCategory from "../../components/CardCategory";
 import ListSettings from "../../components/ListSettings";
+import { useGlobalContext } from "../../providers/globalContext"
+import { Link } from "react-router-dom";
 
 export default function Settings() {
   const [content, setContent] = useState('categories')
+
+  const { currentMonthYear } = useGlobalContext()
+
+  const { mes, ano } = currentMonthYear()
 
   // const configs = {
   //   categories: {
@@ -44,9 +50,9 @@ export default function Settings() {
       <div className='main-content w83 m0auto vertical-align gap4 jc-between'>
         <section className="settings vertical-align bg-gray-800 br">
           <div className="settings__menu horizontal-align p2 gap2 br">
-            <button className="button menu" type="button">
+            <Link className="button menu" to={`/dashboard/?mes=${mes}&ano=${ano}`}>
               <img src="https://fluxofinanceiro.site/assets/seta-esquerda.png" alt="left arrow" />
-            </button>
+            </Link>
             <button className="button menu" type="button" onClick={() => setContent("categories")}
               style={{ background: content == 'categories' ? 'var(--bg-gradient-2)' : '' }}
             >
