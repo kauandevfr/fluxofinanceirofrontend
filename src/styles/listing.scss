@@ -37,7 +37,9 @@
 }
 
 .list-row img,
-.list-row svg {
-    width: 2rem;
+.list-row svg,
+.list-cell img,
+.list-cell svg {
+    width: 2rem !important;
     cursor: pointer;
 }

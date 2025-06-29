@@ -31,13 +31,13 @@ button {
 
 .button img,
 .button svg {
-    width: 2rem;
+    width: 2rem !important;
     display: block;
     flex-shrink: 0;
 }
 
 .button.bg-gradient-red {
-    background: linear-gradient(90deg, var(--red-1000) 0%, rgb(167, 15, 15) 100%);
+    background: linear-gradient(90deg, var(--red-1000) 0%, var(--red-900) 100%);
 }
 
 .button.menu {

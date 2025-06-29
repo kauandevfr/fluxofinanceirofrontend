@@ -47,7 +47,7 @@ export default function Settings() {
   return (
     <main className="min-h-100vh vertical-align">
       <Header tag="settings" />
-      <div className='main-content w83 m0auto vertical-align gap4 jc-between'>
+      <div className='p4-0 w83 m0auto vertical-align gap4 jc-between'>
         <section className="settings vertical-align bg-gray-800 br">
           <div className="settings__menu horizontal-align p2 gap2 br">
             <Link className="button menu" to={`/dashboard/?mes=${mes}&ano=${ano}`}>

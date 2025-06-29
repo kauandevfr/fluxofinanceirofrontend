@@ -1,0 +1,65 @@
+.user-account__menu,
+.user-account__content {
+    height: fit-content;
+}
+
+.user-account__menu {
+    width: 20%;
+    height: fit-content;
+}
+
+.user-account__content {
+    width: 80%;
+}
+
+.user-account__menu-avatar {
+    width: 14rem;
+    height: 14rem;
+    background: var(--bg-gradient-2);
+    border-radius: 50%;
+}
+
+.user-account__content header {
+    border-bottom: var(--border-standard);
+}
+
+.user-account__content svg {
+    width: 6rem;
+}
+
+.delete-account {
+    width: 100%;
+    border: 1.5px solid var(--red-900);
+    border-radius: var(--b-radius);
+}
+
+.delete-account__header {
+    padding: 2rem;
+}
+
+.delete-account__header svg {
+    width: 4rem;
+}
+
+.delete-account__title {
+    font-weight: 700;
+    color: var(--red-900);
+    font-size: 2.25rem;
+}
+
+.delete-account__subtitle {
+    font-weight: 500;
+    color: var(--red-900);
+    font-size: 1.9rem;
+}
+
+.delete-account__content {
+    background-color: #df2a2a31;
+}
+
+.user-account__menu-todashboard {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    background: var(--gray-700);
+}

@@ -3,7 +3,7 @@ import './style.scss';
 export default function Header({ tag, amount }) {
     const data = [
         {
-            tag: 'user-accont',
+            tag: 'user-account',
             title: 'Meu Perfil',
             subtitle: 'Gerencie seus dados pessoais e configurações',
             icon: <img className="header__icon" src="https://www.fluxofinanceiro.site/assets/usuario.png" alt="Ícone de usuário" />

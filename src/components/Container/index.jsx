@@ -280,7 +280,7 @@ export default function Container({ children, amount }) {
                         <span>Ativar Modo Claro</span>
                     </button>
                     <div className="horizontal-align gap1 aside-menu__user-actions">
-                        <Link className="button w100" to='/user-accont'>
+                        <Link className="button w100" to='/user-account'>
                             <svg viewBox="0 0 24 24" fill=" var(--white)" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
@@ -325,10 +325,9 @@ export default function Container({ children, amount }) {
                     </div>
                 </div>
             </aside>
-
             <main className="vertical-align w100 min-h-100vh">
                 <Header tag={page} amount={amount} />
-                <section className='main-content w83 m0auto vertical-align gap4 jc-between'>
+                <section className='p4-0 w83 m0auto vertical-align gap4 jc-between'>
                     <div className="financial-summary horizontal-align gap4 w100">
                         <div className="financial-summary__sum">
                             <div className="vertical-align">
