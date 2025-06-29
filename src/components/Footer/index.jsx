@@ -3,7 +3,7 @@ import './style.scss';
 export default function Footer() {
     return (
         <footer className="footer w100 bg-gray-900">
-            <div className=" w83 m0auto horizontal-align jc-between">
+            <div className=" w83 m0auto horizontal-align jc-between ai-center">
                 <div className="vertical-align gap1 ai-start">
                     <h3 className="page-title">Fluxo Financeiro</h3>
                     <span className="page-subtitle"> © {new Date().getFullYear()} Kauan Rodrigues. Todos os direitos reservados.</span>

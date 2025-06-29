@@ -1,0 +1,19 @@
+.resume__item {
+    background-color: var(--gray-800);
+    border-radius: var(--b-radius);
+    padding: 2rem;
+    width: 100%;
+    gap: 2rem;
+    list-style: none;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.resume__item header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.resume__item-title {}

@@ -328,7 +328,7 @@ export default function Container({ children }) {
 
             <main className="vertical-align w100 min-h-100vh">
                 <Header tag={page} />
-                <section className='main-content w83 m0auto vertical-align gap1 jc-between'>
+                <section className='main-content w83 m0auto vertical-align gap4 jc-between'>
                     <div className="financial-summary horizontal-align gap4 w100">
                         <div className="financial-summary__sum">
                             <div className="vertical-align">

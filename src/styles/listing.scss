@@ -1,0 +1,21 @@
+.list-item {
+    border-radius: var(--b-radius);
+    gap: 2rem;
+    padding: 2rem;
+    background-color: var(--gray-700);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.list-item__subtitle {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--gray-500);
+}
