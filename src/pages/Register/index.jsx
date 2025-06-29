@@ -9,6 +9,10 @@ import './style.scss';
 export default function Register() {
   const { register, watch, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(registerUsers) })
   const { registerUser } = useUserContext()
+
+  useEffect(() => {
+    document.title = "Criar conta | Fluxo Financeiro";
+  }, [])
   return (
     <main className="center-align min-h-100vh animated-gradient">
       <form className="form" onSubmit={handleSubmit(registerUser)}>

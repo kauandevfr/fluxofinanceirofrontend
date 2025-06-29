@@ -43,6 +43,7 @@ export default function Home() {
       setScroll(window.scrollY > 0);
     };
     window.addEventListener('scroll', handleScroll);
+    document.title = "Fluxo Financeiro | Controle suas finanças";
     return () => window.removeEventListener('scroll', handleScroll);
   }, [])
 
@@ -161,6 +162,7 @@ export default function Home() {
         )
 
     }, ".howitworks")
+
 
   }, [])
 

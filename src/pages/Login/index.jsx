@@ -11,6 +11,10 @@ export default function Login() {
 
   const { loginUser } = useUserContext()
 
+  useEffect(() => {
+    document.title = "Login | Fluxo Financeiro";
+  }, [])
+
   return (
     <main className="center-align min-h-100vh animated-gradient">
       <form className="form" onSubmit={handleSubmit(loginUser)}>

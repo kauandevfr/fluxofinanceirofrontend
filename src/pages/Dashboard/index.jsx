@@ -5,6 +5,11 @@ import { Link } from "react-router-dom";
 import CardCategory from "../../components/CardCategory";
 
 export default function Dashboard() {
+
+  useEffect(() => {
+    document.title = "Painel | Fluxo Financeiro";
+  }, [])
+
   return (
     <Container>
       <section className="resume-expense-incomes vertical-align gap1">
