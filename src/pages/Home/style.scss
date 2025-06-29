@@ -1,0 +1,161 @@
+.header-home {
+    padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    transition: all .6s ease-in-out;
+}
+
+.header-home.scroll {
+    padding: 2.4rem 0;
+    background-color: var(--gray-900);
+    box-shadow: 0 0 2rem 0 var(--gray-900);
+}
+
+.header-home__menu ul {
+    list-style: none;
+}
+
+.header-home__menu ul li a {
+    text-decoration: none;
+    color: var(--white);
+    font-size: 1.8rem;
+}
+
+.blur {
+    position: absolute;
+    height: 550px;
+    width: 550px;
+    opacity: 0.3;
+    filter: blur(130px);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.apresentation {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.apresentation .blur:nth-child(1) {
+    background-color: var(--main-800);
+    top: -10%;
+    left: -10%;
+}
+
+.apresentation .blur:nth-child(2) {
+    background-color: var(--main-500);
+    bottom: -15%;
+    right: -10%;
+}
+
+.apresentation__preview {
+    height: 500px;
+    border: var(--border-standard);
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.apresentation__preview-icon {
+    width: 5.8rem;
+    height: 5.8rem;
+}
+
+.animated-arrow-down {
+    position: absolute;
+    width: 7rem;
+    bottom: 0;
+    left: 50%;
+    animation: arrow-down 1.5s infinite;
+}
+
+@keyframes arrow-down {
+    0% {
+        transform: translate(-50%, 0);
+    }
+
+    50% {
+        transform: translate(-50%, 10px);
+    }
+
+    100% {
+        transform: translate(-50%, 0);
+    }
+}
+
+.features,
+.howitworks {
+    padding: 12rem 0;
+    position: relative;
+}
+
+.features__items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+}
+
+.features__items-item {
+    border: var(--border-standard);
+    border-radius: var(--b-radius);
+    padding: 2rem;
+    gap: 2rem;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+    cursor: default;
+}
+
+.howitworks__steps-step {
+    width: 50%;
+    padding: 4rem;
+    border-radius: var(--b-radius);
+    border: var(--border-standard);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.3);
+    cursor: default;
+    background-color: var(--gray-850);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.howitworks__steps-step svg {
+    width: 5rem;
+    box-sizing: content-box;
+    border: 1.5px solid var(--main-800);
+    padding: 1rem;
+    border-radius: 50%;
+    box-shadow: 0 0 2rem 0 var(--main-800);
+}
+
+.howitworks__steps-step h2 {
+    font-size: 2.8rem;
+    font-weight: 300;
+}
+
+.howitworks__steps-step h3 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--gray-500);
+}
+
+.howitworks__steps-line {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, var(--main-800) 50%, rgba(255, 255, 255, 0) 100%);
+    width: .6rem;
+    height: 7rem;
+}
+
+.howitworks .blur {
+    background-color: var(--main-800);
+    top: 45%;
+
+}
+
+.howitworks .blur:nth-child(1) {
+    left: -10%;
+}
+
+.howitworks .blur:nth-child(2) {
+    right: -10%;
+}

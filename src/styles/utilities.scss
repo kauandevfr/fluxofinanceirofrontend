@@ -27,6 +27,10 @@
     justify-content: center;
 }
 
+.ai-center {
+    align-items: center;
+}
+
 .ai-start {
     align-items: start;
 }
@@ -368,4 +372,43 @@
     100% {
         background-position: 100% 50%;
     }
+}
+
+.page-title {
+    font-weight: 600;
+    font-size: 2.7rem;
+    color: var(--white);
+    line-height: 1.02;
+}
+
+.po-r {
+    position: relative;
+}
+
+.fontw-100 {
+    font-weight: 100;
+}
+
+.fontw-300 {
+    font-weight: 300;
+}
+
+.fontw-400 {
+    font-weight: 400;
+}
+
+.fontw-500 {
+    font-weight: 500;
+}
+
+.fontw-600 {
+    font-weight: 600;
+}
+
+.fontw-700 {
+    font-weight: 700;
+}
+
+.fontw-900 {
+    font-weight: 900;
 }
