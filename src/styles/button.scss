@@ -27,11 +27,18 @@
 
 .button img,
 .button svg {
-    width: var(--width-icon);
+    width: 2rem;
     display: block;
     flex-shrink: 0;
 }
 
 .button.bg-gradient-red {
-    background: linear-gradient(90deg, var(--cor-vermelho) 0%, rgba(207, 23, 23, 1) 100%);
+    background: linear-gradient(90deg, var(--red-1000) 0%, rgb(167, 15, 15) 100%);
+}
+
+.button.menu {
+    background: var(--gray-700);
+    justify-content: start;
+    width: 100%;
+    gap: 2rem;
 }

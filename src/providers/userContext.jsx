@@ -53,10 +53,16 @@ export const UserContextProvider = ({ children }) => {
         }
     }
 
+    const logoutSystem = () => {
+        redirect("/")
+        const html = document.querySelector('html').setAttribute('data-theme', '');
+    }
+
     return (
         <UserContext.Provider value={{
             registerUser,
             loginUser,
+            logoutSystem
         }}>
             {children}
         </UserContext.Provider>

@@ -1,0 +1,63 @@
+.aside-menu {
+    height: 100vh;
+    background-color: var(--gray-800);
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    width: 100px;
+    padding: 2rem;
+    box-shadow: 8px 1px 11px -1px rgba(0, 0, 0, 0.2);
+
+
+    .aside-menu__user-actions {
+        flex-direction: column;
+    }
+
+    .page-title,
+    span,
+    form {
+        display: none;
+    }
+
+    .button {
+        padding: 1.5rem 0;
+    }
+
+    .button svg {
+        margin: 0 auto;
+    }
+}
+
+.aside-menu.active {
+    width: 42.4rem;
+
+
+    .aside-menu__user-actions {
+        flex-direction: row;
+    }
+
+    span,
+    .page-title {
+        display: block;
+    }
+
+    form {
+        display: flex;
+    }
+
+    .button.toggle {
+        position: absolute;
+        right: -5%;
+        z-index: 3;
+        width: fit-content;
+        padding: 1.5rem;
+    }
+
+    .button {
+        padding: 1.5rem 3rem;
+    }
+
+    .button svg {
+        margin: 0;
+    }
+}

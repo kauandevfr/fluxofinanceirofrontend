@@ -18,10 +18,35 @@ export const GlobalContextProvider = ({ children }) => {
             ano: date.getFullYear()
         };
     }
+
+    const queryParams = () => {
+        const query = new URLSearchParams(location.search);
+        const objQuery = {};
+        query.forEach((valor, chave) => {
+            if (objQuery[chave]) {
+                objQuery[chave] = [].concat(objQuery[chave], valor);
+            } else {
+                objQuery[chave] = valor;
+            }
+        });
+        for (const chave in objQuery) {
+            if (objQuery[chave].includes(',')) {
+                objQuery[chave] = objQuery[chave].split(',');
+            }
+        }
+        return {
+            query,
+            objQuery,
+            page: window.location.pathname.split("/")[1],
+            queryStr: query.toString() ? "?" + query.toString() : ""
+        }
+    }
+
     return (
         <GlobalContext.Provider value={{
             currentMonthYear,
-            redirect
+            redirect,
+            queryParams
 
         }}>
             {children}
