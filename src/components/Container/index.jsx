@@ -5,6 +5,8 @@ import { Fade } from "@mui/material";
 import { useGlobalContext } from "../../providers/globalContext"
 import { Link } from 'react-router-dom';
 import { useUserContext } from '../../providers/userContext';
+import Header from '../Header';
+import Footer from '../Footer';
 
 export default function Container() {
     const [viewAside, setViewAside] = useState(false)
@@ -323,6 +325,14 @@ export default function Container() {
                     </div>
                 </div>
             </aside>
+
+            <main className="vertical-align w100 min-h-100vh">
+                <Header tag={page} />
+                <section className='w83 m0auto horizontal-align gap1 jc-between'>
+                </section>
+                <Footer />
+            </main>
+
         </main>
     );
 }

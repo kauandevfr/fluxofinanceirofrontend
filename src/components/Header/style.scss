@@ -1,0 +1,16 @@
+.header {
+    padding: 4.6rem 0;
+    width: 100%;
+    border-bottom: var(--border-standard);
+    margin-bottom: auto;
+}
+
+
+.header__icon {
+    width: 6rem;
+    height: 6rem;
+    background: var(--bg-gradient-2);
+    padding: 1rem;
+    border-radius: var(--b-radius);
+    box-sizing: content-box;
+}

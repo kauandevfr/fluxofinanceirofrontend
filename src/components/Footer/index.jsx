@@ -6,7 +6,7 @@ export default function Footer() {
             <div className=" w83 m0auto horizontal-align jc-between">
                 <div className="vertical-align gap1 ai-start">
                     <h3 className="page-title">Fluxo Financeiro</h3>
-                    <span className="text-gray-500 text-3xl"> © {new Date().getFullYear()} Kauan Rodrigues. Todos os direitos reservados.</span>
+                    <span className="page-subtitle"> © {new Date().getFullYear()} Kauan Rodrigues. Todos os direitos reservados.</span>
                 </div>
                 <div className="footer__contact vertical-align gap1">
                     <div className="horizontal-align gap1">
