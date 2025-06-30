@@ -1,0 +1,17 @@
+.not-found__title {
+    background: var(--bg-gradient-2);
+    color: transparent;
+    background-clip: text;
+    font-size: 34rem;
+    line-height: .8;
+}
+
+.not-found__subtitle {
+    position: absolute;
+    top: 50%;
+}
+
+.not-found__content,
+.not-found__titles {
+    max-width: 50%;
+}
