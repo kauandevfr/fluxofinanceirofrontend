@@ -4,9 +4,13 @@ import Container from "../../components/Container";
 import { Link } from 'react-router-dom'
 import { useGlobalContext } from "../../providers/globalContext";
 import CardCategory from "../../components/CardCategory";
+import { useExpenseContext } from "../../providers/expenseContext";
+import WithoutListing from "../../components/WithoutListing";
+import Skeleton from "../../components/Skeleton";
 
 export default function Expenses() {
   const { currentMonthYear } = useGlobalContext()
+  const { expenses } = useExpenseContext()
 
   const { mes, ano } = currentMonthYear()
 
@@ -107,30 +111,39 @@ export default function Expenses() {
         </div>
       </header>
       <ul className="vertical-align gap2">
-        <li className="list-row w100">
-          <div className="list-cell">
-            <h1 className="list-row__title">Teste</h1>
-          </div>
-          <div className="list-cell">
-            <h1 className="list-row__title">Pagamento</h1>
-          </div>
-          <div className="list-cell">
-            <h1 className="list-row__title">Categoria</h1>
-          </div>
-          <div className="list-cell">
-            <CardCategory title="Alimentação" color="red" />
-          </div>
-          <div className="list-cell">
-            <CardCategory title="Pago" color="red" />
-          </div>
-          <div className="list-cell">
-            <h1 className="list-row__title">R$ 1.000,00</h1>
-          </div>
-          <div className="list-cell gap4 jc-center">
-            <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
-            <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
-          </div>
-        </li>
+        {expenses.loading ? <Skeleton /> : expenses.items.length ?
+          expenses.items.map(element => {
+            return (
+              <li className="list-row w100" key={element.id}>
+                <div className="list-cell">
+                  <h1 className="list-row__title">{element.titulo}</h1>
+                </div>
+                <div className="list-cell">
+                  <CardCategory title={element.formapagamento.titulo} color={element.formapagamento.cor} />
+                </div>
+                <div className="list-cell">
+                  <CardCategory title={element.categoria.titulo} color={element.categoria.cor} />
+                </div>
+                <div className="list-cell">
+                  <CardCategory title={element.status == 1 ? "Pago" : "Não pago"} color={element.status == 1 ? "var(--green-1000)" : "var(--red-1000)"} />
+                </div>
+                <div className="list-cell">
+                  <h1 className="list-row__title">{element.precoBR}</h1>
+                </div>
+                <div className="list-cell">
+                  <h1 className="list-row__title">{!element.datavencimento ? "Não consta" : element.datavencimento}</h1>
+                </div>
+                <div className="list-cell gap4 jc-center">
+                  <button>
+                    <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
+                  </button>
+                  <button>
+                    <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
+                  </button>
+                </div>
+              </li>
+            )
+          }) : <WithoutListing />}
       </ul>
     </Container>
   );
