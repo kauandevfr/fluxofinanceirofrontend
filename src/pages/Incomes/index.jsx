@@ -4,10 +4,14 @@ import Container from "../../components/Container";
 import { useGlobalContext } from "../../providers/globalContext";
 import './style.scss';
 import CardCategory from "../../components/CardCategory";
+import { useIncomeContext } from "../../providers/incomeContext";
+import WithoutListing from "../../components/WithoutListing";
+import Skeleton from "../../components/Skeleton";
 
 export default function Incomes() {
 
   const { currentMonthYear } = useGlobalContext()
+  const { incomes } = useIncomeContext()
 
   const { mes, ano } = currentMonthYear()
 
@@ -80,24 +84,26 @@ export default function Incomes() {
         </div>
       </header>
       <ul className="vertical-align gap2">
-        <li className="list-row w100">
-
-          <div className="list-cell">
-            <h1 className="list-row__title">Teste</h1>
-          </div>
-          <div className="list-cell">
-            <h1 className="list-row__title">R$ 1.000,00</h1>
-          </div>
-          <div className="list-cell">
-            <h1 className="list-row__title">00/00/0000</h1>
-          </div>
-
-
-          <div className="list-cell gap4 jc-center">
-            <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
-            <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
-          </div>
-        </li>
+        {incomes.loading ? <Skeleton /> : incomes.items.length ?
+          incomes.items.slice(0, 5).map(element => {
+            return (
+              <li className="list-row w100" key={element.id}>
+                <div className="list-cell">
+                  <h1 className="list-row__title">{element.titulo}</h1>
+                </div>
+                <div className="list-cell">
+                  <h1 className="list-row__title">{element.precoBR}</h1>
+                </div>
+                <div className="list-cell">
+                  <h1 className="list-row__title">{element.datainclusao}</h1>
+                </div>
+                <div className="list-cell gap4 jc-center">
+                  <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
+                  <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
+                </div>
+              </li>
+            )
+          }) : <WithoutListing />}
       </ul>
     </Container>
   );
