@@ -7,11 +7,15 @@ import { Link } from 'react-router-dom';
 import { useUserContext } from '../../providers/userContext';
 import Header from '../Header';
 import Footer from '../Footer';
+import { useExpenseContext } from '../../providers/expenseContext';
+import { useIncomeContext } from '../../providers/incomeContext';
 
 export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
     const [selectPeriod, setSelectPeriod] = useState({ mes: "", ano: "" })
-    const { currentMonthYear, queryParams, redirect } = useGlobalContext()
+    const { currentMonthYear, queryParams, redirect, listingResume, resume } = useGlobalContext()
+    const { listingExpenses } = useExpenseContext()
+    const { listingIncomes } = useIncomeContext()
     const { logoutSystem } = useUserContext()
     const { mes, ano } = currentMonthYear()
     const { query, page, objQuery, queryStr } = queryParams()
@@ -42,6 +46,9 @@ export default function Container({ children, amount }) {
             ano: ano ?? prev.ano,
             mes: mes ?? prev.mes,
         }));
+        listingIncomes()
+        listingExpenses()
+        listingResume()
     }, [])
     return (
         <main>

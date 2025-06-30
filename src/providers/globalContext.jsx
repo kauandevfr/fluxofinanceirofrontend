@@ -11,6 +11,22 @@ export const useGlobalContext = () => {
 export const GlobalContextProvider = ({ children }) => {
     const redirect = useNavigate()
 
+    const [resume, setResume] = useState({
+        loading: true,
+        categoria: [],
+        pagamento: [],
+        status: [],
+        saldoRestante: "",
+        somaCobrancas: {
+            valor: "",
+            br: ""
+        },
+        somaRenda: {
+            valor: "",
+            br: ""
+        }
+    })
+
     function currentMonthYear() {
         const date = new Date();
         return {
@@ -42,12 +58,24 @@ export const GlobalContextProvider = ({ children }) => {
         }
     }
 
+    const listingResume = async () => {
+        const { query } = queryParams()
+        try {
+            const { data } = await instance.get(`/cobrancas/resumo${query.toString() ? "?" + query.toString() : ""}`)
+            setResume({ loading: false, ...data })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <GlobalContext.Provider value={{
             currentMonthYear,
+            queryParams,
             redirect,
-            queryParams
 
+            listingResume,
+            resume,
         }}>
             {children}
         </GlobalContext.Provider>
