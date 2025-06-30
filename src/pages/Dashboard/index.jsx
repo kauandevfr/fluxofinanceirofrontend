@@ -40,7 +40,7 @@ export default function Dashboard() {
                     <h3 className="list-row__title">{element.precoBR}</h3>
                   </li>
                 )
-              }) : <WithoutListing />}
+              }) : <WithoutListing tag="expense" />}
           </ul>
           <ul className="resume__item">
             <header>
@@ -55,7 +55,7 @@ export default function Dashboard() {
                     <h3 className="list-row__title">{element.precoBR}</h3>
                   </li>
                 )
-              }) : <WithoutListing />}
+              }) : <WithoutListing tag="income" />}
           </ul>
         </div>
       </section>
@@ -77,7 +77,7 @@ export default function Dashboard() {
                     </div>
                   </li>
                 )
-              }) : <WithoutListing />}
+              }) : <WithoutListing tag="categorie" />}
           </ul>
           <ul className="resume__item">
             <header>
@@ -94,7 +94,7 @@ export default function Dashboard() {
                     </div>
                   </li>
                 )
-              }) : <WithoutListing />}
+              }) : <WithoutListing tag="paymentform" />}
           </ul>
           <ul className="resume__item">
             <header>
@@ -111,7 +111,7 @@ export default function Dashboard() {
                     </div>
                   </li>
                 )
-              }) : <WithoutListing />}
+              }) : <WithoutListing tag="status" />}
           </ul>
           <ul className="resume__item">
             <header>
@@ -128,7 +128,7 @@ export default function Dashboard() {
                     </div>
                   </li>
                 )
-              }) : <WithoutListing />}
+              }) : <WithoutListing tag="overdue" />}
           </ul>
         </div>
       </section>

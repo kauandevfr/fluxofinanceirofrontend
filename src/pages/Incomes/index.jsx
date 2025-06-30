@@ -105,7 +105,7 @@ export default function Incomes() {
                 </div>
               </li>
             )
-          }) : <WithoutListing />}
+          }) : <WithoutListing tag="income" />}
       </ul>
     </Container>
   );

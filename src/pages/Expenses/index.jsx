@@ -146,7 +146,7 @@ export default function Expenses() {
                 </div>
               </li>
             )
-          }) : <WithoutListing />}
+          }) : <WithoutListing tag="expense" />}
       </ul>
     </Container>
   );
