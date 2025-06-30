@@ -13,6 +13,11 @@ import Home from "../pages/Home";
 import Settings from "../pages/Settings";
 
 export default function MainRoutes() {
+
+    const date = new Date();
+    const mes = date.getMonth() + 1
+    const ano = date.getFullYear()
+
     function PrivateRoutes({ redirectTo }) {
         const isAuthenticated = localStorage.getItem("token");
         if (!isAuthenticated) localStorage.clear();
@@ -35,7 +40,7 @@ export default function MainRoutes() {
                 <Route path="/settings" element={<Settings />} />
             </Route>
 
-            <Route element={<PublicRoutes redirectTo="/dashboard" />}>
+            <Route element={<PublicRoutes redirectTo={`/dashboard/?mes=${mes}&ano=${ano}`} />}>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/" element={<Home />} />
