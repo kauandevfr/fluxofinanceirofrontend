@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 export default function Settings() {
   const [content, setContent] = useState('categories')
 
-  const { currentMonthYear } = useGlobalContext()
+  const { currentMonthYear, queryParams } = useGlobalContext()
 
   const { mes, ano } = currentMonthYear()
 
@@ -42,6 +42,12 @@ export default function Settings() {
   // };
 
   useEffect(() => {
+    const { query } = queryParams()
+
+    const tag = query.get("tag")
+
+    if (tag) setContent(tag)
+
     document.title = "Configurações | Fluxo Financeiro";
   }, [])
   return (
