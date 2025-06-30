@@ -7,6 +7,8 @@ import CardCategory from "../../components/CardCategory";
 import { useIncomeContext } from "../../providers/incomeContext";
 import WithoutListing from "../../components/WithoutListing";
 import Skeleton from "../../components/Skeleton";
+import { format } from "date-fns";
+import { fromZonedTime } from "date-fns-tz";
 
 export default function Incomes() {
 
@@ -95,7 +97,7 @@ export default function Incomes() {
                   <h1 className="list-row__title">{element.precoBR}</h1>
                 </div>
                 <div className="list-cell">
-                  <h1 className="list-row__title">{element.datainclusao}</h1>
+                  <h1 className="list-row__title">{format(fromZonedTime(element.datainclusao, "America/Sao_Paulo"), "dd/MM/yyyy")}</h1>
                 </div>
                 <div className="list-cell gap4 jc-center">
                   <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
