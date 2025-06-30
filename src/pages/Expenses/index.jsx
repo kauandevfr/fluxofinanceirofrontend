@@ -7,6 +7,8 @@ import CardCategory from "../../components/CardCategory";
 import { useExpenseContext } from "../../providers/expenseContext";
 import WithoutListing from "../../components/WithoutListing";
 import Skeleton from "../../components/Skeleton";
+import { format } from "date-fns";
+import { fromZonedTime } from "date-fns-tz";
 
 export default function Expenses() {
   const { currentMonthYear } = useGlobalContext()
@@ -113,6 +115,7 @@ export default function Expenses() {
       <ul className="vertical-align gap2">
         {expenses.loading ? <Skeleton /> : expenses.items.length ?
           expenses.items.map(element => {
+            const formattedDueDate = element.datavencimento ? format(fromZonedTime(element.datavencimento, "America/Sao_Paulo"), "dd/MM/yyyy") : 'Não consta'
             return (
               <li className="list-row w100" key={element.id}>
                 <div className="list-cell">
@@ -131,7 +134,7 @@ export default function Expenses() {
                   <h1 className="list-row__title">{element.precoBR}</h1>
                 </div>
                 <div className="list-cell">
-                  <h1 className="list-row__title">{!element.datavencimento ? "Não consta" : element.datavencimento}</h1>
+                  <h1 className="list-row__title">{formattedDueDate}</h1>
                 </div>
                 <div className="list-cell gap4 jc-center">
                   <button>
@@ -143,7 +146,7 @@ export default function Expenses() {
                 </div>
               </li>
             )
-          }) : <WithoutListing />}
+          }) : <WithoutListing tag="expense" />}
       </ul>
     </Container>
   );
