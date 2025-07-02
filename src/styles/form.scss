@@ -27,11 +27,11 @@
 
 .header-form {
     width: 100%;
-    min-height: 250px;
+    min-height: 10.4rem;
     background: var(--bg-gradient-2);
     gap: .5rem;
     position: relative;
-    border-radius: var(--b-radius);
+    // border-radius: var(--b-radius);
 }
 
 .form-title {
@@ -49,8 +49,10 @@
 
 .form-icon {
     box-sizing: content-box;
-    width: 6rem;
+    width: 3.6rem;
     padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.223);
+    border-radius: 50%;
 }
 
 .footer-form {
@@ -61,4 +63,12 @@
 .footer-form__title {
     color: var(--gray-500);
     font-size: 1.6rem;
+}
+
+.form-icon__close img {
+    width: 2rem;
+    background-color: rgba(255, 255, 255, 0.223);
+    border-radius: 50%;
+    padding: 1rem;
+    box-sizing: content-box;
 }

@@ -9,10 +9,13 @@ import WithoutListing from "../../components/WithoutListing";
 import Skeleton from "../../components/Skeleton";
 import { format } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
+import ModalBase from "../../components/ModalBase";
 
 export default function Expenses() {
   const { currentMonthYear } = useGlobalContext()
   const { expenses } = useExpenseContext()
+
+  const [modal, setModal] = useState(false)
 
   const { mes, ano } = currentMonthYear()
 
@@ -140,7 +143,7 @@ export default function Expenses() {
                   <button>
                     <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
                   </button>
-                  <button>
+                  <button type="button" onClick={() => setModal(true)}>
                     <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
                   </button>
                 </div>
@@ -148,6 +151,8 @@ export default function Expenses() {
             )
           }) : <WithoutListing tag="expense" />}
       </ul>
+
+      {/* <ModalBase isOpen={modal} onClose={() => setModal(false)} /> */}
     </Container>
   );
 }
