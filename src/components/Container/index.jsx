@@ -9,6 +9,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import { useExpenseContext } from '../../providers/expenseContext';
 import { useIncomeContext } from '../../providers/incomeContext';
+import AnimatedNumber from '../AnimateNumber';
 
 export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
@@ -337,24 +338,24 @@ export default function Container({ children, amount }) {
                 <Header tag={page} amount={amount} />
                 <section className='p4-0 w83 m0auto vertical-align gap4 jc-between'>
                     <div className="financial-summary horizontal-align gap4 w100">
-                        <div className="financial-summary__sum">
-                            <div className="vertical-align">
+                        <div className="financial-summary__sum gap1">
+                            <div className="vertical-align w100 gap1">
                                 <h1 className="financial-summary__sum-title text-gray-500 fontw-500 text-5xl">Receita mensal</h1>
-                                <h2 className="financial-summary__sum-value fontw-500 text-5xl">R$ 100.000,00</h2>
+                                <AnimatedNumber value={resume.somaRenda.valor} />
                             </div>
                             <img className='bg-green-1000' src="https://fluxofinanceiro.site/assets/receitas.png" alt="income icon" />
                         </div>
-                        <div className="financial-summary__sum">
-                            <div className="vertical-align">
+                        <div className="financial-summary__sum gap1">
+                            <div className="vertical-align w100 gap1">
                                 <h1 className="financial-summary__sum-title text-gray-500 fontw-500 text-5xl">Despesas totais</h1>
-                                <h2 className="financial-summary__sum-value fontw-500 text-5xl">R$ 100.000,00</h2>
+                                <AnimatedNumber value={resume.somaCobrancas.valor} />
                             </div>
                             <img className='bg-red-900' src="https://fluxofinanceiro.site/assets/despesa.png" alt="expense icon" />
                         </div>
-                        <div className="financial-summary__sum">
-                            <div className="vertical-align">
+                        <div className="financial-summary__sum gap1">
+                            <div className="vertical-align w100 gap1">
                                 <h1 className="financial-summary__sum-title text-gray-500 fontw-500 text-5xl">Saldo restante</h1>
-                                <h2 className="financial-summary__sum-value fontw-500 text-5xl">R$ 100.000,00</h2>
+                                <AnimatedNumber value={resume.saldoRestante.valor} />
                             </div>
                             <img className='bg-main-500' src="https://fluxofinanceiro.site/assets/carteira.png" alt="wallet icon" />
                         </div>
