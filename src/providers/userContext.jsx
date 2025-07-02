@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import instance from "../utilities/instance";
 import { useGlobalContext } from "./globalContext";
 
@@ -11,6 +11,11 @@ export const useUserContext = () => {
 export const UserContextProvider = ({ children }) => {
 
     const { currentMonthYear, redirect } = useGlobalContext()
+
+    const [user, setUser] = useState({
+        loading: true,
+        data: {}
+    })
 
     const registerUser = async (data, e) => {
         e.preventDefault();
@@ -55,14 +60,31 @@ export const UserContextProvider = ({ children }) => {
 
     const logoutSystem = () => {
         redirect("/")
-        const html = document.querySelector('html').setAttribute('data-theme', '');
+        document.querySelector('html').setAttribute('data-theme', '');
+    }
+
+    const listUser = async () => {
+
+        try {
+            const { data } = await instance.get("/usuario")
+            setUser({
+                loading: false, data: {
+                    ...data, datadenascimento: data.datadenascimento ? data.datadenascimento.split("T")[0] : ""
+                }
+            })
+
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (
         <UserContext.Provider value={{
             registerUser,
             loginUser,
-            logoutSystem
+            logoutSystem,
+            listUser,
+            user
         }}>
             {children}
         </UserContext.Provider>
