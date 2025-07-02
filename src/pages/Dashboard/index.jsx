@@ -11,9 +11,11 @@ import { useIncomeContext } from "../../providers/incomeContext";
 
 export default function Dashboard() {
 
-  const { resume } = useGlobalContext()
+  const { resume, queryParams } = useGlobalContext()
   const { expenses } = useExpenseContext()
   const { incomes } = useIncomeContext()
+
+  const { query } = queryParams()
 
   useEffect(() => {
     document.title = "Painel | Fluxo Financeiro";
@@ -27,7 +29,7 @@ export default function Dashboard() {
           <ul className="resume__item">
             <header>
               <h1 className="page-title">Despesas</h1>
-              <Link className="link" to={'/'}>Ver mais</Link>
+              <Link className="link" to={`/expenses/?${query.toString()}`}>Ver mais</Link>
             </header>
             {expenses.loading ? <Skeleton /> : expenses.items.length ?
               expenses.items.slice(0, 5).map(element => {
@@ -45,7 +47,7 @@ export default function Dashboard() {
           <ul className="resume__item">
             <header>
               <h1 className="page-title">Receitas</h1>
-              <Link className="link" to={'/'}>Ver mais</Link>
+              <Link className="link" to={`/incomes/?${query.toString()}`}>Ver mais</Link>
             </header>
             {incomes.loading ? <Skeleton /> : incomes.items.length ?
               incomes.items.slice(0, 5).map(element => {

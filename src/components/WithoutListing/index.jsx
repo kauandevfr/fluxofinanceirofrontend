@@ -76,7 +76,7 @@ export default function WithoutListing({ tag }) {
             </svg>
         },
         overdue: {
-            title: "Os status de suas despesas aparecerão aqui quando você adicioná-las.",
+            title: "Os vencimentos das suas despesas serão listados aqui quando você adicioná-las.",
             icon: <svg
                 className="w5rem"
                 viewBox="0 0 24 24"
@@ -119,7 +119,7 @@ export default function WithoutListing({ tag }) {
     return (
         <div class="no-items br p4 center-align bg-gray-700">
             {(configs[tag]?.icon || fallback.icon)}
-            <span className="text-2xl text-gray-500"> {configs[tag]?.title || fallback.title}</span>
+            <span className="text-2xl text-gray-500 text-center"> {configs[tag]?.title || fallback.title}</span>
         </div>
     );
 }

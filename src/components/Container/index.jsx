@@ -16,7 +16,7 @@ export default function Container({ children, amount }) {
     const { currentMonthYear, queryParams, redirect, listingResume, resume } = useGlobalContext()
     const { listingExpenses } = useExpenseContext()
     const { listingIncomes } = useIncomeContext()
-    const { logoutSystem } = useUserContext()
+    const { logoutSystem, listUser, user } = useUserContext()
     const { mes, ano } = currentMonthYear()
     const { query, page, objQuery, queryStr } = queryParams()
     const goToCurrentPeriod = () => {
@@ -46,6 +46,7 @@ export default function Container({ children, amount }) {
             ano: ano ?? prev.ano,
             mes: mes ?? prev.mes,
         }));
+        listUser()
         listingIncomes()
         listingExpenses()
         listingResume()
@@ -269,7 +270,7 @@ export default function Container({ children, amount }) {
                     </div>
                 </div>
                 <div className="vertical-align gap1">
-                    <span className="fontw-600 text-4xl">Kauan Rodrigues</span>
+                    <span className="fontw-600 text-4xl">{user.data.nome}</span>
                     <button className="button menu" type="button">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
