@@ -11,16 +11,15 @@ export default function ModalBase({ header, children, isOpen, onClose }) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                 >
-                    <motion.form
+                    <motion.section
                         className="form"
                         initial={{ scale: 0.9 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0.9 }}
                         transition={{ duration: 0.2 }}
                     >
-
                         <header className="header-form horizontal-align p2 jc-between">
-                            <div className="horizontal-align gap2 ai-center">
+                            <div className="horizontal-align gap1 ai-center">
                                 {header.icon}
                                 <h1 className="form-title">{header.title}</h1>
                             </div>
@@ -28,10 +27,12 @@ export default function ModalBase({ header, children, isOpen, onClose }) {
                                 <img src="https://fluxofinanceiro.site/assets/fechar.png" alt="close icon" />
                             </button>
                         </header>
-                        <section className="vertical-align p2">
+                        <form className="vertical-align p2 gap2"
+                        // onSubmit={{}}
+                        >
                             {children}
-                        </section>
-                    </motion.form>
+                        </form>
+                    </motion.section>
                 </motion.div>
             )}
         </AnimatePresence>

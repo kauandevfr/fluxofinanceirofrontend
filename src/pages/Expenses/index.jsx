@@ -10,12 +10,12 @@ import Skeleton from "../../components/Skeleton";
 import { format } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
 import ModalBase from "../../components/ModalBase";
+import ModalDelete from "../../components/ModalDelete";
 
 export default function Expenses() {
-  const { currentMonthYear } = useGlobalContext()
+  const { currentMonthYear, setDeleteModal } = useGlobalContext()
   const { expenses } = useExpenseContext()
 
-  const [modal, setModal] = useState(false)
 
   const { mes, ano } = currentMonthYear()
 
@@ -118,6 +118,7 @@ export default function Expenses() {
       <ul className="vertical-align gap2">
         {expenses.loading ? <Skeleton /> : expenses.items.length ?
           expenses.items.map(element => {
+            console.log(element);
             const formattedDueDate = element.datavencimento ? format(fromZonedTime(element.datavencimento, "America/Sao_Paulo"), "dd/MM/yyyy") : 'Não consta'
             return (
               <li className="list-row w100" key={element.id}>
@@ -143,7 +144,7 @@ export default function Expenses() {
                   <button>
                     <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
                   </button>
-                  <button type="button" onClick={() => setModal(true)}>
+                  <button type="button" onClick={() => setDeleteModal({ open: true, item: element, type: "despesa" })}>
                     <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
                   </button>
                 </div>
@@ -152,7 +153,6 @@ export default function Expenses() {
           }) : <WithoutListing tag="expense" />}
       </ul>
 
-      {/* <ModalBase isOpen={modal} onClose={() => setModal(false)} /> */}
     </Container>
   );
 }

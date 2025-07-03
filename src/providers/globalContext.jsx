@@ -11,6 +11,12 @@ export const useGlobalContext = () => {
 export const GlobalContextProvider = ({ children }) => {
     const redirect = useNavigate()
 
+    const [deleteModal, setDeleteModal] = useState({
+        open: false,
+        item: {},
+        type: ""
+    })
+
     const [resume, setResume] = useState({
         loading: true,
         categoria: [],
@@ -75,6 +81,8 @@ export const GlobalContextProvider = ({ children }) => {
             currentMonthYear,
             queryParams,
             redirect,
+            deleteModal,
+            setDeleteModal,
 
             listingResume,
             resume,
