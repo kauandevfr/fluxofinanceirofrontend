@@ -69,8 +69,6 @@ export const GlobalContextProvider = ({ children }) => {
         try {
             const { data } = await instance.get(`/cobrancas/resumo${query.toString() ? "?" + query.toString() : ""}`)
             setResume({ loading: false, ...data })
-
-            console.log(resume)
         } catch (error) {
             console.error(error)
         }

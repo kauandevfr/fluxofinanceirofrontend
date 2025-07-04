@@ -11,11 +11,12 @@ import { useExpenseContext } from '../../providers/expenseContext';
 import { useIncomeContext } from '../../providers/incomeContext';
 import AnimatedNumber from '../AnimateNumber';
 import ModalDelete from '../ModalDelete';
+import ModalExpense from '../ModalExpense';
 
 export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
     const [selectPeriod, setSelectPeriod] = useState({ mes: "", ano: "" })
-    const { currentMonthYear, queryParams, redirect, listingResume, resume, deleteModal } = useGlobalContext()
+    const { currentMonthYear, queryParams, redirect, listingResume, resume } = useGlobalContext()
     const { listingExpenses } = useExpenseContext()
     const { listingIncomes } = useIncomeContext()
     const { logoutSystem, listUser, user } = useUserContext()
@@ -52,6 +53,7 @@ export default function Container({ children, amount }) {
         listingIncomes()
         listingExpenses()
         listingResume()
+
     }, [])
     return (
         <main>
@@ -368,6 +370,7 @@ export default function Container({ children, amount }) {
             </main>
 
             <ModalDelete />
+            <ModalExpense />
         </main>
     );
 }

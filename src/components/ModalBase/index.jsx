@@ -1,7 +1,17 @@
 import { motion, AnimatePresence } from "framer-motion";
 import './style.scss';
+import { useEffect } from "react";
 
 export default function ModalBase({ header, children, isOpen, onClose }) {
+
+    useEffect(() => {
+        document.documentElement.style.overflow = isOpen ? 'hidden' : '';
+
+        return () => {
+            document.documentElement.style.overflow = '';
+        };
+    }, [isOpen]);
+
     return (
         <AnimatePresence>
             {isOpen && (

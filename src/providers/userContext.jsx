@@ -59,6 +59,7 @@ export const UserContextProvider = ({ children }) => {
     }
 
     const logoutSystem = () => {
+        localStorage.clear()
         redirect("/")
         document.querySelector('html').setAttribute('data-theme', '');
     }

@@ -7,5 +7,8 @@ export default defineConfig({
     port: 5000,
     // open: true,
     host: true,
+    allowedHosts: [
+      'sponsorship-strap-pipes-salon.trycloudflare.com'
+    ]
   }
 })

@@ -14,12 +14,14 @@ import ModalDelete from "../../components/ModalDelete";
 
 export default function Expenses() {
   const { currentMonthYear, setDeleteModal } = useGlobalContext()
-  const { expenses } = useExpenseContext()
-
+  const { expenses, setExpenseModal } = useExpenseContext()
+  const { listingCategories, listingPaymentForms } = useExpenseContext()
 
   const { mes, ano } = currentMonthYear()
 
   useEffect(() => {
+    listingCategories()
+    listingPaymentForms()
     document.title = "Despesas | Fluxo Financeiro";
   }, [])
 
@@ -28,7 +30,7 @@ export default function Expenses() {
       <div className="horizontal-align jc-between ">
         <Link className="button" to={`/dashboard/?mes=${mes}&ano=${ano}`}>Painel</Link>
         <div className="horizontal-align gap2">
-          <button className="button" type="button">
+          <button className="button" type="button" onClick={() => setExpenseModal({ open: true, item: {}, type: "Adicionar" })}>
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Edit / Add_Plus_Circle">
                 <path
@@ -118,7 +120,6 @@ export default function Expenses() {
       <ul className="vertical-align gap2">
         {expenses.loading ? <Skeleton /> : expenses.items.length ?
           expenses.items.map(element => {
-            console.log(element);
             const formattedDueDate = element.datavencimento ? format(fromZonedTime(element.datavencimento, "America/Sao_Paulo"), "dd/MM/yyyy") : 'Não consta'
             return (
               <li className="list-row w100" key={element.id}>
@@ -141,7 +142,7 @@ export default function Expenses() {
                   <h1 className="list-row__title">{formattedDueDate}</h1>
                 </div>
                 <div className="list-cell gap4 jc-center">
-                  <button>
+                  <button type="button" onClick={() => setExpenseModal({ open: true, item: element, type: "Editar" })}>
                     <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
                   </button>
                   <button type="button" onClick={() => setDeleteModal({ open: true, item: element, type: "despesa" })}>

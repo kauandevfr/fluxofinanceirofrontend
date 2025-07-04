@@ -10,6 +10,22 @@ export const useExpenseContext = () => {
 
 export const ExpenseContextProvider = ({ children }) => {
 
+    const [categories, setCategories] = useState({
+        loading: true,
+        items: []
+    })
+
+    const [paymentForms, setPaymentForms] = useState({
+        loading: true,
+        items: []
+    })
+
+    const [expenseModal, setExpenseModal] = useState({
+        open: false,
+        type: "Editar",
+        item: {}
+    })
+
     const { queryParams } = useGlobalContext()
     const initialListing = { loading: true, items: [] }
     const [expenses, setExpenses] = useState(initialListing)
@@ -27,10 +43,50 @@ export const ExpenseContextProvider = ({ children }) => {
 
     }
 
+
+    const listingCategories = async () => {
+        try {
+            const { data } = await instance.get("/categorias");
+            const filteredItems = data.map(e => ({ ...e, selected: false, filter: false })).sort((a, b) => b.titulo.length - a.titulo.length);
+            setCategories({
+                loading: false,
+                items: filteredItems,
+            });
+
+            console.log(data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const listingPaymentForms = async () => {
+        try {
+            const { data } = await instance.get("/formaspagamento");
+            const filteredItems = data.map(e => ({ ...e, selected: false, filter: false })).sort((a, b) => b.titulo.length - a.titulo.length);
+
+            setPaymentForms({
+                loading: false,
+                items: filteredItems
+            })
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <ExpenseContext.Provider value={{
             listingExpenses,
-            expenses
+            expenses,
+
+            expenseModal,
+            setExpenseModal,
+
+            listingCategories,
+            categories,
+
+            listingPaymentForms,
+            paymentForms
 
         }}>
             {children}
