@@ -10,7 +10,8 @@ export default function ModalDelete() {
     const closeModal = () => {
         setDeleteModal({
             open: false,
-            item: {}
+            item: {},
+
         })
     }
 
@@ -27,10 +28,10 @@ export default function ModalDelete() {
             isOpen={deleteModal.open}
             onClose={closeModal}
         >
-            <h2 className="form-subtitle">Esta ação excluirá permanentemente a {deleteModal.type} selecionada e não poderá ser desfeita.</h2>
+            <h2 className="form-subtitle">Esta ação excluirá permanentemente o(a) {deleteModal.type} selecionado(a) e não poderá ser desfeita.</h2>
 
             <div className="horizontal-align gap1 w100">
-                <button className="button w100 bg-gray-500" type="button">Cancelar</button>
+                <button className="button w100 bg-gray-500" type="button" onClick={closeModal}>Cancelar</button>
                 <button className="button bg-gradient-red w100" type="submit">Excluir</button>
             </div>
         </ModalBase>

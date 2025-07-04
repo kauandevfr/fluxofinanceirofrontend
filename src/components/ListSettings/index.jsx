@@ -4,7 +4,7 @@ import CardCategory from "../CardCategory"
 
 import "./style.scss"
 
-export default function ListSettings({ title, subtitle, itens, onAdd, onEdit, onDelete }) {
+export default function ListSettings({ title, subtitle, items, onAdd, onEdit, onDelete }) {
     return (
         <div className="vertical-align p2 gap2">
             <div className="horizontal-align jc-between">
@@ -12,7 +12,7 @@ export default function ListSettings({ title, subtitle, itens, onAdd, onEdit, on
                     <h1 className="page-title">{title}</h1>
                     <h2 className="page-subtitle">{subtitle}</h2>
                 </div>
-                <button className="button" type="text" onClick={onAdd}>
+                <button className="button" type="button" onClick={onAdd}>
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="Edit / Add_Plus_Circle">
                             <path
@@ -27,9 +27,9 @@ export default function ListSettings({ title, subtitle, itens, onAdd, onEdit, on
                     Adicionar</button>
             </div>
             <ul className="settings__listing gap2">
-                {itens.carregando ? <Skeleton /> :
-                    itens.itens.length ?
-                        itens.itens.map((element, index) => {
+                {items.loading ? <Skeleton /> :
+                    items.items.length ?
+                        items.items.map((element) => {
                             return (
                                 <li className="list-row" key={element.id}>
                                     <CardCategory color={element.cor} title={element.titulo} />

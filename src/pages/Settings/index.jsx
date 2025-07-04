@@ -2,50 +2,57 @@ import React, { useState, useEffect } from "react";
 import './style.scss';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import CardCategory from "../../components/CardCategory";
 import ListSettings from "../../components/ListSettings";
 import { useGlobalContext } from "../../providers/globalContext"
+import { useExpenseContext } from "../../providers/expenseContext"
 import { Link } from "react-router-dom";
+import ModalDelete from "../../components/ModalDelete";
+import ModalBank from "../../components/ModalBank";
 
 export default function Settings() {
   const [content, setContent] = useState('categories')
 
-  const { currentMonthYear, queryParams } = useGlobalContext()
+  const { categories, listingCategories, paymentForms, listingPaymentForms, banks, listingBanks, setModalBank } = useExpenseContext()
+
+  const { currentMonthYear, queryParams, setDeleteModal } = useGlobalContext()
 
   const { mes, ano } = currentMonthYear()
 
-  // const configs = {
-  //   categories: {
-  //     titulo: "Categorias",
-  //     getSubtitle: '(itens) => `${itens.length} categorias cadastradas`',
-  //     items: 'categories',
-  //     onAdd: '() => setModalCP({ modal: true, tipo: "Adicionar", item: "categoria", valor: {} })',
-  //     onEdit: '(el) => setModalCP({ modal: true, tipo: "Atualizar", item: "categoria", valor: el })',
-  //     onDelete: '(id) => setModalDelete({ modal: true, tag: "categoria", id })',
-  //   },
-  //   paymentForms: {
-  //     titulo: "Formas de pagamento",
-  //     getSubtitle: '(itens) => `${itens.length} formas de pagamento cadastradas`',
-  //     items: 'paymentForms',
-  //     onAdd: '() => setModalCP({ modal: true, tipo: "Adicionar", item: "forma de pagamento", valor: {} })',
-  //     onEdit: '(el) => setModalCP({ modal: true, tipo: "Atualizar", item: "forma de pagamento", valor: el })',
-  //     onDelete: '(id) => setModalDelete({ modal: true, tag: "categoria", id })',
-  //   },
-  //   banks: {
-  //     titulo: "Bancos",
-  //     getSubtitle: '(itens) => `${itens.length} bancos cadastrados`',
-  //     items: 'banks',
-  //     onAdd: '() => setModalBank({ modal: true, item: {} })',
-  //     onEdit: '(el) => setModalBank({ modal: true, item: el })',
-  //     onDelete: '(id) => setModalDelete({ modal: true, tag: "instituicaofinanceira", id })',
-  //   }
-  // };
+  const configs = {
+    categories: {
+      title: "Categorias",
+      getSubtitle: (items) => `${items.length} categorias cadastradas`,
+      items: categories,
+      onAdd: '() => setModalCP({ modal: true, tipo: "Adicionar", item: "categoria", valor: {} })',
+      // onEdit: (el) => setModalCP({ modal: true, tipo: "Atualizar", item: "categoria", valor: el }),
+      onDelete: (id) => setDeleteModal({ open: true, type: "categoria", id }),
+    },
+    paymentForms: {
+      title: "Formas de pagamento",
+      getSubtitle: (items) => `${items.length} formas de pagamento cadastradas`,
+      items: paymentForms,
+      onAdd: '() => setModalCP({ open: true, tipo: "Adicionar", item: "forma de pagamento", valor: {} })',
+      // onEdit: (el) => setModalCP({ open: true, type: "Atualizar", item: "forma de pagamento", valor: el }),
+      onDelete: (id) => setDeleteModal({ open: true, type: "forma de pagamento", id }),
+    },
+    banks: {
+      title: "Bancos",
+      getSubtitle: (items) => `${items.length} bancos cadastrados`,
+      items: banks,
+      onAdd: () => setModalBank({ open: true, item: {}, type: "Adicionar" }),
+      onEdit: (el) => setModalBank({ open: true, item: el, type: "Editar" }),
+      onDelete: (id) => setDeleteModal({ open: true, type: "banco", id }),
+    }
+  };
 
   useEffect(() => {
     const { query } = queryParams()
+    listingCategories()
+    listingPaymentForms()
+    listingBanks()
+
 
     const tag = query.get("tag")
-
     if (tag) setContent(tag)
 
     document.title = "Configurações | Fluxo Financeiro";
@@ -93,22 +100,25 @@ export default function Settings() {
             </button>
           </div>
 
-          {/* 
+
           {configs[content] ? (
             <ListSettings
               title={configs[content].title}
-              subtitle={configs[content].getSubtitle(configs[content].itens.itens)}
+              subtitle={configs[content].getSubtitle(configs[content].items.items)}
               items={configs[content].items}
               onAdd={configs[content].onAdd}
               onEdit={configs[content].onEdit}
               onDelete={configs[content].onDelete}
             />
-          ) : ''} 
-           */}
+          ) : ''}
+
 
         </section>
       </div>
       <Footer />
+
+      <ModalBank />
+      <ModalDelete />
     </main>
   );
 }

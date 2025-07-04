@@ -9,8 +9,7 @@ import WithoutListing from "../../components/WithoutListing";
 import Skeleton from "../../components/Skeleton";
 import { format } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
-import ModalBase from "../../components/ModalBase";
-import ModalDelete from "../../components/ModalDelete";
+
 
 export default function Expenses() {
   const { currentMonthYear, setDeleteModal } = useGlobalContext()
