@@ -26,6 +26,13 @@ export const ExpenseContextProvider = ({ children }) => {
         item: {}
     })
 
+    const [paymentCategory, setPaymentCategory] = useState({
+        open: false,
+        type: "Adicionar",
+        item: {},
+        tag: ""
+    })
+
     const [expenseModal, setExpenseModal] = useState({
         open: false,
         type: "Adicionar",
@@ -109,7 +116,10 @@ export const ExpenseContextProvider = ({ children }) => {
             banks,
 
             bankModal,
-            setModalBank
+            setModalBank,
+
+            paymentCategory,
+            setPaymentCategory
         }}>
             {children}
         </ExpenseContext.Provider>

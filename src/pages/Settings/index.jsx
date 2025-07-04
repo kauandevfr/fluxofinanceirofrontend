@@ -8,11 +8,12 @@ import { useExpenseContext } from "../../providers/expenseContext"
 import { Link } from "react-router-dom";
 import ModalDelete from "../../components/ModalDelete";
 import ModalBank from "../../components/ModalBank";
+import ModalPaymentCategory from "../../components/ModalPaymentCategory";
 
 export default function Settings() {
   const [content, setContent] = useState('categories')
 
-  const { categories, listingCategories, paymentForms, listingPaymentForms, banks, listingBanks, setModalBank } = useExpenseContext()
+  const { categories, listingCategories, paymentForms, listingPaymentForms, banks, listingBanks, setModalBank, setPaymentCategory } = useExpenseContext()
 
   const { currentMonthYear, queryParams, setDeleteModal } = useGlobalContext()
 
@@ -23,16 +24,16 @@ export default function Settings() {
       title: "Categorias",
       getSubtitle: (items) => `${items.length} categorias cadastradas`,
       items: categories,
-      onAdd: '() => setModalCP({ modal: true, tipo: "Adicionar", item: "categoria", valor: {} })',
-      // onEdit: (el) => setModalCP({ modal: true, tipo: "Atualizar", item: "categoria", valor: el }),
+      onAdd: () => setPaymentCategory({ open: true, type: "Adicionar", item: {}, tag: "categoria" }),
+      onEdit: (el) => setPaymentCategory({ open: true, type: "Atualizar", item: el, tag: "categoria" }),
       onDelete: (id) => setDeleteModal({ open: true, type: "categoria", id }),
     },
     paymentForms: {
       title: "Formas de pagamento",
       getSubtitle: (items) => `${items.length} formas de pagamento cadastradas`,
       items: paymentForms,
-      onAdd: '() => setModalCP({ open: true, tipo: "Adicionar", item: "forma de pagamento", valor: {} })',
-      // onEdit: (el) => setModalCP({ open: true, type: "Atualizar", item: "forma de pagamento", valor: el }),
+      onAdd: () => setPaymentCategory({ open: true, type: "Adicionar", item: {}, tag: "forma de pagamento" }),
+      onEdit: (el) => setPaymentCategory({ open: true, type: "Atualizar", item: el, tag: "forma de pagamento" }),
       onDelete: (id) => setDeleteModal({ open: true, type: "forma de pagamento", id }),
     },
     banks: {
@@ -118,6 +119,7 @@ export default function Settings() {
       <Footer />
 
       <ModalBank />
+      <ModalPaymentCategory />
       <ModalDelete />
     </main>
   );
