@@ -1,11 +1,22 @@
+import { useForm } from 'react-hook-form';
 import { useExpenseContext } from '../../providers/expenseContext';
 import CardCategory from '../CardCategory';
 import ModalBase from '../ModalBase';
 import './style.scss';
+import { yupResolver } from '@hookform/resolvers/yup';
+import registerPaymentCategory from '../../schemas/paymentcategory/register';
+import updatePaymentCategory from '../../schemas/paymentcategory/update';
+import { useEffect } from 'react';
+import instance from '../../utilities/instance';
 
 export default function ModalPaymentCategory() {
 
-    const { paymentCategory, setPaymentCategory } = useExpenseContext()
+    const { paymentCategory, setPaymentCategory, listingCategories, listingPaymentForms } = useExpenseContext()
+
+    const { reset, register, handleSubmit, formState: { errors } } =
+        useForm({
+            resolver: yupResolver(paymentCategory.type === "Adicionar" ? registerPaymentCategory : updatePaymentCategory),
+        })
 
     const closeModal = () => {
         setPaymentCategory({
@@ -16,6 +27,45 @@ export default function ModalPaymentCategory() {
         })
     }
 
+    const addEditPaymentCategory = async (data) => {
+        const { type, item, tag } = paymentCategory;
+        const id = item?.id;
+
+        const config = {
+            categoria: { endpoint: '/categoria', callback: listingCategories },
+            "forma de pagamento": { endpoint: '/formapagamento', callback: listingPaymentForms }
+        };
+
+        const { endpoint, callback } = config[tag];
+
+        try {
+            if (type === "Adicionar") {
+                await instance.post(endpoint, data);
+            } else {
+                await instance.put(`${endpoint}/${id}`, data);
+            }
+
+            callback();
+            closeModal();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+
+        if (paymentCategory.open) {
+            reset({
+                titulo: paymentCategory.item?.titulo ?? '',
+                cor: paymentCategory.item?.cor ?? '#B3B3B3',
+                status: paymentCategory.item?.status === 1
+                    ? true
+                    : paymentCategory.item?.status ?? true,
+            });
+        }
+        console.log(paymentCategory.item)
+    }, [paymentCategory.open])
+
     return (
         <ModalBase
             header={{
@@ -24,25 +74,30 @@ export default function ModalPaymentCategory() {
             }}
             isOpen={paymentCategory.open}
             onClose={closeModal}
-        >
+            onSubmit={handleSubmit(addEditPaymentCategory)}
 
+        >
             <div className="item-form">
                 <label htmlFor="title" className="label">Titulo</label>
                 <input className="input" type="text" id="title" required placeholder={`Digite o título da ${paymentCategory.tag}`}
+                    {...register("titulo")}
                 />
-            </div>
-
-            <div className="item-form">
-                <label className="label" htmlFor="status">Status</label>
-                <div className="horizontal-align gap1 fx-wrap bg-gray-700 w100 p1 br">
-                    <CardCategory color="var(--red-1000)" title="Indisponível" />
-                    <CardCategory color="var(--green-1000)" title="disponível" />
-                </div>
+                {errors.cor && <span className="span-message error">{errors.cor?.message}</span>}
             </div>
 
             <div className="item-form">
                 <label className="label" htmlFor="color">Cor:</label>
-                <input className="color-input" type="color" id="color" required />
+                <input className="color-input" type="color" id="color" required
+                    {...register("cor")}
+                />
+                {errors.cor && <span className="span-message error">{errors.cor?.message}</span>}
+            </div>
+
+            <div className="horizontal-align ai-center gap1 jc-end">
+                <label htmlFor="status" className="label">Disponível</label>
+                <input className="input" type="checkbox" id="status"
+                    {...register("status")}
+                />
             </div>
 
             <button type="submit" className="button">{paymentCategory.type}</button>

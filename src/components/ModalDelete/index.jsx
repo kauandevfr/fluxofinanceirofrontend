@@ -3,7 +3,6 @@ import ModalBase from '../ModalBase';
 import './style.scss';
 import instance from '../../utilities/instance';
 import { useExpenseContext } from "../../providers/expenseContext"
-import CheckBoxC from "../../components/CheckboxC"
 
 export default function ModalDelete() {
 
@@ -27,7 +26,7 @@ export default function ModalDelete() {
             despesa: { endpoint: `/cobranca/${id}`, callback: listingExpenses },
             // renda: { endpoint: `/renda/${id}`, callback: listarRendas },
             categoria: { endpoint: `/categoria/${id}`, callback: listingCategories },
-            formapagamento: { endpoint: `/formapagamento/${id}`, callback: listingPaymentForms },
+            "forma de pagamento": { endpoint: `/formapagamento/${id}`, callback: listingPaymentForms },
             banco: { endpoint: `/instituicaofinanceira/${id}`, callback: listingBanks },
         };
 
@@ -54,7 +53,6 @@ export default function ModalDelete() {
             onSubmit={(e) => deleteItem(e, deleteModal.item.id)}
         >
             <h2 className="form-subtitle">Esta ação excluirá permanentemente o(a) {deleteModal.type} selecionado(a) e não poderá ser desfeita.</h2>
-            <CheckBoxC />
             <div className="horizontal-align gap1 w100">
                 <button className="button w100 bg-gray-500" type="button" onClick={closeModal}>Cancelar</button>
                 <button className="button bg-gradient-red w100" type="submit">Excluir</button>

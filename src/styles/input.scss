@@ -40,3 +40,39 @@
     border: none;
     border-radius: 8px;
 }
+
+.input[type="checkbox"] {
+    width: fit-content;
+    height: fit-content;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    background-color: var(--gray-600);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.input[type="checkbox"]:checked {
+    background-color: var(--main-800);
+}
+
+.input[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 5px;
+    border-left: 2px solid var(--gray-800);
+    border-bottom: 2px solid var(--gray-800);
+    transform: rotate(-45deg) scale(0);
+    top: 9px;
+    left: 8px;
+    transition: transform 0.2s ease;
+}
+
+.input[type="checkbox"]:checked::after {
+    transform: rotate(-45deg) scale(1);
+}

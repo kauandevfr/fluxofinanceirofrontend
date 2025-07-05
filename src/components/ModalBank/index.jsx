@@ -52,7 +52,6 @@ export default function ModalBank() {
                 cor: bankModal.item?.cor ?? '#B3B3B3',
                 status: bankModal.item?.status === 1 ? true : false,
             });
-            console.log(bankModal.item)
         }
     }, [bankModal.open]);
 
