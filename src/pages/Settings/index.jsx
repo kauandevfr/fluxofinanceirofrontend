@@ -13,7 +13,7 @@ import ModalPaymentCategory from "../../components/ModalPaymentCategory";
 export default function Settings() {
   const [content, setContent] = useState('categories')
 
-  const { categories, listingCategories, paymentForms, listingPaymentForms, banks, listingBanks, setModalBank, setPaymentCategory } = useExpenseContext()
+  const { categories, listingCategories, paymentForms, listingPaymentForms, banks, listingBanks, setBankModal, setPaymentCategory } = useExpenseContext()
 
   const { currentMonthYear, queryParams, setDeleteModal } = useGlobalContext()
 
@@ -40,8 +40,8 @@ export default function Settings() {
       title: "Bancos",
       getSubtitle: (items) => `${items.length} bancos cadastrados`,
       items: banks,
-      onAdd: () => setModalBank({ open: true, item: {}, type: "Adicionar" }),
-      onEdit: (el) => setModalBank({ open: true, item: el, type: "Editar" }),
+      onAdd: () => setBankModal({ open: true, item: {}, type: "Adicionar" }),
+      onEdit: (el) => setBankModal({ open: true, item: el, type: "Editar" }),
       onDelete: (id) => setDeleteModal({ open: true, type: "banco", id }),
     }
   };

@@ -20,7 +20,7 @@ export const ExpenseContextProvider = ({ children }) => {
 
     const [expenses, setExpenses] = useState(initialListing)
 
-    const [bankModal, setModalBank] = useState({
+    const [bankModal, setBankModal] = useState({
         open: false,
         type: "Adicionar",
         item: {}
@@ -116,7 +116,7 @@ export const ExpenseContextProvider = ({ children }) => {
             banks,
 
             bankModal,
-            setModalBank,
+            setBankModal,
 
             paymentCategory,
             setPaymentCategory

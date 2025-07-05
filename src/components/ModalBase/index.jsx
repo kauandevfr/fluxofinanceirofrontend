@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import './style.scss';
 import { useEffect } from "react";
 
-export default function ModalBase({ header, children, isOpen, onClose }) {
+export default function ModalBase({ header, children, isOpen, onClose, onSubmit }) {
 
     useEffect(() => {
         document.documentElement.style.overflow = isOpen ? 'hidden' : '';
@@ -38,7 +38,7 @@ export default function ModalBase({ header, children, isOpen, onClose }) {
                             </button>
                         </header>
                         <form className="vertical-align p2 gap2"
-                        // onSubmit={{}}
+                            onSubmit={onSubmit}
                         >
                             {children}
                         </form>
