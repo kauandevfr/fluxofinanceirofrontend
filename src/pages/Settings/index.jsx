@@ -26,7 +26,7 @@ export default function Settings() {
       items: categories,
       onAdd: () => setPaymentCategory({ open: true, type: "Adicionar", item: {}, tag: "categoria" }),
       onEdit: (el) => setPaymentCategory({ open: true, type: "Atualizar", item: el, tag: "categoria" }),
-      onDelete: (id) => setDeleteModal({ open: true, type: "categoria", id }),
+      onDelete: (el) => setDeleteModal({ open: true, type: "categoria", item: el }),
     },
     paymentForms: {
       title: "Formas de pagamento",
@@ -34,7 +34,7 @@ export default function Settings() {
       items: paymentForms,
       onAdd: () => setPaymentCategory({ open: true, type: "Adicionar", item: {}, tag: "forma de pagamento" }),
       onEdit: (el) => setPaymentCategory({ open: true, type: "Atualizar", item: el, tag: "forma de pagamento" }),
-      onDelete: (id) => setDeleteModal({ open: true, type: "forma de pagamento", id }),
+      onDelete: (el) => setDeleteModal({ open: true, type: "forma de pagamento", item: el }),
     },
     banks: {
       title: "Bancos",
@@ -42,7 +42,7 @@ export default function Settings() {
       items: banks,
       onAdd: () => setBankModal({ open: true, item: {}, type: "Adicionar" }),
       onEdit: (el) => setBankModal({ open: true, item: el, type: "Editar" }),
-      onDelete: (id) => setDeleteModal({ open: true, type: "banco", id }),
+      onDelete: (el) => setDeleteModal({ open: true, type: "banco", item: el }),
     }
   };
 
