@@ -54,6 +54,7 @@ export default function Container({ children, amount }) {
         listingExpenses()
         listingResume()
 
+        console.log(resume)
     }, [])
     return (
         <main>

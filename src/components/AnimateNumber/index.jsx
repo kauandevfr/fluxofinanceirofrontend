@@ -3,14 +3,14 @@ import gsap from "gsap";
 import Skeleton from "../Skeleton";
 import { useGlobalContext } from "../../providers/globalContext";
 
-export default function AnimatedNumber() {
+export default function AnimatedNumber({ value }) {
     const numberRef = useRef();
     const { resume } = useGlobalContext();
 
     useEffect(() => {
         if (resume.loading) return;
 
-        const finalValue = parseFloat(resume.somaCobrancas.valor) || 0;
+        const finalValue = parseFloat(value) || 0;
         const obj = { val: 0 };
 
         const formatBRL = (val) => {
