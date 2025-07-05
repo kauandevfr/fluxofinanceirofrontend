@@ -66,24 +66,6 @@ export default function Expenses() {
             </svg>
             Filtros
           </button>
-          <button className="button" type="button">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 20C7.58172 20 4 16.4183 4 12M20 12C20 14.5264 18.8289 16.7792 17 18.2454"
-                stroke="var(--white)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M12 14L12 4M12 4L15 7M12 4L9 7"
-                stroke="var(--white)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Exportar para PDF
-          </button>
         </div>
       </div>
       <input className="input" type="text" placeholder="Pesquise por titulo" />
