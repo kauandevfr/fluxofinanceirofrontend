@@ -79,7 +79,7 @@ export default function Dashboard() {
                     </div>
                   </li>
                 )
-              }) : <WithoutListing tag="categorie" />}
+              }) : <WithoutListing tag="category" />}
           </ul>
           <ul className="resume__item">
             <header>
