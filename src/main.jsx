@@ -7,6 +7,7 @@ import { GlobalContextProvider } from './providers/globalContext'
 import { ExpenseContextProvider } from './providers/expenseContext'
 import { IncomeContextProvider } from './providers/incomeContext'
 import { UserContextProvider } from './providers/userContext'
+import RouteObserver from './components/RouteObserver'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <IncomeContextProvider>
                         <UserContextProvider>
                             <MainRoutes />
+                            <RouteObserver />
                         </UserContextProvider>
                     </IncomeContextProvider>
                 </ExpenseContextProvider>

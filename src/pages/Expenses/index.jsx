@@ -21,7 +21,7 @@ export default function Expenses() {
   const { query } = queryParams()
 
   const sortExpenses = (tag) => {
-    const currentOrder = query.get('order') || 'desc';
+    const currentOrder = query.get('ordem') || 'desc';
     const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
     query.set('ordem', newOrder);
     query.set('ordenarPor', tag);
@@ -31,6 +31,8 @@ export default function Expenses() {
   useEffect(() => {
     listingCategories()
     listingPaymentForms()
+
+
     document.title = "Despesas | Fluxo Financeiro";
   }, [])
 
