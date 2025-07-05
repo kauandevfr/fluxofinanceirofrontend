@@ -12,11 +12,21 @@ import { fromZonedTime } from "date-fns-tz";
 
 
 export default function Expenses() {
-  const { currentMonthYear, setDeleteModal } = useGlobalContext()
+  const { currentMonthYear, setDeleteModal, redirect, queryParams } = useGlobalContext()
   const { expenses, setExpenseModal } = useExpenseContext()
   const { listingCategories, listingPaymentForms } = useExpenseContext()
 
   const { mes, ano } = currentMonthYear()
+
+  const { query } = queryParams()
+
+  const sortExpenses = (tag) => {
+    const currentOrder = query.get('order') || 'desc';
+    const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+    query.set('ordem', newOrder);
+    query.set('ordenarPor', tag);
+    redirect(`/expenses/?${query.toString()}`);
+  };
 
   useEffect(() => {
     listingCategories()
@@ -78,37 +88,43 @@ export default function Expenses() {
       <header className="list-header">
         <div className="list-cell">
           <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+            onClick={() => sortExpenses("titulo")}
           />
           <h1 className="list-row__title">Titulo</h1>
         </div>
         <div className="list-cell">
           <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+            onClick={() => sortExpenses("formapagamento")}
           />
           <h1 className="list-row__title">Pagamento</h1>
         </div>
         <div className="list-cell">
           <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+            onClick={() => sortExpenses("categoria")}
           />
           <h1 className="list-row__title">Categoria</h1>
         </div>
         <div className="list-cell">
           <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+            onClick={() => sortExpenses("status")}
           />
           <h1 className="list-row__title">Status</h1>
         </div>
         <div className="list-cell">
           <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+            onClick={() => sortExpenses("preco")}
           />
           <h1 className="list-row__title">Valor</h1>
         </div>
         <div className="list-cell">
           <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+            onClick={() => sortExpenses("datainclusao")}
+          />
+          <h1 className="list-row__title">Inclusão</h1>
+        </div>
+        <div className="list-cell">
+          <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
+            onClick={() => sortExpenses("datavencimento")}
           />
           <h1 className="list-row__title">Vencimento</h1>
         </div>
@@ -120,6 +136,7 @@ export default function Expenses() {
         {expenses.loading ? <Skeleton /> : expenses.items.length ?
           expenses.items.map(element => {
             const formattedDueDate = element.datavencimento ? format(fromZonedTime(element.datavencimento, "America/Sao_Paulo"), "dd/MM/yyyy") : 'Não consta'
+            const formattedInclusionDate = format(fromZonedTime(element.datainclusao, "America/Sao_Paulo"), "dd/MM/yyyy")
             return (
               <li className="list-row w100" key={element.id}>
                 <div className="list-cell">
@@ -136,6 +153,9 @@ export default function Expenses() {
                 </div>
                 <div className="list-cell">
                   <h1 className="list-row__title">{element.precoBR}</h1>
+                </div>
+                <div className="list-cell">
+                  <h1 className="list-row__title">{formattedInclusionDate}</h1>
                 </div>
                 <div className="list-cell">
                   <h1 className="list-row__title">{formattedDueDate}</h1>
