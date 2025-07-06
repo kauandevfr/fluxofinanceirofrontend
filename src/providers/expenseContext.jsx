@@ -20,6 +20,8 @@ export const ExpenseContextProvider = ({ children }) => {
 
     const [expenses, setExpenses] = useState(initialListing)
 
+    const [filtersModal, setFiltersModal] = useState(false)
+
     const [bankModal, setBankModal] = useState({
         open: false,
         type: "Adicionar",
@@ -119,7 +121,10 @@ export const ExpenseContextProvider = ({ children }) => {
             setBankModal,
 
             paymentCategory,
-            setPaymentCategory
+            setPaymentCategory,
+
+            filtersModal,
+            setFiltersModal
         }}>
             {children}
         </ExpenseContext.Provider>

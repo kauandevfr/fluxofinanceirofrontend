@@ -53,8 +53,6 @@ export default function Container({ children, amount }) {
         listingIncomes()
         listingExpenses()
         listingResume()
-
-        console.log(resume)
     }, [])
     return (
         <main>

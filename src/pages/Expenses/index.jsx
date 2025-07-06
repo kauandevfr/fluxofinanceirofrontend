@@ -9,12 +9,13 @@ import WithoutListing from "../../components/WithoutListing";
 import Skeleton from "../../components/Skeleton";
 import { format } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
+import ModalFilters from "../../components/ModalFilters";
 
 
 export default function Expenses() {
   const { currentMonthYear, setDeleteModal, redirect, queryParams } = useGlobalContext()
   const { expenses, setExpenseModal } = useExpenseContext()
-  const { listingCategories, listingPaymentForms } = useExpenseContext()
+  const { listingCategories, listingPaymentForms, setFiltersModal } = useExpenseContext()
 
   const { mes, ano } = currentMonthYear()
 
@@ -55,7 +56,9 @@ export default function Expenses() {
             </svg>
             Adicionar despesa
           </button>
-          <button className="button" type="button">
+          <button className="button" type="button"
+            onClick={() => setFiltersModal(true)}
+          >
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 fillRule="evenodd"
@@ -157,6 +160,7 @@ export default function Expenses() {
           }) : <WithoutListing tag="expense" />}
       </ul>
 
+      <ModalFilters />
     </Container>
   );
 }
