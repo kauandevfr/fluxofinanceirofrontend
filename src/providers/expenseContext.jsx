@@ -52,7 +52,7 @@ export const ExpenseContextProvider = ({ children }) => {
         setExpenses(initialListing)
         try {
             const { data } = await instance.get(`/cobrancas?${query.toString()}`)
-            setExpenses({ loading: false, items: data.map(element => { return { ...element, selected: false } }) })
+            setExpenses({ loading: false, items: data })
 
         } catch (error) {
             console.error(error)

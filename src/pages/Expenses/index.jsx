@@ -27,6 +27,24 @@ export default function Expenses() {
 
   const [search, setSearch] = useState('')
 
+  const [selected, setSelected] = useState([])
+
+  const allSelected = selected.length === expenses.items.length
+
+  const toggleItem = (id) => {
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const toggleAll = () => {
+    if (allSelected) {
+      setSelected([]);
+    } else {
+      setSelected(expenses.items.map((item) => item.id));
+    }
+  };
+
   const sortExpenses = (tag) => {
     const currentOrder = query.get('ordem') || 'desc';
     const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
@@ -107,6 +125,10 @@ export default function Expenses() {
       </form>
       <header className="list-header">
         <div className="list-cell">
+          <input className="input" type="checkbox" id="status"
+            checked={allSelected}
+            onChange={toggleAll}
+          />
           <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
             onClick={() => sortExpenses("titulo")}
           />
@@ -167,6 +189,9 @@ export default function Expenses() {
                 transition={{ delay: index * 0.05, duration: 0.5 }}
               >
                 <div className="list-cell">
+                  <input className="input" type="checkbox" id="status" onChange={() => toggleItem(element.id)}
+                    checked={selected.includes(element.id)}
+                  />
                   <h1 className="list-row__title">{element.titulo}</h1>
                 </div>
                 <div className="list-cell">
@@ -199,7 +224,7 @@ export default function Expenses() {
             )
           }) : <WithoutListing tag="expense" />}
       </ul>
-      {expenses.items.length > 0 && (
+      {expenses.items.length > 5 && (
         <div className="center-align">
           {visibleItems < expenses.items.length ?
             <button className="button bg-gray-700" type="button" onClick={showMoreItems}>

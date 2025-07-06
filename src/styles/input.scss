@@ -42,8 +42,8 @@
 }
 
 .input[type="checkbox"] {
-    width: fit-content;
-    height: fit-content;
+    width: 10px;
+    height: 10px;
 
     -webkit-appearance: none;
     appearance: none;
@@ -63,7 +63,7 @@
 .input[type="checkbox"]::after {
     content: "";
     position: absolute;
-    width: 10px;
+    width: 8px;
     height: 5px;
     border-left: 2px solid var(--gray-800);
     border-bottom: 2px solid var(--gray-800);
