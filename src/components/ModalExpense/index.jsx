@@ -12,6 +12,7 @@ import ModalBase from '../ModalBase';
 import Skeleton from '../Skeleton';
 import WithoutListing from '../WithoutListing';
 import './style.scss';
+import { format } from 'date-fns';
 
 export default function ModalExpense() {
     const { expenseModal, setExpenseModal, categories, paymentForms, listingExpenses } = useExpenseContext();
@@ -65,31 +66,26 @@ export default function ModalExpense() {
         const { mes, ano } = objQuery
         const preco = parseFloat((data.preco?.toString().replace(/\D/g, '') || '0')) / 100;
         const status = data.status === true ? 1 : 0;
-
         try {
             const payload = { ...data, status, preco, mes, ano };
             const endpoint = "/cobranca";
             const method = isAdding === "Adicionar" ? "post" : "put";
             const url = isAdding === "Adicionar" ? endpoint : `${endpoint}/${expenseModal.item?.id}`;
             await instance[method](url, payload);
-
             listingExpenses()
             closeModal();
         } catch (error) {
             console.error("Erro ao salvar despesa:", error);
         }
     };
-
     const closeModal = () => {
         setExpenseModal({ open: false, type: "", item: {} })
         reset()
     }
-
     useEffect(() => {
         const precoBruto = watch("preco") || "";
         setReal(formatCurrency(precoBruto.toString()));
     }, [watch("preco")]);
-
     useEffect(() => {
         if (expenseModal.open) {
             const getItem = (path, fallback) => get(expenseModal, `item.${path}`, fallback);
@@ -101,7 +97,7 @@ export default function ModalExpense() {
                 categoria: getItem('categoria.id', ''),
                 observacao: getItem('observacao', ''),
                 preco: getItem('precoBR', ''),
-                datainclusao: formatDate(getItem('datainclusao', '')),
+                datainclusao: formatDate(getItem('datainclusao', format(new Date(), 'yyyy-MM-dd'))),
                 datavencimento: formatDate(getItem('datavencimento', '')),
                 status: getItem('status') === 1 ? true : getItem('status', true),
                 parcelas: 0
@@ -109,7 +105,6 @@ export default function ModalExpense() {
             });
         }
     }, [expenseModal.open]);
-
     return (
         <ModalBase
             isOpen={expenseModal.open}
@@ -206,7 +201,9 @@ export default function ModalExpense() {
                 {errors.preco && <span className="span-message error">{errors.preco?.message}</span>}
             </div>
             <div className="item-form">
-                <label className="label" htmlFor="overduedate" >Data de vencimento</label>
+                <label className="label" htmlFor="overduedate"
+                    onClick={() => console.log(watch("datavencimento"))}
+                >Data de vencimento</label>
                 <input className="input" type="date" id="overduedate"
                     {...register("datavencimento")}
                 />

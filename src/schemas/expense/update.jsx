@@ -25,10 +25,11 @@ const updateExpense = Yup.object().shape({
     datainclusao: Yup.date()
         .nullable(),
 
-    datavencimento: Yup.date()
+    datavencimento: Yup
+        .date()
         .nullable()
-        .transform((_, val) => val === '' ? null : val)
-        .typeError('Data de vencimento inválida'),
+        .transform((value, originalValue) => (originalValue === "" ? null : value))
+        .typeError("A data de vencimento informada é inválida. Por favor, insira uma data no formato correto."),
 
     status: Yup.boolean()
         .typeError('Status deve ser verdadeiro ou falso')
