@@ -1,0 +1,42 @@
+.actions {
+    position: fixed;
+    right: 3rem;
+    bottom: 3rem;
+    width: 340px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.actions__content {
+    max-height: 25rem;
+    overflow-y: auto;
+}
+
+.actions__header {
+    border-bottom: var(--border-standard);
+}
+
+.actions__content-buttons {
+
+    border-top: var(--border-standard);
+}
+
+.actions__content-buttons .button {
+    padding: .6rem !important;
+    font-size: 1.4rem;
+}
+
+.actions__content-row {
+    padding: 1rem;
+}
+
+
+
+.actions__content-row-title {
+    font-size: 1.6rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.actions__content-row-subtitle {}

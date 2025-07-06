@@ -10,7 +10,8 @@ import Skeleton from "../../components/Skeleton";
 import { format } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
 import ModalFilters from "../../components/ModalFilters";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import ModalActions from "../../components/ModalActions";
 
 export default function Expenses() {
   const { currentMonthYear, setDeleteModal, redirect, queryParams } = useGlobalContext()
@@ -31,17 +32,31 @@ export default function Expenses() {
 
   const allSelected = selected.length === expenses.items.length
 
-  const toggleItem = (id) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
+  const toggleItem = (item) => {
+    setSelected((prev) => {
+      const exists = prev.find((el) => el.id === item.id);
+      if (exists) {
+        return prev.filter((el) => el.id !== item.id);
+      } else {
+        return [...prev, {
+          id: item.id,
+          title: item.titulo,
+          price: item.precoBR
+        }];
+      }
+    });
   };
+
 
   const toggleAll = () => {
     if (allSelected) {
       setSelected([]);
     } else {
-      setSelected(expenses.items.map((item) => item.id));
+      setSelected(expenses.items.map(item => ({
+        id: item.id,
+        title: item.titulo,
+        price: item.precoBR
+      })));
     }
   };
 
@@ -80,165 +95,179 @@ export default function Expenses() {
   }, [])
 
   return (
-    <Container amount={1}>
-      <div className="horizontal-align jc-between ">
-        <Link className="button" to={`/dashboard/?mes=${mes}&ano=${ano}`}>Painel</Link>
-        <div className="horizontal-align gap2">
-          <button className="button" type="button" onClick={() => setExpenseModal({ open: true, item: {}, type: "Adicionar" })}>
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g id="Edit / Add_Plus_Circle">
-                <path
-                  d="M8 12H12M12 12H16M12 12V16M12 12V8M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
-                  stroke="var(--white)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </g>
-            </svg>
-            Adicionar despesa
-          </button>
-          <button className="button" type="button"
-            onClick={() => setFiltersModal(true)}
-          >
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"
-                fill="var(--white)"
-              />
-            </svg>
-            Filtros
-          </button>
-        </div>
-      </div>
-      <form className="w100" onSubmit={(e) => searchExpense(e)}  >
-        <input
-          className="input"
-          id="pesquisa"
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Pesquisa por titulo..."
-        />
-      </form>
-      <header className="list-header">
-        <div className="list-cell">
-          <input className="input" type="checkbox" id="status"
-            checked={allSelected}
-            onChange={toggleAll}
-          />
-          <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-            onClick={() => sortExpenses("titulo")}
-          />
-          <h1 className="list-row__title">Titulo</h1>
-        </div>
-        <div className="list-cell">
-          <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-            onClick={() => sortExpenses("formapagamento")}
-          />
-          <h1 className="list-row__title">Pagamento</h1>
-        </div>
-        <div className="list-cell">
-          <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-            onClick={() => sortExpenses("categoria")}
-          />
-          <h1 className="list-row__title">Categoria</h1>
-        </div>
-        <div className="list-cell">
-          <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-            onClick={() => sortExpenses("status")}
-          />
-          <h1 className="list-row__title">Status</h1>
-        </div>
-        <div className="list-cell">
-          <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-            onClick={() => sortExpenses("preco")}
-          />
-          <h1 className="list-row__title">Valor</h1>
-        </div>
-        <div className="list-cell">
-          <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-            onClick={() => sortExpenses("datainclusao")}
-          />
-          <h1 className="list-row__title">Inclusão</h1>
-        </div>
-        <div className="list-cell">
-          <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-            onClick={() => sortExpenses("datavencimento")}
-          />
-          <h1 className="list-row__title">Vencimento</h1>
-        </div>
-        <div className="list-cell jc-center">
-          <h1 className="list-row__title">Editar ou excluir</h1>
-        </div>
-      </header>
-      <ul className="vertical-align gap2">
-        {expenses.loading ? <Skeleton /> : expenses.items.length ?
-          expenses.items.slice(0, visibleItems).map((element, index) => {
-            const formattedDueDate = element.datavencimento ? format(fromZonedTime(element.datavencimento, "America/Sao_Paulo"), "dd/MM/yyyy") : 'Não consta'
-            const formattedInclusionDate = format(fromZonedTime(element.datainclusao, "America/Sao_Paulo"), "dd/MM/yyyy")
-            return (
-              <motion.li
-                key={element.id}
-                className="list-row w100"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: index * 0.05, duration: 0.5 }}
-              >
-                <div className="list-cell">
-                  <input className="input" type="checkbox" id="status" onChange={() => toggleItem(element.id)}
-                    checked={selected.includes(element.id)}
+    <>
+      <Container>
+        <div className="horizontal-align jc-between ">
+          <Link className="button" to={`/dashboard/?mes=${mes}&ano=${ano}`}>Painel</Link>
+          <div className="horizontal-align gap2">
+            <button className="button" type="button" onClick={() => setExpenseModal({ open: true, item: {}, type: "Adicionar" })}>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Edit / Add_Plus_Circle">
+                  <path
+                    d="M8 12H12M12 12H16M12 12V16M12 12V8M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+                    stroke="var(--white)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
-                  <h1 className="list-row__title">{element.titulo}</h1>
-                </div>
-                <div className="list-cell">
-                  <CardCategory title={element.formapagamento.titulo} color={element.formapagamento.cor} />
-                </div>
-                <div className="list-cell">
-                  <CardCategory title={element.categoria.titulo} color={element.categoria.cor} />
-                </div>
-                <div className="list-cell">
-                  <CardCategory title={element.status == 1 ? "Pago" : "Não pago"} color={element.status == 1 ? "var(--green-1000)" : "var(--red-1000)"} />
-                </div>
-                <div className="list-cell">
-                  <h1 className="list-row__title">{element.precoBR}</h1>
-                </div>
-                <div className="list-cell">
-                  <h1 className="list-row__title">{formattedInclusionDate}</h1>
-                </div>
-                <div className="list-cell">
-                  <h1 className="list-row__title">{formattedDueDate}</h1>
-                </div>
-                <div className="list-cell gap4 jc-center">
-                  <button type="button" onClick={() => setExpenseModal({ open: true, item: element, type: "Editar" })}>
-                    <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
-                  </button>
-                  <button type="button" onClick={() => setDeleteModal({ open: true, item: element, type: "despesa" })}>
-                    <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
-                  </button>
-                </div>
-              </motion.li>
-            )
-          }) : <WithoutListing tag="expense" />}
-      </ul>
-      {expenses.items.length > 5 && (
-        <div className="center-align">
-          {visibleItems < expenses.items.length ?
-            <button className="button bg-gray-700" type="button" onClick={showMoreItems}>
-              Mostrar mais
+                </g>
+              </svg>
+              Adicionar despesa
             </button>
-            :
-            <button className="button bg-gray-700" type="button" onClick={() => setVisibleItems(minVisible)}>
-              Mostrar menos
+            <button className="button" type="button"
+              onClick={() => setFiltersModal(true)}
+            >
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"
+                  fill="var(--white)"
+                />
+              </svg>
+              Filtros
             </button>
-          }
+          </div>
         </div>
-      )}
-
-      <ModalFilters />
-    </Container >
+        <form className="w100" onSubmit={(e) => searchExpense(e)}  >
+          <input
+            className="input"
+            id="pesquisa"
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Pesquisa por titulo..."
+          />
+        </form>
+        <header className="list-header">
+          <div className="list-cell">
+            <input className="input" type="checkbox" id="status"
+              checked={allSelected}
+              onChange={toggleAll}
+            />
+            <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
+              onClick={() => sortExpenses("titulo")}
+            />
+            <h1 className="list-row__title">Titulo</h1>
+          </div>
+          <div className="list-cell">
+            <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
+              onClick={() => sortExpenses("formapagamento")}
+            />
+            <h1 className="list-row__title">Pagamento</h1>
+          </div>
+          <div className="list-cell">
+            <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
+              onClick={() => sortExpenses("categoria")}
+            />
+            <h1 className="list-row__title">Categoria</h1>
+          </div>
+          <div className="list-cell">
+            <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
+              onClick={() => sortExpenses("status")}
+            />
+            <h1 className="list-row__title">Status</h1>
+          </div>
+          <div className="list-cell">
+            <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
+              onClick={() => sortExpenses("preco")}
+            />
+            <h1 className="list-row__title">Valor</h1>
+          </div>
+          <div className="list-cell">
+            <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
+              onClick={() => sortExpenses("datainclusao")}
+            />
+            <h1 className="list-row__title">Inclusão</h1>
+          </div>
+          <div className="list-cell">
+            <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
+              onClick={() => sortExpenses("datavencimento")}
+            />
+            <h1 className="list-row__title">Vencimento</h1>
+          </div>
+          <div className="list-cell jc-center">
+            <h1 className="list-row__title">Editar ou excluir</h1>
+          </div>
+        </header>
+        <ul className="vertical-align gap2">
+          {expenses.loading ? <Skeleton /> : expenses.items.length ?
+            expenses.items.slice(0, visibleItems).map((element, index) => {
+              const formattedDueDate = element.datavencimento ? format(fromZonedTime(element.datavencimento, "America/Sao_Paulo"), "dd/MM/yyyy") : 'Não consta'
+              const formattedInclusionDate = format(fromZonedTime(element.datainclusao, "America/Sao_Paulo"), "dd/MM/yyyy")
+              return (
+                <motion.li
+                  key={element.id}
+                  className="list-row w100"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.5 }}
+                >
+                  <div className="list-cell">
+                    <input className="input" type="checkbox" id="status"
+                      checked={selected.some((el) => el.id === element.id)}
+                      onChange={() => toggleItem(element)}
+                    />
+                    <h1 className="list-row__title">{element.titulo}</h1>
+                  </div>
+                  <div className="list-cell">
+                    <CardCategory title={element.formapagamento.titulo} color={element.formapagamento.cor} />
+                  </div>
+                  <div className="list-cell">
+                    <CardCategory title={element.categoria.titulo} color={element.categoria.cor} />
+                  </div>
+                  <div className="list-cell">
+                    <CardCategory title={element.status == 1 ? "Pago" : "Não pago"} color={element.status == 1 ? "var(--green-1000)" : "var(--red-1000)"} />
+                  </div>
+                  <div className="list-cell">
+                    <h1 className="list-row__title">{element.precoBR}</h1>
+                  </div>
+                  <div className="list-cell">
+                    <h1 className="list-row__title">{formattedInclusionDate}</h1>
+                  </div>
+                  <div className="list-cell">
+                    <h1 className="list-row__title">{formattedDueDate}</h1>
+                  </div>
+                  <div className="list-cell gap4 jc-center">
+                    <button type="button" onClick={() => setExpenseModal({ open: true, item: element, type: "Editar" })}>
+                      <img src="https://fluxofinanceiro.site/assets/editar.png" alt="edit icon" />
+                    </button>
+                    <button type="button" onClick={() => setDeleteModal({ open: true, item: element, type: "despesa" })}>
+                      <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
+                    </button>
+                  </div>
+                </motion.li>
+              )
+            }) : <WithoutListing tag="expense" />}
+        </ul>
+        {expenses.items.length > 5 && (
+          <div className="center-align">
+            {visibleItems < expenses.items.length ?
+              <button className="button bg-gray-700" type="button" onClick={showMoreItems}>
+                Mostrar mais
+              </button>
+              :
+              <button className="button bg-gray-700" type="button" onClick={() => setVisibleItems(minVisible)}>
+                Mostrar menos
+              </button>
+            }
+          </div>
+        )}
+        <ModalFilters />
+      </Container >
+      <AnimatePresence>
+        {selected.length > 0 && (
+          <motion.div
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 100, opacity: 0 }}
+          // transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+          >
+            <ModalActions selected={selected} setSelected={setSelected} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
