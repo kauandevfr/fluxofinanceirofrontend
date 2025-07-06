@@ -31,9 +31,11 @@ const registerExpense = Yup.object().shape({
         .typeError('Data de inclusão inválida')
         .required('A data de inclusão é obrigatória'),
 
-    datavencimento: Yup.date()
-        .typeError('Data de vencimento inválida')
-        .nullable(),
+    datavencimento: Yup
+        .date()
+        .nullable()
+        .transform((value, originalValue) => (originalValue === "" ? null : value))
+        .typeError("A data de vencimento informada é inválida. Por favor, insira uma data no formato correto."),
 
     status: Yup.boolean()
         .required('O status é obrigatório')
