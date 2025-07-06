@@ -117,7 +117,7 @@ export default function WithoutListing({ tag }) {
     }
 
     return (
-        <div class="no-items br p4 center-align bg-gray-700">
+        <div className="no-items br p4 center-align bg-gray-700">
             {(configs[tag]?.icon || fallback.icon)}
             <span className="text-2xl text-gray-500 text-center"> {configs[tag]?.title || fallback.title}</span>
         </div>

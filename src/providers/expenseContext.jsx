@@ -41,6 +41,12 @@ export const ExpenseContextProvider = ({ children }) => {
         item: {}
     })
 
+    const [addInModal, setAddInModal] = useState({
+        open: false,
+        mes: "",
+        ano: ""
+    })
+
     const { queryParams } = useGlobalContext()
 
     const listingExpenses = async () => {
@@ -128,7 +134,10 @@ export const ExpenseContextProvider = ({ children }) => {
             setPaymentCategory,
 
             filtersModal,
-            setFiltersModal
+            setFiltersModal,
+
+            addInModal,
+            setAddInModal
         }}>
             {children}
         </ExpenseContext.Provider>

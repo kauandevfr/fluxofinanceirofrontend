@@ -12,6 +12,7 @@ import { fromZonedTime } from "date-fns-tz";
 import ModalFilters from "../../components/ModalFilters";
 import { AnimatePresence, motion } from "framer-motion";
 import ModalActions from "../../components/ModalActions";
+import ModalAddIn from "../../components/ModalAddIn";
 
 export default function Expenses() {
   const { currentMonthYear, setDeleteModal, redirect, queryParams } = useGlobalContext()
@@ -38,11 +39,7 @@ export default function Expenses() {
       if (exists) {
         return prev.filter((el) => el.id !== item.id);
       } else {
-        return [...prev, {
-          id: item.id,
-          title: item.titulo,
-          price: item.precoBR
-        }];
+        return [...prev, item];
       }
     });
   };
@@ -52,11 +49,7 @@ export default function Expenses() {
     if (allSelected) {
       setSelected([]);
     } else {
-      setSelected(expenses.items.map(item => ({
-        id: item.id,
-        title: item.titulo,
-        price: item.precoBR
-      })));
+      setSelected(expenses.items);
     }
   };
 
@@ -193,6 +186,7 @@ export default function Expenses() {
         <ul className="vertical-align gap2">
           {expenses.loading ? <Skeleton /> : expenses.items.length ?
             expenses.items.slice(0, visibleItems).map((element, index) => {
+              const select = selected.some((el) => el.id === element.id)
               const formattedDueDate = element.datavencimento ? format(fromZonedTime(element.datavencimento, "America/Sao_Paulo"), "dd/MM/yyyy") : 'Não consta'
               const formattedInclusionDate = format(fromZonedTime(element.datainclusao, "America/Sao_Paulo"), "dd/MM/yyyy")
               return (
@@ -203,10 +197,11 @@ export default function Expenses() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.5 }}
+                  style={{ borderLeft: select && '.4rem solid var(--main-500)' }}
                 >
                   <div className="list-cell">
                     <input className="input" type="checkbox" id="status"
-                      checked={selected.some((el) => el.id === element.id)}
+                      checked={select}
                       onChange={() => toggleItem(element)}
                     />
                     <h1 className="list-row__title">{element.titulo}</h1>

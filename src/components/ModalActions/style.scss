@@ -12,15 +12,6 @@
     overflow-y: auto;
 }
 
-.actions__header {
-    border-bottom: var(--border-standard);
-}
-
-.actions__content-buttons {
-
-    border-top: var(--border-standard);
-}
-
 .actions__content-buttons .button {
     padding: .6rem !important;
     font-size: 1.4rem;
@@ -30,8 +21,6 @@
     padding: 1rem;
 }
 
-
-
 .actions__content-row-title {
     font-size: 1.6rem;
     overflow: hidden;
@@ -39,4 +28,12 @@
     font-weight: 500;
 }
 
-.actions__content-row-subtitle {}
+.actions__header-buttons button {
+    background-color: var(--gray-700);
+    border-radius: var(--b-radius);
+    padding: .6rem;
+}
+
+.actions__header-buttons button img {
+    width: 2rem;
+}
