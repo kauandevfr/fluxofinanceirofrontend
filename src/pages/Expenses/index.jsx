@@ -10,6 +10,7 @@ import Skeleton from "../../components/Skeleton";
 import { format } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
 import ModalFilters from "../../components/ModalFilters";
+import { motion } from "framer-motion";
 
 export default function Expenses() {
   const { currentMonthYear, setDeleteModal, redirect, queryParams } = useGlobalContext()
@@ -127,11 +128,18 @@ export default function Expenses() {
       </header>
       <ul className="vertical-align gap2">
         {expenses.loading ? <Skeleton /> : expenses.items.length ?
-          expenses.items.slice(0, visibleItems).map(element => {
+          expenses.items.slice(0, visibleItems).map((element, index) => {
             const formattedDueDate = element.datavencimento ? format(fromZonedTime(element.datavencimento, "America/Sao_Paulo"), "dd/MM/yyyy") : 'Não consta'
             const formattedInclusionDate = format(fromZonedTime(element.datainclusao, "America/Sao_Paulo"), "dd/MM/yyyy")
             return (
-              <li className="list-row w100" key={element.id}>
+              <motion.li
+                key={element.id}
+                className="list-row w100"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: index * 0.05, duration: 0.5 }}
+              >
                 <div className="list-cell">
                   <h1 className="list-row__title">{element.titulo}</h1>
                 </div>
@@ -161,21 +169,24 @@ export default function Expenses() {
                     <img src="https://fluxofinanceiro.site/assets/deletar.png" alt="delete icon" />
                   </button>
                 </div>
-              </li>
+              </motion.li>
             )
           }) : <WithoutListing tag="expense" />}
       </ul>
-      {visibleItems < expenses.items.length && (
+      {expenses.items.length > 0 && (
         <div className="center-align">
-          <button className="button bg-gray-700" type="button" onClick={showMoreItems}>Mostrar mais</button>
+          {visibleItems < expenses.items.length ?
+            <button className="button bg-gray-700" type="button" onClick={showMoreItems}>
+              Mostrar mais
+            </button>
+            :
+            <button className="button bg-gray-700" type="button" onClick={() => setVisibleItems(minVisible)}>
+              Mostrar menos
+            </button>
+          }
         </div>
       )}
 
-      {visibleItems >= expenses.items.length && (
-        <div className="center-align">
-          <button className="button bg-gray-700" type="button" onClick={() => setVisibleItems(minVisible)}>Mostrar menos</button>
-        </div>
-      )}
       <ModalFilters />
     </Container >
   );
