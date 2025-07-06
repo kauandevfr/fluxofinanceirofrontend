@@ -134,10 +134,12 @@ export default function Expenses() {
         </form>
         <header className="list-header">
           <div className="list-cell">
-            <input className="input" type="checkbox" id="status"
-              checked={allSelected}
-              onChange={toggleAll}
-            />
+            {expenses.items.length > 0 &&
+              <input className="input" type="checkbox" id="status"
+                checked={allSelected}
+                onChange={toggleAll}
+              />
+            }
             <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
               onClick={() => sortExpenses("titulo")}
             />
