@@ -45,10 +45,14 @@ export const ExpenseContextProvider = ({ children }) => {
 
     const listingExpenses = async () => {
         const { query } = queryParams()
+        if (query.get('search')) {
+            query.set('titulo', query.get('search'))
+            query.delete('search')
+        }
         setExpenses(initialListing)
         try {
             const { data } = await instance.get(`/cobrancas?${query.toString()}`)
-            setExpenses({ loading: false, items: data.map(element => { return { ...element, seleted: false } }) })
+            setExpenses({ loading: false, items: data.map(element => { return { ...element, selected: false } }) })
 
         } catch (error) {
             console.error(error)

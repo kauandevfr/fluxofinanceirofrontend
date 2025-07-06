@@ -25,6 +25,8 @@ export default function Expenses() {
 
   const [visibleItems, setVisibleItems] = useState(minVisible);
 
+  const [search, setSearch] = useState('')
+
   const sortExpenses = (tag) => {
     const currentOrder = query.get('ordem') || 'desc';
     const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
@@ -38,7 +40,22 @@ export default function Expenses() {
     setVisibleItems(Math.min(nextVisible, expenses.items.length));
   };
 
+  const searchExpense = (e) => {
+    e.preventDefault();
+    if (search === "") {
+      query.delete('search')
+      return redirect(`/expenses/?${query.toString()}`)
+    }
+    query.set('search', search)
+    redirect(`/expenses/?${query.toString()}`)
+  };
+
   useEffect(() => {
+
+    if (query.get('search')) {
+      setSearch(query.get('search'))
+    }
+
     listingCategories()
     listingPaymentForms()
     document.title = "Despesas | Fluxo Financeiro";
@@ -78,7 +95,16 @@ export default function Expenses() {
           </button>
         </div>
       </div>
-      <input className="input" type="text" placeholder="Pesquise por titulo" />
+      <form className="w100" onSubmit={(e) => searchExpense(e)}  >
+        <input
+          className="input"
+          id="pesquisa"
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Pesquisa por titulo..."
+        />
+      </form>
       <header className="list-header">
         <div className="list-cell">
           <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
