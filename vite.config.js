@@ -8,7 +8,6 @@ export default defineConfig({
     // open: true,
     host: true,
     allowedHosts: [
-      'sponsorship-strap-pipes-salon.trycloudflare.com'
     ]
   }
 })

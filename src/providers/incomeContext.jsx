@@ -13,6 +13,12 @@ export const IncomeContextProvider = ({ children }) => {
     const [incomes, setIncomes] = useState(initialListing)
     const { queryParams } = useGlobalContext()
 
+    const [incomeModal, setIncomeModal] = useState({
+        open: false,
+        item: {},
+        type: "Adicionar"
+    })
+
     const listingIncomes = async () => {
         const { query } = queryParams()
         setIncomes(initialListing)
@@ -30,7 +36,10 @@ export const IncomeContextProvider = ({ children }) => {
     return (
         <IncomeContext.Provider value={{
             listingIncomes,
-            incomes
+            incomes,
+
+            incomeModal,
+            setIncomeModal
 
         }}>
             {children}

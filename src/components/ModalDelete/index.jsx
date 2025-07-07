@@ -3,12 +3,15 @@ import ModalBase from '../ModalBase';
 import './style.scss';
 import instance from '../../utilities/instance';
 import { useExpenseContext } from "../../providers/expenseContext"
+import { useIncomeContext } from '../../providers/incomeContext';
 
 export default function ModalDelete() {
 
     const { deleteModal, setDeleteModal } = useGlobalContext()
 
     const { listingExpenses, listingCategories, listingPaymentForms, listingBanks } = useExpenseContext()
+
+    const { listingIncomes } = useIncomeContext()
 
     const closeModal = () => {
         setDeleteModal({
@@ -24,7 +27,7 @@ export default function ModalDelete() {
 
         const configs = {
             despesa: { endpoint: `/cobranca/${id}`, callback: listingExpenses },
-            // renda: { endpoint: `/renda/${id}`, callback: listarRendas },
+            receita: { endpoint: `/renda/${id}`, callback: listingIncomes },
             categoria: { endpoint: `/categoria/${id}`, callback: listingCategories },
             "forma de pagamento": { endpoint: `/formapagamento/${id}`, callback: listingPaymentForms },
             banco: { endpoint: `/instituicaofinanceira/${id}`, callback: listingBanks },
