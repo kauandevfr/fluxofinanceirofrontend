@@ -43,6 +43,15 @@ export default function Incomes() {
     }
   };
 
+  const minVisible = 5;
+
+  const [visibleItems, setVisibleItems] = useState(minVisible);
+
+  const showMoreItems = () => {
+    const nextVisible = visibleItems + 5;
+    setVisibleItems(Math.min(nextVisible, incomes.items.length));
+  };
+
   useEffect(() => {
     document.title = "Receitas | Fluxo Financeiro";
   }, [])
@@ -102,7 +111,7 @@ export default function Incomes() {
         </header>
         <ul className="vertical-align gap2">
           {incomes.loading ? <Skeleton /> : incomes.items.length ?
-            incomes.items.slice(0, 5).map((element, index) => {
+            incomes.items.slice(0, visibleItems).map((element, index) => {
               const select = selected.some((el) => el.id === element.id)
               return (
                 <motion.li
@@ -139,6 +148,19 @@ export default function Incomes() {
               )
             }) : <WithoutListing tag="income" />}
         </ul>
+        {incomes.items.length > 5 && (
+          <div className="center-align">
+            {visibleItems < incomes.items.length ?
+              <button className="button bg-gray-700" type="button" onClick={showMoreItems}>
+                Mostrar mais
+              </button>
+              :
+              <button className="button bg-gray-700" type="button" onClick={() => setVisibleItems(minVisible)}>
+                Mostrar menos
+              </button>
+            }
+          </div>
+        )}
         <ModalDelete />
         <ModalIncome />
       </Container>
