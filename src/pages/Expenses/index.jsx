@@ -11,7 +11,7 @@ import { format } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
 import ModalFilters from "../../components/ModalFilters";
 import { AnimatePresence, motion } from "framer-motion";
-import ModalActions from "../../components/ModalActions";
+import ModalExpenseActions from "../../components/ModalExpenseActions";
 
 export default function Expenses() {
   const { currentMonthYear, setDeleteModal, redirect, queryParams } = useGlobalContext()
@@ -260,7 +260,7 @@ export default function Expenses() {
             exit={{ x: 100, opacity: 0 }}
           // transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           >
-            <ModalActions selected={selected} setSelected={setSelected} />
+            <ModalExpenseActions selected={selected} setSelected={setSelected} />
           </motion.div>
         )}
       </AnimatePresence>

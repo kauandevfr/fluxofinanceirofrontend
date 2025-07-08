@@ -1,13 +1,13 @@
 import './style.scss';
 import ModalBase from '../ModalBase'
 import months from '../../data/months';
-import { useExpenseContext } from '../../providers/expenseContext';
 import { useEffect } from 'react';
+import { useGlobalContext } from '../../providers/globalContext';
 
 
 export default function ModalAddIn({ callback }) {
 
-    const { addInModal, setAddInModal } = useExpenseContext()
+    const { addInModal, setAddInModal } = useGlobalContext()
 
     const closeModal = async () => {
         setAddInModal({

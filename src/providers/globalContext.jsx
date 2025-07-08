@@ -74,6 +74,15 @@ export const GlobalContextProvider = ({ children }) => {
         }
     }
 
+
+    const [addInModal, setAddInModal] = useState({
+        open: false,
+        type: "",
+        mes: "",
+        ano: ""
+    })
+
+
     return (
         <GlobalContext.Provider value={{
             currentMonthYear,
@@ -84,6 +93,9 @@ export const GlobalContextProvider = ({ children }) => {
 
             listingResume,
             resume,
+
+            addInModal,
+            setAddInModal
         }}>
             {children}
         </GlobalContext.Provider>

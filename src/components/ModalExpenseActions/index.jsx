@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import instance from "../../utilities/instance";
 import "./style.scss"
-import { useExpenseContext } from "../../providers/expenseContext";
 import ModalAddIn from "../ModalAddIn";
 import months from "../../data/months";
+import { useGlobalContext } from "../../providers/globalContext";
 
-export default function ModalActions({ selected, setSelected }) {
+export default function ModalExpenseActions({ selected, setSelected }) {
 
-    const { setAddInModal, addInModal } = useExpenseContext()
+    const { setAddInModal, addInModal } = useGlobalContext()
 
     const [show, setShow] = useState(true)
 
@@ -53,27 +53,32 @@ export default function ModalActions({ selected, setSelected }) {
 
     const addAnotherPeriod = async (e) => {
         e.preventDefault();
-
         setAddInModal({ open: false, mes: "", ano: "" });
 
         const mesId = months.find(month => month.month === addInModal.mes).id + 1;
 
-        for (const { id, datapagamento, dataalteracao, idusuario, pendente, precoBR, ...element } of selectedCopy) {
-            const payload = {
-                ...element,
-                formapagamento: element.formapagamento.id,
-                categoria: element.categoria.id,
-                mes: mesId,
-                ano: addInModal.ano,
-                datainclusao: new Date()
-            };
+        try {
 
-            await instance.post('/cobranca', payload);
-            console.log(element.titulo)
-            setSelectedCopy(prev => prev.filter(item => item.id !== id));
+            for (const { id, datapagamento, dataalteracao, idusuario, pendente, precoBR, ...element } of selectedCopy) {
+                const payload = {
+                    ...element,
+                    formapagamento: element.formapagamento.id,
+                    categoria: element.categoria.id,
+                    mes: mesId,
+                    ano: addInModal.ano,
+                    datainclusao: new Date()
+                };
+
+                await instance.post('/cobranca', payload);
+                console.log(element.titulo)
+                setSelectedCopy(prev => prev.filter(item => item.id !== id));
+            }
+            closeModal();
+
+        } catch (error) {
+            console.error(error)
         }
 
-        closeModal();
     };
 
 

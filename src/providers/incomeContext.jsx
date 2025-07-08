@@ -25,8 +25,7 @@ export const IncomeContextProvider = ({ children }) => {
         try {
             const { data } = await instance.get(`/rendas?${query.toString()}`)
             setIncomes({
-                loading: false, items: data.map(element => { return { ...element, seleted: false } })
-                    .sort((a, b) => new Date(a.datainclusao) - new Date(b.datainclusao))
+                loading: false, items: data.sort((a, b) => new Date(a.datainclusao) - new Date(b.datainclusao))
             })
         } catch (error) {
             console.error(error)
