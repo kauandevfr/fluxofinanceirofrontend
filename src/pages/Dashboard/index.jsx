@@ -12,12 +12,14 @@ import { useIncomeContext } from "../../providers/incomeContext";
 export default function Dashboard() {
 
   const { resume, queryParams } = useGlobalContext()
-  const { expenses } = useExpenseContext()
-  const { incomes } = useIncomeContext()
+  const { expenses, listingExpenses } = useExpenseContext()
+  const { incomes, listingIncomes } = useIncomeContext()
 
   const { query } = queryParams()
 
   useEffect(() => {
+    listingIncomes()
+    listingExpenses()
     document.title = "Painel | Fluxo Financeiro";
   }, [])
 

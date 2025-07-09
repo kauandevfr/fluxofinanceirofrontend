@@ -14,8 +14,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import ModalExpenseActions from "../../components/ModalExpenseActions";
 
 export default function Expenses() {
+
   const { currentMonthYear, setDeleteModal, redirect, queryParams } = useGlobalContext()
+
   const { expenses, setExpenseModal } = useExpenseContext()
+
   const { listingCategories, listingPaymentForms, setFiltersModal, listingExpenses } = useExpenseContext()
 
   const { mes, ano } = currentMonthYear()
@@ -69,18 +72,20 @@ export default function Expenses() {
     e.preventDefault();
     if (search === "") {
       query.delete('search')
-      return redirect(`/expenses/?${query.toString()}`)
+      redirect(`/expenses/?${query.toString()}`)
+      listingExpenses()
+
+      return
     }
     query.set('search', search)
     redirect(`/expenses/?${query.toString()}`)
+    listingExpenses()
   };
 
   useEffect(() => {
+    if (query.get('search')) { setSearch(query.get('search')) }
 
-    if (query.get('search')) {
-      setSearch(query.get('search'))
-    }
-
+    listingExpenses()
     listingCategories()
     listingPaymentForms()
     document.title = "Despesas | Fluxo Financeiro";

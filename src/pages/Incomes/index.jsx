@@ -16,6 +16,7 @@ import ModalIncomesActions from "../../components/ModalIncomesActions";
 export default function Incomes() {
 
   const { currentMonthYear, setDeleteModal, queryParams, redirect } = useGlobalContext()
+
   const { incomes, setIncomeModal, listingIncomes } = useIncomeContext()
 
   const [selected, setSelected] = useState([])
@@ -86,9 +87,8 @@ export default function Incomes() {
   useEffect(() => {
     if (query.get('search')) { setSearch(query.get('search')) }
 
-    document.title = "Receitas | Fluxo Financeiro";
     listingIncomes()
-
+    document.title = "Receitas | Fluxo Financeiro";
   }, [])
 
   return (
