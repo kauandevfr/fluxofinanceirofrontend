@@ -95,7 +95,7 @@ export default function ModalIncomesActions({ selected, setSelected }) {
                     </ul>
                     <div className="actions__content-buttons vertical-align fx-wrap gap1 p2 bg-gray-700">
                         <button className="button bg-gradient-red" type="button" onClick={deleteExpenses}>Excluir</button>
-                        <button className="button bg-main-500" type="button" onClick={() => setAddInModal({ open: true, mes: "", ano: "" })}>Clonar</button>
+                        <button className="button bg-main-500" type="button" onClick={() => setAddInModal({ open: true, mes: "", ano: "", type: "receita" })}>Clonar</button>
                     </div>
                 </>
             }

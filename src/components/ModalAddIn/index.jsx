@@ -22,13 +22,15 @@ export default function ModalAddIn({ callback }) {
             closeModal()
         }
 
+        console.log(addInModal)
+
     }, [addInModal.open])
 
     return (
         <ModalBase
             header={{
-                title: `Adicionar despesas em?`,
-                icon: <img className="form-icon bg-red-900" src="http://fluxofinanceiro.site/assets/despesa.png" alt="expense icon" />
+                title: `Adicionar ${addInModal.type} em?`,
+                icon: addInModal.type === "receita" ? <img className="form-icon bg-green-1000" src="http://fluxofinanceiro.site/assets/receitas.png" alt="income icon" /> : <img className="form-icon bg-red-900" src="http://fluxofinanceiro.site/assets/despesa.png" alt="expense icon" />
             }}
             isOpen={addInModal.open}
             onClose={closeModal}
