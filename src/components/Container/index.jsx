@@ -50,7 +50,6 @@ export default function Container({ children, amount }) {
             mes: mes ?? prev.mes,
         }));
         listUser()
-        listingIncomes()
         listingExpenses()
         listingResume()
     }, [])

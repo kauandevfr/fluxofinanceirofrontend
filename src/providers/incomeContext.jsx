@@ -22,10 +22,9 @@ export const IncomeContextProvider = ({ children }) => {
     const listingIncomes = async () => {
         const { query } = queryParams()
         setIncomes(initialListing)
-
-        console.log(query.toString())
+        const newQuery = query
         try {
-            const { data } = await instance.get(`/rendas?${query.toString()}`)
+            const { data } = await instance.get(`/rendas?${newQuery.toString()}`)
             setIncomes({
                 loading: false, items: data
             })

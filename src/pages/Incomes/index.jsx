@@ -47,6 +47,8 @@ export default function Incomes() {
 
   const minVisible = 5;
 
+  const [search, setSearch] = useState('')
+
   const [visibleItems, setVisibleItems] = useState(minVisible);
 
   const showMoreItems = () => {
@@ -59,13 +61,34 @@ export default function Incomes() {
     const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
     query.set('ordem', newOrder);
     query.set('ordenarPor', tag);
-
     redirect(`/incomes/?${query.toString()}`);
     listingIncomes()
   };
 
+  const searchIncome = (e) => {
+    e.preventDefault();
+
+    if (search === "") {
+      query.delete('search')
+      redirect(`/incomes/?${query.toString()}`)
+      listingIncomes()
+
+      return
+    }
+
+    query.set('search', search)
+    redirect(`/incomes/?${query.toString()}`)
+
+    listingIncomes()
+  };
+
+
   useEffect(() => {
+    if (query.get('search')) { setSearch(query.get('search')) }
+
     document.title = "Receitas | Fluxo Financeiro";
+    listingIncomes()
+
   }, [])
 
   return (
@@ -90,7 +113,16 @@ export default function Incomes() {
             </button>
           </div>
         </div>
-        <input className="input" type="text" placeholder="Pesquise por titulo" />
+        <form className="w100" onSubmit={(e) => searchIncome(e)}  >
+          <input
+            className="input"
+            id="pesquisa"
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Pesquisa por titulo..."
+          />
+        </form>
         <header className="list-header">
           <div className="list-cell">
             {incomes.items.length > 0 &&
