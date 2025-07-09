@@ -12,12 +12,12 @@ export default function ModalFilters() {
 
     const { redirect, queryParams } = useGlobalContext()
 
-    const { query } = queryParams();
+    const { query, objQuery } = queryParams();
 
     const initialValues = {
         status: null,
         categorias: [],
-        formapgamento: []
+        formaspagamento: []
     }
 
     const [selected, setSelected] = useState(initialValues)
@@ -39,11 +39,11 @@ export default function ModalFilters() {
         });
     };
 
-    const applyFilters = (e) => {
+    const applyFilters = e => {
         e.preventDefault();
 
         const newQuery = query
-        const { categorias, formapgamento, status } = selected;
+        const { categorias, formaspagamento, status } = selected;
 
         if (typeof status === "boolean") {
             newQuery.set("status", status === false ? 0 : 1)
@@ -52,7 +52,7 @@ export default function ModalFilters() {
             newQuery.delete("status")
         }
 
-        const filtrosArray = { categorias, formapgamento };
+        const filtrosArray = { categorias, formaspagamento };
         Object.entries(filtrosArray).forEach(([chave, valor]) => {
             valor?.length
                 ? newQuery.set(chave, valor.join(','))
@@ -60,21 +60,32 @@ export default function ModalFilters() {
         });
 
         redirect(`expenses/?${newQuery.toString()}`);
+        listingExpenses()
         closeModal();
     };
 
-    const removeFilters = () => {
+    const removeFilters = e => {
+        e.preventDefault()
+
         const newQuery = new URLSearchParams();
-        if (query.has('mes')) {
-            newQuery.append('mes', query.get('mes'));
-        }
-        if (query.has('ano')) {
-            newQuery.append('ano', query.get('ano'));
-        }
-        closeModal()
+
+        const mes = query.get('mes');
+        const ano = query.get('ano');
+
+        if (mes) newQuery.append('mes', mes);
+        if (ano) newQuery.append('ano', ano);
+
         redirect(`expenses/?${newQuery.toString()}`);
+        listingExpenses()
+        closeModal();
     };
 
+    useEffect(() => {
+        if (filtersModal) {
+            const { mes, ano, ...removedFilters } = objQuery;
+            setSelected(prev => ({ ...prev, ...removedFilters }));
+        }
+    }, [filtersModal]);
 
     return (
         <ModalBase
@@ -115,8 +126,8 @@ export default function ModalFilters() {
                                     title={element.titulo}
                                     key={element.id}
                                     clickable={true}
-                                    onClick={() => handleSelectToggle('formapgamento', element.id)}
-                                    active={!selected.formapgamento.includes(element.id)}
+                                    onClick={() => handleSelectToggle('formaspagamento', element.id)}
+                                    active={!selected.formaspagamento.includes(element.id)}
                                 />
                             )
                         }) : <WithoutListing tag="paymentform" />}
@@ -147,7 +158,7 @@ export default function ModalFilters() {
             </div>
             <div className="horizontal-align gap2">
                 {Array.from(new URLSearchParams(location.search).keys()).some(param => param !== 'mes' && param !== 'ano') && (
-                    <button className="button bg-gradient-red w100" onClick={removeFilters}>
+                    <button className="button bg-gradient-red w100" type="button" onClick={e => removeFilters(e)}>
                         Remover filtros
                     </button>
                 )}
