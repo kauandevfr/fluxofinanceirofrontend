@@ -22,8 +22,6 @@ export default function ModalAddIn({ callback }) {
             closeModal()
         }
 
-        console.log(addInModal)
-
     }, [addInModal.open])
 
     return (

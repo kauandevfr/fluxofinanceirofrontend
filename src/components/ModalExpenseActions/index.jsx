@@ -4,10 +4,15 @@ import "./style.scss"
 import ModalAddIn from "../ModalAddIn";
 import months from "../../data/months";
 import { useGlobalContext } from "../../providers/globalContext";
+import { useExpenseContext } from "../../providers/expenseContext";
 
 export default function ModalExpenseActions({ selected, setSelected }) {
 
-    const { setAddInModal, addInModal } = useGlobalContext()
+    const { setAddInModal, addInModal, queryParams } = useGlobalContext()
+
+    const { listingExpenses } = useExpenseContext()
+
+    const { objQuery } = queryParams()
 
     const [show, setShow] = useState(true)
 
@@ -22,6 +27,11 @@ export default function ModalExpenseActions({ selected, setSelected }) {
         })
     }
 
+    const closeAndListing = () => {
+        closeModal();
+        listingExpenses();
+    };
+
     const deleteExpenses = async () => {
         try {
             for (let i = 0; i < selectedCopy.length; i++) {
@@ -29,7 +39,8 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                 await instance.delete(`/cobranca/${element.id}`);
                 setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
             }
-            closeModal()
+
+            closeAndListing()
         } catch (error) {
             console.error(error)
         }
@@ -45,7 +56,7 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                 });
                 setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
             }
-            closeModal()
+            closeAndListing()
         } catch (error) {
             console.error(error)
         }
@@ -53,12 +64,14 @@ export default function ModalExpenseActions({ selected, setSelected }) {
 
     const addAnotherPeriod = async (e) => {
         e.preventDefault();
-        setAddInModal({ open: false, mes: "", ano: "" });
 
         const mesId = months.find(month => month.month === addInModal.mes).id + 1;
 
-        try {
+        const mustList = objQuery.mes == mesId && objQuery.ano == addInModal.ano;
 
+        setAddInModal({ open: false, mes: "", ano: "" });
+
+        try {
             for (const { id, datapagamento, dataalteracao, idusuario, pendente, precoBR, ...element } of selectedCopy) {
                 const payload = {
                     ...element,
@@ -68,20 +81,16 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                     ano: addInModal.ano,
                     datainclusao: new Date()
                 };
-
                 await instance.post('/cobranca', payload);
-                console.log(element.titulo)
                 setSelectedCopy(prev => prev.filter(item => item.id !== id));
             }
-            closeModal();
+
+            if (mustList) { closeAndListing() } else { closeModal() }
 
         } catch (error) {
             console.error(error)
         }
-
     };
-
-
 
     useEffect(() => {
         setSelectedCopy(selected.map(item => ({ ...item })));
@@ -119,7 +128,7 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                             <button className="button bg-gradient-red w100" type="button" onClick={() => changeStatusExpenses(false)}>Não pagar</button>
                         </div>
                         <button className="button bg-gradient-red" type="button" onClick={deleteExpenses}>Excluir</button>
-                        <button className="button bg-main-500" type="button" onClick={() => setAddInModal({ open: true, mes: "", ano: "" })}>Clonar</button>
+                        <button className="button bg-main-500" type="button" onClick={() => setAddInModal({ open: true, mes: "", ano: "", type: "despesa" })}>Clonar</button>
                     </div>
                 </>
             }
