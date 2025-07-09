@@ -37,7 +37,7 @@ button {
 }
 
 .button.bg-gradient-red {
-    background: linear-gradient(90deg, var(--red-1000) 0%, var(--red-900) 100%);
+    background: linear-gradient(90deg, var(--red-1000) 0%, var(--red-900) 100%) !important;
 }
 
 .button.menu {
@@ -45,4 +45,20 @@ button {
     justify-content: start;
     width: 100%;
     gap: 2rem;
+}
+
+aside[data-view-aside="false"] .button.menu:hover::after {
+    content: attr(data-tooltip);
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    background-color: var(--gray-700);
+    white-space: nowrap;
+    padding: 1rem;
+    margin-left: 0.5rem;
+    border-radius: var(--b-radius);
+    border: var(--border-standard);
+    box-shadow: 6px -1px 47px -6px rgba(0, 0, 0, 0.75);
 }
