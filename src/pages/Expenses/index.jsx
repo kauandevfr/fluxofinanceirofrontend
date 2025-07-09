@@ -16,7 +16,7 @@ import ModalExpenseActions from "../../components/ModalExpenseActions";
 export default function Expenses() {
   const { currentMonthYear, setDeleteModal, redirect, queryParams } = useGlobalContext()
   const { expenses, setExpenseModal } = useExpenseContext()
-  const { listingCategories, listingPaymentForms, setFiltersModal } = useExpenseContext()
+  const { listingCategories, listingPaymentForms, setFiltersModal, listingExpenses } = useExpenseContext()
 
   const { mes, ano } = currentMonthYear()
 
@@ -43,7 +43,6 @@ export default function Expenses() {
     });
   };
 
-
   const toggleAll = () => {
     if (allSelected) {
       setSelected([]);
@@ -58,6 +57,7 @@ export default function Expenses() {
     query.set('ordem', newOrder);
     query.set('ordenarPor', tag);
     redirect(`/expenses/?${query.toString()}`);
+    listingExpenses()
   };
 
   const showMoreItems = () => {
