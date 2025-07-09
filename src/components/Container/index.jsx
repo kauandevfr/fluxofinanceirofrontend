@@ -12,6 +12,7 @@ import ModalDelete from '../ModalDelete';
 import ModalExpense from '../ModalExpense';
 import { useExpenseContext } from '../../providers/expenseContext';
 import { useIncomeContext } from '../../providers/incomeContext';
+import instance from '../../utilities/instance';
 
 export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
@@ -55,6 +56,23 @@ export default function Container({ children, amount }) {
         if (selectPeriod.ano) query.set("ano", selectPeriod.ano);
         redirect(`/dashboard/?${query.toString()}`)
         refreshData();
+    }
+    const exportPDF = async (e) => {
+        e.preventDefault();
+        console.log('Entrou na função de exportar pdf')
+
+        try {
+            const { data } = await instance.post(`/relatorio/pdf?${query}`, {}, {
+                responseType: 'blob'
+            });
+
+            const pdfURL = URL.createObjectURL(data);
+            window.open(pdfURL, '_blank');
+
+        } catch (error) {
+            console.error(error)
+        }
+
     }
     useEffect(() => {
         setViewAside(false);
@@ -196,7 +214,7 @@ export default function Container({ children, amount }) {
                             <span>Painel Principal</span>
                         </Link>
 
-                        <button className="button menu" type="button" data-tooltip="Exportar relatório">
+                        <button className="button menu" type="button" data-tooltip="Exportar relatório" onClick={(e) => exportPDF(e)}>
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M12 20C7.58172 20 4 16.4183 4 12M20 12C20 14.5264 18.8289 16.7792 17 18.2454"
