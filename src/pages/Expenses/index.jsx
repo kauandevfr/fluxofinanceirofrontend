@@ -244,7 +244,7 @@ export default function Expenses() {
                 Mostrar mais
               </button>
               :
-              <button className="button bg-gray-700" type="button" onClick={() => setVisibleItems(minVisible)}>
+              <button className="button bg-gray-600" type="button" onClick={() => setVisibleItems(minVisible)}>
                 Mostrar menos
               </button>
             }
