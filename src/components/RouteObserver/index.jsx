@@ -10,7 +10,7 @@ export default function RouteObserver() {
     const { query } = queryParams();
     useEffect(() => {
         const path = location.pathname;
-        const isOnExpensesOrIncomes = path === '/expenses/';
+        const isOnExpensesOrIncomes = path === '/expenses/' || path === '/incomes/';
 
         if (!isOnExpensesOrIncomes) {
             const mes = query.get('mes');

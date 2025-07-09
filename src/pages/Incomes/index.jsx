@@ -15,14 +15,16 @@ import ModalIncomesActions from "../../components/ModalIncomesActions";
 
 export default function Incomes() {
 
-  const { currentMonthYear, setDeleteModal } = useGlobalContext()
-  const { incomes, setIncomeModal } = useIncomeContext()
+  const { currentMonthYear, setDeleteModal, queryParams, redirect } = useGlobalContext()
+  const { incomes, setIncomeModal, listingIncomes } = useIncomeContext()
 
   const [selected, setSelected] = useState([])
 
   const { mes, ano } = currentMonthYear()
 
   const allSelected = selected.length === incomes.items.length
+
+  const { query } = queryParams()
 
   const toggleItem = (item) => {
     setSelected((prev) => {
@@ -50,6 +52,16 @@ export default function Incomes() {
   const showMoreItems = () => {
     const nextVisible = visibleItems + 5;
     setVisibleItems(Math.min(nextVisible, incomes.items.length));
+  };
+
+  const sortIncomes = tag => {
+    const currentOrder = query.get('ordem') || 'desc';
+    const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+    query.set('ordem', newOrder);
+    query.set('ordenarPor', tag);
+
+    redirect(`/incomes/?${query.toString()}`);
+    listingIncomes()
   };
 
   useEffect(() => {
@@ -88,20 +100,19 @@ export default function Incomes() {
               />
             }
             <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+              onClick={() => sortIncomes("titulo")}
             />
             <h1 className="list-row__title">Titulo</h1>
           </div>
-
           <div className="list-cell">
             <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+              onClick={() => sortIncomes("preco")}
             />
             <h1 className="list-row__title">Valor</h1>
           </div>
           <div className="list-cell">
             <img src="https://www.fluxofinanceiro.site/assets/ordem.png" alt="order icon"
-
+              onClick={() => sortIncomes("datainclusao")}
             />
             <h1 className="list-row__title">Inclusão</h1>
           </div>

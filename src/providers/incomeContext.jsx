@@ -22,10 +22,12 @@ export const IncomeContextProvider = ({ children }) => {
     const listingIncomes = async () => {
         const { query } = queryParams()
         setIncomes(initialListing)
+
+        console.log(query.toString())
         try {
             const { data } = await instance.get(`/rendas?${query.toString()}`)
             setIncomes({
-                loading: false, items: data.sort((a, b) => new Date(a.datainclusao) - new Date(b.datainclusao))
+                loading: false, items: data
             })
         } catch (error) {
             console.error(error)
