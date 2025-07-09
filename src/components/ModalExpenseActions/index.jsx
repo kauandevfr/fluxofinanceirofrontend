@@ -8,7 +8,7 @@ import { useExpenseContext } from "../../providers/expenseContext";
 
 export default function ModalExpenseActions({ selected, setSelected }) {
 
-    const { setAddInModal, addInModal, queryParams } = useGlobalContext()
+    const { setAddInModal, addInModal, queryParams, listingResume } = useGlobalContext()
 
     const { listingExpenses } = useExpenseContext()
 
@@ -39,7 +39,7 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                 await instance.delete(`/cobranca/${element.id}`);
                 setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
             }
-
+            listingResume();
             closeAndListing()
         } catch (error) {
             console.error(error)
@@ -69,7 +69,7 @@ export default function ModalExpenseActions({ selected, setSelected }) {
 
         const mustList = objQuery.mes == mesId && objQuery.ano == addInModal.ano;
 
-        setAddInModal({ open: false, mes: "", ano: "" });
+        setAddInModal({ open: false, mes: "", ano: "", type: "" });
 
         try {
             for (const { id, datapagamento, dataalteracao, idusuario, pendente, precoBR, ...element } of selectedCopy) {
@@ -85,7 +85,10 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                 setSelectedCopy(prev => prev.filter(item => item.id !== id));
             }
 
-            if (mustList) { closeAndListing() } else { closeModal() }
+            if (mustList) {
+                closeAndListing()
+                listingResume();
+            } else { closeModal() }
 
         } catch (error) {
             console.error(error)

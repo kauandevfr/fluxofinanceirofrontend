@@ -7,7 +7,7 @@ import { useIncomeContext } from '../../providers/incomeContext';
 
 export default function ModalDelete() {
 
-    const { deleteModal, setDeleteModal } = useGlobalContext()
+    const { deleteModal, setDeleteModal, listingResume } = useGlobalContext()
 
     const { listingExpenses, listingCategories, listingPaymentForms, listingBanks } = useExpenseContext()
 
@@ -21,13 +21,18 @@ export default function ModalDelete() {
         })
     }
 
+    const closeAndList = (mainListFn) => {
+        mainListFn();
+        listingResume();
+    };
+
     const deleteItem = async (e, id) => {
 
         e.preventDefault()
 
         const configs = {
-            despesa: { endpoint: `/cobranca/${id}`, callback: listingExpenses },
-            receita: { endpoint: `/renda/${id}`, callback: listingIncomes },
+            despesa: { endpoint: `/cobranca/${id}`, callback: () => closeAndList(listingExpenses) },
+            receita: { endpoint: `/renda/${id}`, callback: () => closeAndList(listingIncomes) },
             categoria: { endpoint: `/categoria/${id}`, callback: listingCategories },
             "forma de pagamento": { endpoint: `/formapagamento/${id}`, callback: listingPaymentForms },
             banco: { endpoint: `/instituicaofinanceira/${id}`, callback: listingBanks },

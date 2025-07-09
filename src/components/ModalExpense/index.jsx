@@ -17,7 +17,7 @@ import { format } from 'date-fns';
 export default function ModalExpense() {
     const { expenseModal, setExpenseModal, categories, paymentForms, listingExpenses } = useExpenseContext();
 
-    const { queryParams } = useGlobalContext()
+    const { queryParams, listingResume } = useGlobalContext()
 
     const { objQuery } = queryParams()
 
@@ -72,6 +72,7 @@ export default function ModalExpense() {
             const method = isAdding === "Adicionar" ? "post" : "put";
             const url = isAdding === "Adicionar" ? endpoint : `${endpoint}/${expenseModal.item?.id}`;
             await instance[method](url, payload);
+            listingResume()
             listingExpenses()
             closeModal();
         } catch (error) {

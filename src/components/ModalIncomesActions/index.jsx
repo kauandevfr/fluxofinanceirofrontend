@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
 import instance from "../../utilities/instance";
 import { useGlobalContext } from "../../providers/globalContext";
+import { useIncomeContext } from "../../providers/incomeContext";
 import ModalAddIn from "../ModalAddIn";
 import months from "../../data/months";
 
 export default function ModalIncomesActions({ selected, setSelected }) {
 
-    const { setAddInModal, addInModal } = useGlobalContext()
+    const { setAddInModal, addInModal, listingResume, queryParams } = useGlobalContext()
+
+    const { listingIncomes } = useIncomeContext()
 
     const [show, setShow] = useState(true)
 
     const [selectedCopy, setSelectedCopy] = useState(selected)
 
-    const deleteExpenses = async () => {
-        try {
-            for (let i = 0; i < selectedCopy.length; i++) {
-                const element = selectedCopy[i];
-                await instance.delete(`/renda/${element.id}`);
-                setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
-            }
-            closeModal()
-        } catch (error) {
-            console.error(error)
-        }
-
-    };
+    const { objQuery } = queryParams()
 
     const closeModal = () => {
         setSelected([])
@@ -36,12 +27,35 @@ export default function ModalIncomesActions({ selected, setSelected }) {
         })
     }
 
+    const closeAndListing = () => {
+        closeModal();
+        listingIncomes();
+    };
+
+    const deleteIncomes = async () => {
+        try {
+            for (let i = 0; i < selectedCopy.length; i++) {
+                const element = selectedCopy[i];
+                await instance.delete(`/renda/${element.id}`);
+                setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
+            }
+            closeAndListing()
+            listingResume();
+
+        } catch (error) {
+            console.error(error)
+        }
+
+    };
+
     const addAnotherPeriod = async e => {
         e.preventDefault();
 
-        setAddInModal({ open: false, mes: "", ano: "" });
-
         const mesId = months.find(month => month.month === addInModal.mes).id + 1;
+
+        const mustList = objQuery.mes == mesId && objQuery.ano == addInModal.ano;
+
+        setAddInModal({ open: false, mes: "", ano: "", type: "" });
 
         try {
             for (const { id, datapagamento, dataalteracao, idusuario, pendente, precoBR, ...element } of selectedCopy) {
@@ -56,7 +70,10 @@ export default function ModalIncomesActions({ selected, setSelected }) {
                 setSelectedCopy(prev => prev.filter(item => item.id !== id));
             }
 
-            closeModal();
+            if (mustList) {
+                closeAndListing()
+                listingResume();
+            } else { closeModal() }
 
         } catch (error) {
             console.error(error);
@@ -94,7 +111,7 @@ export default function ModalIncomesActions({ selected, setSelected }) {
                         )}
                     </ul>
                     <div className="actions__content-buttons vertical-align fx-wrap gap1 p2 bg-gray-700">
-                        <button className="button bg-gradient-red" type="button" onClick={deleteExpenses}>Excluir</button>
+                        <button className="button bg-gradient-red" type="button" onClick={deleteIncomes}>Excluir</button>
                         <button className="button bg-main-500" type="button" onClick={() => setAddInModal({ open: true, mes: "", ano: "", type: "receita" })}>Clonar</button>
                     </div>
                 </>
