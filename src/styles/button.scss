@@ -18,6 +18,7 @@ button {
     position: relative;
     justify-content: center;
     box-sizing: border-box;
+    white-space: nowrap;
 }
 
 .button:hover {

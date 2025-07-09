@@ -10,18 +10,29 @@ import Footer from '../Footer';
 import AnimatedNumber from '../AnimateNumber';
 import ModalDelete from '../ModalDelete';
 import ModalExpense from '../ModalExpense';
+import { useExpenseContext } from '../../providers/expenseContext';
+import { useIncomeContext } from '../../providers/incomeContext';
 
 export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
     const [selectPeriod, setSelectPeriod] = useState({ mes: "", ano: "" })
     const { currentMonthYear, queryParams, redirect, listingResume, resume } = useGlobalContext()
+    const { listingExpenses } = useExpenseContext()
+    const { listingIncomes } = useIncomeContext()
     const { logoutSystem, listUser, user } = useUserContext()
     const { mes, ano } = currentMonthYear()
     const { query, page, objQuery, queryStr } = queryParams()
+    const refreshData = () => {
+        listingResume();
+        listingExpenses();
+        listingIncomes();
+        setViewAside(false)
+    };
     const goToCurrentPeriod = () => {
         query.set('mes', mes)
         query.set('ano', ano)
         redirect(`${window.location.pathname}?${query.toString()}`);
+        refreshData();
     }
     const changePeriod = (value) => {
         let mes = (+objQuery.mes || currentMonthYear().mes) + value;
@@ -32,8 +43,19 @@ export default function Container({ children, amount }) {
 
         query.set('mes', mes);
         query.set('ano', ano);
-        redirect(`${page}?${query}`);
+        redirect(`/dashboard/?${query}`);
+        refreshData();
     };
+    const applyPeriod = (e) => {
+        e.preventDefault()
+        if (selectPeriod.mes) {
+            const mesId = months.find(mes => mes.month.toLowerCase() === selectPeriod.mes.toLowerCase())?.id;
+            query.set("mes", mesId + 1);
+        }
+        if (selectPeriod.ano) query.set("ano", selectPeriod.ano);
+        redirect(`/dashboard/?${query.toString()}`)
+        refreshData();
+    }
     useEffect(() => {
         setViewAside(false);
         const query = new URLSearchParams(location.search);
@@ -67,7 +89,7 @@ export default function Container({ children, amount }) {
                     </svg>
                 </button>
                 <h1 className="page-title text-center">Fluxo Financeiro</h1>
-                <form className="vertical-align gap2 w100">
+                <form className="vertical-align gap2 w100" onSubmit={(e) => applyPeriod(e)}>
                     <h3 className="page-subtitle text-center">Selecionar periodo</h3>
                     <div className="horizontal-align gap1">
                         <input
