@@ -63,7 +63,6 @@ export default function Container({ children, amount }) {
     }
     const exportPDF = async (e) => {
         e.preventDefault();
-        console.log('Entrou na função de exportar pdf')
 
         try {
             const { data } = await instance.post(`/relatorio/pdf?${query}`, {}, {
@@ -77,6 +76,21 @@ export default function Container({ children, amount }) {
             console.error(error)
         }
 
+    }
+    const changeTheme = async () => {
+        const theme = user.data.tema === "claro" ? "escuro" : "claro"
+
+        console.log(theme)
+        try {
+            await instance.put('/usuario', { tema: theme })
+
+            const html = document.querySelector('html');
+            html.setAttribute('data-theme', theme);
+
+            listUser()
+        } catch (error) {
+            console.error(error)
+        }
     }
     useEffect(() => {
         setViewAside(false);
@@ -334,7 +348,7 @@ export default function Container({ children, amount }) {
                 </div>
                 <div className="vertical-align gap1">
                     <span className="fontw-600 text-4xl">{user.data.nome}</span>
-                    <button className="button menu" type="button" data-tooltip="Alterar tema">
+                    <button className="button menu" type="button" data-tooltip="Alterar tema" onClick={changeTheme}>
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                             <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
@@ -348,7 +362,7 @@ export default function Container({ children, amount }) {
                                 />
                             </g>
                         </svg>
-                        <span>Ativar Modo Claro</span>
+                        <span>Alterar para tema {user.data.tema === "claro" ? "escuro" : "claro"}</span>
                     </button>
                     <div className="horizontal-align gap1 aside-menu__user-actions">
                         <Link className="button w100 menu bg-gradient" to='/user-account' data-tooltip="Minha conta">

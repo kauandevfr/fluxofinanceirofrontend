@@ -125,7 +125,7 @@ export default function ModalExpense() {
             </div>
             <div className="item-form">
                 <label className="label" htmlFor="paymentforms">Formas de pagamento</label>
-                <div className="horizontal-align gap1 fx-wrap bg-gray-700 w100 p1 br">
+                <div className="form-items horizontal-align gap1 fx-wrap bg-gray-700 w100 p1 br">
                     {paymentForms.loading ? <Skeleton /> :
                         paymentForms.items.length ? paymentForms.items.map(element => {
                             return (
@@ -144,7 +144,7 @@ export default function ModalExpense() {
             </div>
             <div className="item-form">
                 <label className="label" htmlFor="categories">Categorias</label>
-                <div className="horizontal-align gap1 fx-wrap bg-gray-700 w100 p1 br">
+                <div className="form-items horizontal-align gap1 fx-wrap bg-gray-700 w100 p1 br">
                     {categories.loading ? <Skeleton /> :
                         categories.items.length ? categories.items.map(element => {
                             return (

@@ -38,5 +38,5 @@ export default function AnimatedNumber({ value }) {
         return <Skeleton />
     }
 
-    return <span className="fontw-500 text-5xl" ref={numberRef}>R$ 0,00</span>;
+    return <span className="financial-summary__sum-subtitle fontw-500 text-5xl" ref={numberRef}>R$ 0,00</span>;
 }

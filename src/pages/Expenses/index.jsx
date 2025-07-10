@@ -189,7 +189,7 @@ export default function Expenses() {
             <h1 className="list-row__title">Editar ou excluir</h1>
           </div>
         </header>
-        <ul className="vertical-align gap2">
+        <ul className="list-table vertical-align gap2">
           {expenses.loading ? <Skeleton /> : expenses.items.length ?
             expenses.items.slice(0, visibleItems).map((element, index) => {
               const select = selected.some((el) => el.id === element.id)
@@ -245,11 +245,11 @@ export default function Expenses() {
         {expenses.items.length > 5 && (
           <div className="center-align">
             {visibleItems < expenses.items.length ?
-              <button className="button bg-gray-700" type="button" onClick={showMoreItems}>
+              <button className="button bg-gray-700 show" type="button" onClick={showMoreItems}>
                 Mostrar mais
               </button>
               :
-              <button className="button bg-gray-600" type="button" onClick={() => setVisibleItems(minVisible)}>
+              <button className="button bg-gray-600 show" type="button" onClick={() => setVisibleItems(minVisible)}>
                 Mostrar menos
               </button>
             }

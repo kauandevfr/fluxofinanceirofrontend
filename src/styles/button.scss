@@ -48,7 +48,7 @@ button {
     gap: 2rem;
 }
 
-aside[data-view-aside="false"] .button.menu:hover::after {
+.aside-menu[data-view-aside="false"] .button.menu:hover::after {
     content: attr(data-tooltip);
     display: block;
     position: absolute;
@@ -61,5 +61,4 @@ aside[data-view-aside="false"] .button.menu:hover::after {
     margin-left: 0.5rem;
     border-radius: var(--b-radius);
     border: var(--border-standard);
-    box-shadow: 6px -1px 47px -6px rgba(0, 0, 0, 0.75);
 }

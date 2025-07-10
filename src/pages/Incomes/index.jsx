@@ -152,7 +152,7 @@ export default function Incomes() {
             <h1 className="list-row__title">Editar ou excluir</h1>
           </div>
         </header>
-        <ul className="vertical-align gap2">
+        <ul className="list-table vertical-align gap2">
           {incomes.loading ? <Skeleton /> : incomes.items.length ?
             incomes.items.slice(0, visibleItems).map((element, index) => {
               const select = selected.some((el) => el.id === element.id)

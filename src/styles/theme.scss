@@ -1,0 +1,120 @@
+[data-theme="claro"] {
+
+    *::-webkit-scrollbar-thumb {
+        background-color: var(--main-500);
+    }
+
+    body,
+    .aside-menu,
+    .footer {
+        background-color: var(--gray-100);
+    }
+
+    .footer,
+    .header,
+    .aside-menu,
+    .settings__menu,
+    .user-account__content header {
+        border-color: var(--gray-200);
+    }
+
+    .aside-menu,
+    .form {
+        box-shadow: none;
+    }
+
+    .form {
+        background-color: var(--gray-100);
+        border: 1px solid var(--gray-200);
+    }
+
+    .aside-menu .button.menu,
+    .settings__menu .button.menu,
+    .user-account__menu .button.menu,
+    .user-account__menu-todashboard {
+        background: var(--bg-gradient);
+    }
+
+    .aside-menu[data-view-aside="false"] .button.menu:hover::after {
+        background-color: var(--gray-100);
+        color: var(--gray-700);
+        border-color: var(--gray-200);
+    }
+
+    .resume__item,
+    .financial-summary__sum,
+    .list-table .list-row,
+    .settings,
+    .form-items,
+    .user-account__menu,
+    .user-account__content,
+    .actions,
+    .actions__content-buttons {
+        background-color: var(--white);
+        border: 1px solid var(--gray-200);
+    }
+
+    .list-row,
+    .actions__content-row {
+        background: var(--gray-100);
+    }
+
+    .header-form,
+    .actions__header {
+        background: var(--gray-200);
+    }
+
+    .actions__header-buttons button {
+        background: var(--gray-300);
+    }
+
+    .list-row__title,
+    .page-title,
+    .financial-summary__sum-title,
+    .financial-summary__sum-subtitle,
+    .actions__content-row {
+        color: var(--gray-700);
+    }
+
+    .financial-summary__sum-subtitle {
+        font-weight: 700;
+    }
+
+    .page-subtitle,
+    .footer__contact,
+    .form-title,
+    .label,
+    .form-subtitle {
+        color: var(--gray-600);
+    }
+
+    .list-header .list-row__title {
+        color: var(--white);
+    }
+
+    .input {
+        background-color: var(--white);
+        color: var(--gray-600);
+        border-color: var(--gray-200);
+    }
+
+    .input[type="checkbox"] {
+        background-color: var(--gray-200);
+    }
+
+    .button.show {
+        background-color: var(--white);
+        color: var(--gray-600);
+    }
+
+    .list-table .list-cell img {
+        box-sizing: content-box;
+        padding: 1rem;
+        border-radius: var(--b-radius);
+        background-color: var(--gray-200);
+    }
+
+    .skeleton::after {
+        background: linear-gradient(90deg, transparent, var(--gray-200), transparent);
+    }
+}

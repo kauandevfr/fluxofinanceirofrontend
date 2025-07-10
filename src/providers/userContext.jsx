@@ -73,7 +73,9 @@ export const UserContextProvider = ({ children }) => {
                     ...data, datadenascimento: data.datadenascimento ? data.datadenascimento.split("T")[0] : ""
                 }
             })
-
+            const html = document.querySelector('html');
+            html.setAttribute('data-theme', data.tema);
+            console.log(data)
         } catch (error) {
             console.error(error)
         }
