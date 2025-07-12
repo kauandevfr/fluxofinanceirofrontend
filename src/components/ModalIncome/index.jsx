@@ -15,7 +15,7 @@ export default function ModalIncome() {
 
     const { incomeModal, setIncomeModal, listingIncomes } = useIncomeContext()
 
-    const { queryParams, listingResume, showError } = useGlobalContext()
+    const { queryParams, listingResume, showError, setAlertModal } = useGlobalContext()
 
     const { objQuery } = queryParams()
 
@@ -93,7 +93,6 @@ export default function ModalIncome() {
 
     useEffect(() => {
         if (incomeModal.open) {
-            console.log(incomeModal)
             const getItem = (path, fallback) => get(incomeModal, `item.${path}`, fallback);
             const formatDate = (dateStr) => dateStr?.split('T')[0] || '';
 

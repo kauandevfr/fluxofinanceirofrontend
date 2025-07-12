@@ -88,7 +88,6 @@ export const UserContextProvider = ({ children }) => {
             })
             const html = document.querySelector('html');
             html.setAttribute('data-theme', data.tema);
-            console.log(data)
         } catch (error) {
             console.error(error)
         }

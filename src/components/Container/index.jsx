@@ -18,7 +18,7 @@ import Alert from '../Alert';
 export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
     const [selectPeriod, setSelectPeriod] = useState({ mes: "", ano: "" })
-    const { currentMonthYear, queryParams, redirect, listingResume, resume, setAlertModal } = useGlobalContext()
+    const { currentMonthYear, queryParams, redirect, listingResume, resume, showError, setAlertModal } = useGlobalContext()
     const { listingExpenses } = useExpenseContext()
     const { listingIncomes } = useIncomeContext()
     const { logoutSystem, listUser, user } = useUserContext()
@@ -65,23 +65,35 @@ export default function Container({ children, amount }) {
     const exportPDF = async (e) => {
         e.preventDefault();
 
+        setAlertModal({
+            open: true,
+            tag: "alert",
+            message: "Exportando relatório..."
+        })
+
         try {
             const { data } = await instance.post(`/relatorio/pdf?${query}`, {}, {
                 responseType: 'blob'
             });
 
             const pdfURL = URL.createObjectURL(data);
+
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: "Relatório criado com sucesso!"
+            })
+
             window.open(pdfURL, '_blank');
 
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
 
     }
     const changeTheme = async () => {
         const theme = user.data.tema === "claro" ? "escuro" : "claro"
 
-        console.log(theme)
         try {
             await instance.put('/usuario', { tema: theme })
 
@@ -90,7 +102,7 @@ export default function Container({ children, amount }) {
 
             listUser()
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
     useEffect(() => {
