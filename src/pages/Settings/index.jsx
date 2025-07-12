@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import ModalDelete from "../../components/ModalDelete";
 import ModalBank from "../../components/ModalBank";
 import ModalPaymentCategory from "../../components/ModalPaymentCategory";
+import Alert from "../../components/Alert";
 
 export default function Settings() {
   const [content, setContent] = useState('categories')
@@ -121,6 +122,7 @@ export default function Settings() {
       <ModalBank />
       <ModalPaymentCategory />
       <ModalDelete />
+      <Alert />
     </main>
   );
 }

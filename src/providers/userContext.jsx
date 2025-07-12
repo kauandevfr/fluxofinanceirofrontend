@@ -10,7 +10,7 @@ export const useUserContext = () => {
 
 export const UserContextProvider = ({ children }) => {
 
-    const { currentMonthYear, redirect } = useGlobalContext()
+    const { currentMonthYear, redirect, showError, setAlertModal } = useGlobalContext()
 
     const [user, setUser] = useState({
         loading: true,
@@ -26,8 +26,15 @@ export const UserContextProvider = ({ children }) => {
 
         try {
             await instance.post("/registrar", { ...data })
+
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: "Sucesso ao criar conta!"
+            })
+
         } catch (error) {
-            console.error(error);
+            showError(error);
         } finally {
             btn.disabled = false
             btn.textContent = 'Registrar'
@@ -46,12 +53,18 @@ export const UserContextProvider = ({ children }) => {
             localStorage.setItem("token", content.token)
 
             const { mes, ano } = currentMonthYear()
+
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: "Redirecionando para o seu painel financeiro."
+            })
+
             redirect(`/dashboard?mes=${mes}&ano=${ano}`)
 
             window.location.reload()
         } catch (erro) {
-
-            console.error(erro)
+            showError(erro)
         } finally {
             btn.textContent = "Iniciar sessão"
             btn.disabled = false

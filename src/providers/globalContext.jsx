@@ -83,6 +83,22 @@ export const GlobalContextProvider = ({ children }) => {
     })
 
 
+    const [alertModal, setAlertModal] = useState({
+        open: false,
+        tag: "sucess",
+        message: ""
+    })
+
+    const showError = error => {
+        console.error(error)
+
+        setAlertModal({
+            open: true,
+            tag: "error",
+            message: error.response?.data || "Erro interno. Tente novamente"
+        })
+    }
+
     return (
         <GlobalContext.Provider value={{
             currentMonthYear,
@@ -95,7 +111,12 @@ export const GlobalContextProvider = ({ children }) => {
             resume,
 
             addInModal,
-            setAddInModal
+            setAddInModal,
+
+            alertModal,
+            setAlertModal,
+
+            showError
         }}>
             {children}
         </GlobalContext.Provider>

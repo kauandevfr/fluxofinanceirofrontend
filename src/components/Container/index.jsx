@@ -13,11 +13,12 @@ import ModalExpense from '../ModalExpense';
 import { useExpenseContext } from '../../providers/expenseContext';
 import { useIncomeContext } from '../../providers/incomeContext';
 import instance from '../../utilities/instance';
+import Alert from '../Alert';
 
 export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
     const [selectPeriod, setSelectPeriod] = useState({ mes: "", ano: "" })
-    const { currentMonthYear, queryParams, redirect, listingResume, resume } = useGlobalContext()
+    const { currentMonthYear, queryParams, redirect, listingResume, resume, setAlertModal } = useGlobalContext()
     const { listingExpenses } = useExpenseContext()
     const { listingIncomes } = useIncomeContext()
     const { logoutSystem, listUser, user } = useUserContext()
@@ -444,6 +445,7 @@ export default function Container({ children, amount }) {
 
             <ModalDelete />
             <ModalExpense />
+            <Alert />
         </main>
     );
 }

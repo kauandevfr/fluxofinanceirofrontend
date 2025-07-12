@@ -8,7 +8,7 @@ import { useExpenseContext } from "../../providers/expenseContext";
 
 export default function ModalExpenseActions({ selected, setSelected }) {
 
-    const { setAddInModal, addInModal, queryParams, listingResume } = useGlobalContext()
+    const { setAddInModal, addInModal, queryParams, listingResume, setAlertModal, showError } = useGlobalContext()
 
     const { listingExpenses } = useExpenseContext()
 
@@ -39,10 +39,17 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                 await instance.delete(`/cobranca/${element.id}`);
                 setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
             }
+
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: `Sucesso ao excluir ${selected.length} despesas!`
+            })
+
             listingResume();
             closeAndListing()
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
 
     };
@@ -57,8 +64,15 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                 setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
             }
             closeAndListing()
+
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: `Sucesso ao ${status ? "pagar" : "não pagar"} ${selected.length} despesas!`
+            })
+
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     };
 
@@ -90,8 +104,14 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                 listingResume();
             } else { closeModal() }
 
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: `Sucesso ao adicionar ${selected.length} despesas em ${addInModal.mes} de ${addInModal.ano}`
+            })
+
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     };
 

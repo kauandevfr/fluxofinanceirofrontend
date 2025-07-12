@@ -10,10 +10,11 @@ import { useUserContext } from "../../providers/userContext";
 import updateUsers from "../../schemas/users/update";
 import './style.scss';
 import instance from "../../utilities/instance";
+import Alert from "../../components/Alert"
 
 export default function User() {
   const [content, setContent] = useState('personalData')
-  const { currentMonthYear } = useGlobalContext()
+  const { currentMonthYear, showError } = useGlobalContext()
   const { listUser, user } = useUserContext()
   const { mes, ano } = currentMonthYear()
 
@@ -30,9 +31,15 @@ export default function User() {
       .reduce((obj, key) => (obj[key] = data[key], obj), {});
     try {
       await instance.put("/usuario", { ...data })
+      setAlertModal({
+        open: true,
+        tag: "suceess",
+        message: "Sucesso ao atualizar seus dados!"
+      })
+
       listUser()
     } catch (error) {
-      console.error(error)
+      showError(error)
     }
   }
 
@@ -47,9 +54,15 @@ export default function User() {
     const { senhaNovaRepetida, ...dataToSend } = data;
     try {
       await instance.put("/usuario", dataToSend)
+
+      setAlertModal({
+        open: true,
+        tag: "suceess",
+        message: "Sucesso ao atualizar sua senha!"
+      })
       listUser()
     } catch (error) {
-      console.error(error)
+      showError(error)
     }
   }
   useEffect(() => {
@@ -345,6 +358,7 @@ export default function User() {
               : ''}
         </div>
       </section>
+      <Alert />
       <Footer />
     </main>
   );

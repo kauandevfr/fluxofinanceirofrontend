@@ -8,10 +8,13 @@ import registerPaymentCategory from '../../schemas/paymentcategory/register';
 import updatePaymentCategory from '../../schemas/paymentcategory/update';
 import { useEffect } from 'react';
 import instance from '../../utilities/instance';
+import { useGlobalContext } from '../../providers/globalContext';
 
 export default function ModalPaymentCategory() {
 
     const { paymentCategory, setPaymentCategory, listingCategories, listingPaymentForms } = useExpenseContext()
+
+    const { showError, setAlertModal } = useGlobalContext()
 
     const { reset, register, handleSubmit, formState: { errors } } =
         useForm({
@@ -45,10 +48,16 @@ export default function ModalPaymentCategory() {
                 await instance.put(`${endpoint}/${id}`, data);
             }
 
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: `Sucesso ao ${type.toLowerCase()} ${tag}!`
+            })
+
             callback();
             closeModal();
         } catch (error) {
-            console.error(error);
+            showError(error)
         }
     };
 

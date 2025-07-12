@@ -7,7 +7,7 @@ import months from "../../data/months";
 
 export default function ModalIncomesActions({ selected, setSelected }) {
 
-    const { setAddInModal, addInModal, listingResume, queryParams } = useGlobalContext()
+    const { setAddInModal, addInModal, listingResume, queryParams, setAlertModal, showError } = useGlobalContext()
 
     const { listingIncomes } = useIncomeContext()
 
@@ -39,11 +39,18 @@ export default function ModalIncomesActions({ selected, setSelected }) {
                 await instance.delete(`/renda/${element.id}`);
                 setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
             }
-            closeAndListing()
+
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: `Sucesso ao excluir ${selected.length} receitas!`
+            })
+
             listingResume();
+            closeAndListing()
 
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
 
     };
@@ -76,7 +83,7 @@ export default function ModalIncomesActions({ selected, setSelected }) {
             } else { closeModal() }
 
         } catch (error) {
-            console.error(error);
+            showError(error)
         }
     }
 

@@ -15,7 +15,7 @@ export default function ModalIncome() {
 
     const { incomeModal, setIncomeModal, listingIncomes } = useIncomeContext()
 
-    const { queryParams, listingResume } = useGlobalContext()
+    const { queryParams, listingResume, showError } = useGlobalContext()
 
     const { objQuery } = queryParams()
 
@@ -76,11 +76,18 @@ export default function ModalIncome() {
             const method = isAdding === "Adicionar" ? "post" : "put";
             const url = isAdding === "Adicionar" ? endpoint : `${endpoint}/${incomeModal.item?.id}`;
             await instance[method](url, payload);
+
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: `Sucesso ao ${isAdding.toLowerCase()} receita!`
+            })
+
             listingResume()
             listingIncomes()
             closeModal()
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
 

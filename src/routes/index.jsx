@@ -3,7 +3,6 @@ import SendTokenPassword from "../pages/SendTokenPassword";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import Expenses from "../pages/Expenses";
-import ViewBilling from "../pages/ViewBilling";
 import Dashboard from "../pages/Dashboard";
 import Incomes from "../pages/Incomes";
 import Login from "../pages/Login";
@@ -35,7 +34,6 @@ export default function MainRoutes() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/expenses" element={<Expenses />} />
                 <Route path="/incomes" element={<Incomes />} />
-                <Route path="/billing/:id" element={<ViewBilling />} />
                 <Route path="/user-account" element={<User />} />
                 <Route path="/settings" element={<Settings />} />
             </Route>

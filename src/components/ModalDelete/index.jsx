@@ -7,7 +7,7 @@ import { useIncomeContext } from '../../providers/incomeContext';
 
 export default function ModalDelete() {
 
-    const { deleteModal, setDeleteModal, listingResume } = useGlobalContext()
+    const { deleteModal, setDeleteModal, listingResume, setAlertModal, showError } = useGlobalContext()
 
     const { listingExpenses, listingCategories, listingPaymentForms, listingBanks } = useExpenseContext()
 
@@ -44,9 +44,15 @@ export default function ModalDelete() {
             await instance.delete(endpoint);
             callback();
 
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: `Sucesso ao excluir ${deleteModal.type}`
+            })
+
             closeModal()
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
 

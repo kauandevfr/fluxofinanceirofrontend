@@ -5,6 +5,7 @@ import './style.scss';
 import loginUsers from '../../schemas/users/login';
 import { useUserContext } from '../../providers/userContext';
 import { useEffect } from 'react';
+import Alert from "../../components/Alert"
 
 export default function Login() {
 
@@ -62,6 +63,7 @@ export default function Login() {
           <span className="footer-form__title">© {new Date().getFullYear()} Fluxo Financeiro. Todos os direitos reservados.</span>
         </footer>
       </form>
+      <Alert />
     </main>
   );
 }

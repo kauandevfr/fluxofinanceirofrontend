@@ -7,10 +7,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import registerBank from '../../schemas/banks/register';
 import updateBank from '../../schemas/banks/update';
 import { useEffect } from 'react';
+import { useGlobalContext } from '../../providers/globalContext';
 
 export default function ModalBank() {
 
+    const { setAlertModal, showError } = useGlobalContext()
+
     const { bankModal, setBankModal, listingBanks } = useExpenseContext()
+
     const { reset, register, handleSubmit, formState: { errors } } =
         useForm({
             resolver: yupResolver(bankModal.type === "Adicionar" ? registerBank : updateBank),
@@ -34,10 +38,16 @@ export default function ModalBank() {
                 await instance.put(`/instituicaofinanceira/${id}`, data)
             }
 
+            setAlertModal({
+                open: true,
+                tag: "sucess",
+                message: `Sucesso ao ${bankModal.type.toLowerCase()} banco!`
+            })
+
             closeModal()
             listingBanks()
         } catch (error) {
-            console.error(error);
+            showError(error)
         }
     }
 

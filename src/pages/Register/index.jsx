@@ -5,6 +5,7 @@ import PasswordCriteria from "../../components/PasswordCriteria";
 import { useUserContext } from "../../providers/userContext";
 import registerUsers from "../../schemas/users/register";
 import './style.scss';
+import Alert from "../../components/Alert"
 
 export default function Register() {
   const { register, watch, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(registerUsers) })
@@ -66,6 +67,7 @@ export default function Register() {
           <span className="footer-form__title">© {new Date().getFullYear()} Fluxo Financeiro. Todos os direitos reservados.</span>
         </footer>
       </form>
+      <Alert />
     </main>
   );
 }
