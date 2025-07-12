@@ -12,6 +12,21 @@ export default function ModalBase({ header, children, isOpen, onClose, onSubmit 
         };
     }, [isOpen]);
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
+
+        if (isOpen) {
+            window.addEventListener('keydown', handleKeyDown);
+        }
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isOpen, onClose]);
+
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -20,6 +35,7 @@ export default function ModalBase({ header, children, isOpen, onClose, onSubmit 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
+                    onClick={onClose}
                 >
                     <motion.section
                         className="form"
@@ -27,6 +43,7 @@ export default function ModalBase({ header, children, isOpen, onClose, onSubmit 
                         animate={{ scale: 1 }}
                         exit={{ scale: 0.9 }}
                         transition={{ duration: 0.2 }}
+                        onClick={(e) => e.stopPropagation()}
                     >
                         <header className="header-form horizontal-align p2 jc-between">
                             <div className="horizontal-align gap1 ai-center">

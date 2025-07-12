@@ -14,6 +14,7 @@ import { useExpenseContext } from '../../providers/expenseContext';
 import { useIncomeContext } from '../../providers/incomeContext';
 import instance from '../../utilities/instance';
 import Alert from '../Alert';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
@@ -121,6 +122,16 @@ export default function Container({ children, amount }) {
     }, [])
     return (
         <main>
+            <AnimatePresence>
+                {viewAside &&
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="aside-menu__bg" onClick={() => setViewAside(false)}>
+                    </motion.div>
+                }
+            </AnimatePresence>
             <aside className={`aside-menu vertical-align gap1 ${viewAside ? "active" : ''}`} data-view-aside={viewAside}>
                 <button className="button menu toggle" onClick={() => setViewAside(!viewAside)} data-tooltip="Abrir menu">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

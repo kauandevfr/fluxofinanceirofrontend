@@ -6,8 +6,7 @@
     z-index: 3;
     width: 100px;
     padding: 2rem;
-    box-shadow: 8px 1px 11px -1px rgba(0, 0, 0, 0.2);
-
+    box-shadow: 8px 1px 11px -1px rgba(0, 0, 0, 0.3);
 
     .aside-menu__user-actions {
         flex-direction: column;
@@ -30,7 +29,6 @@
 
 .aside-menu.active {
     width: 42.4rem;
-
 
     .aside-menu__user-actions {
         flex-direction: row;
@@ -62,6 +60,14 @@
     }
 }
 
+.aside-menu__bg {
+    inset: 0;
+    position: fixed;
+    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.3);
+    ;
+    z-index: 3;
+}
 
 .financial-summary {}
 
