@@ -7,12 +7,12 @@ export default function RouteObserver() {
     const { redirect, queryParams } = useGlobalContext()
 
     const location = useLocation();
-    const { query } = queryParams();
+    const { query, page } = queryParams();
     useEffect(() => {
-        const path = location.pathname;
-        const isOnExpensesOrIncomes = path === '/expenses/' || path === '/incomes/';
+        const isOnExpensesOrIncomes = page === 'expenses' || page === 'incomes';
+        const isSettings = page === 'settings';
 
-        if (!isOnExpensesOrIncomes) {
+        if (!isOnExpensesOrIncomes && !isSettings) {
             const mes = query.get('mes');
             const ano = query.get('ano');
 
@@ -20,7 +20,14 @@ export default function RouteObserver() {
             if (mes) newParams.set('mes', mes);
             if (ano) newParams.set('ano', ano);
 
-            redirect(`${path}?${newParams.toString()}`, { replace: true });
+            redirect(`${page}/?${newParams.toString()}`, { replace: true });
+        } else if (isSettings) {
+            const tag = query.get('tag');
+
+            const newParams = new URLSearchParams();
+            if (tag) newParams.set('tag', tag);
+
+            redirect(`${page}/?${newParams.toString()}`, { replace: true });
         }
     }, [location.pathname]);
 

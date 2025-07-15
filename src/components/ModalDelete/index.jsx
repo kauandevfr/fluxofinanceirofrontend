@@ -35,7 +35,6 @@ export default function ModalDelete() {
             receita: { endpoint: `/renda/${id}`, callback: () => closeAndList(listingIncomes) },
             categoria: { endpoint: `/categoria/${id}`, callback: listingCategories },
             "forma de pagamento": { endpoint: `/formapagamento/${id}`, callback: listingPaymentForms },
-            banco: { endpoint: `/instituicaofinanceira/${id}`, callback: listingBanks },
         };
 
         try {

@@ -16,8 +16,6 @@ export const ExpenseContextProvider = ({ children }) => {
 
     const [paymentForms, setPaymentForms] = useState(initialListing)
 
-    const [banks, setBanks] = useState(initialListing)
-
     const [expenses, setExpenses] = useState(initialListing)
 
     const [filtersModal, setFiltersModal] = useState(false)
@@ -88,20 +86,6 @@ export const ExpenseContextProvider = ({ children }) => {
         }
     }
 
-    const listingBanks = async () => {
-        try {
-            setBanks(initialListing)
-
-            const { data } = await instance.get("/instituicoesfinanceiras")
-            const filteredItems = data.map(e => ({ ...e, filter: false })).sort((a, b) => b.titulo.length - a.titulo.length);
-
-            setBanks({ loading: false, items: filteredItems })
-
-        } catch (error) {
-            showError(error)
-        }
-    }
-
     return (
         <ExpenseContext.Provider value={{
             listingExpenses,
@@ -115,9 +99,6 @@ export const ExpenseContextProvider = ({ children }) => {
 
             listingPaymentForms,
             paymentForms,
-
-            listingBanks,
-            banks,
 
             bankModal,
             setBankModal,
