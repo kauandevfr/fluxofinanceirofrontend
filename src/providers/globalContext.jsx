@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import instance from "../utilities/instance";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "./userContext"
 
 const GlobalContext = createContext();
 
@@ -70,7 +71,7 @@ export const GlobalContextProvider = ({ children }) => {
             const { data } = await instance.get(`/cobrancas/resumo${query.toString() ? "?" + query.toString() : ""}`)
             setResume({ loading: false, ...data })
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
 
@@ -92,11 +93,17 @@ export const GlobalContextProvider = ({ children }) => {
     const showError = error => {
         console.error(error)
 
+        if (error.response.status == 401) {
+            localStorage.clear()
+            return redirect("/")
+        }
+
         setAlertModal({
             open: true,
             tag: "error",
             message: error.response?.data || "Erro interno. Tente novamente"
         })
+
     }
 
     return (

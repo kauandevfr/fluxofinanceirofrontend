@@ -11,7 +11,7 @@ export const useIncomeContext = () => {
 export const IncomeContextProvider = ({ children }) => {
     const initialListing = { loading: true, items: [] }
     const [incomes, setIncomes] = useState(initialListing)
-    const { queryParams } = useGlobalContext()
+    const { queryParams, showError } = useGlobalContext()
 
     const [incomeModal, setIncomeModal] = useState({
         open: false,
@@ -29,7 +29,7 @@ export const IncomeContextProvider = ({ children }) => {
                 loading: false, items: data
             })
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
 

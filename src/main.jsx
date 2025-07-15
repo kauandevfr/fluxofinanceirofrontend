@@ -16,8 +16,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 <ExpenseContextProvider>
                     <IncomeContextProvider>
                         <UserContextProvider>
-                            <MainRoutes />
                             <RouteObserver />
+                            <MainRoutes />
                         </UserContextProvider>
                     </IncomeContextProvider>
                 </ExpenseContextProvider>

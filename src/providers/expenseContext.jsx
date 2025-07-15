@@ -41,7 +41,7 @@ export const ExpenseContextProvider = ({ children }) => {
         item: {}
     })
 
-    const { queryParams } = useGlobalContext()
+    const { queryParams, showError } = useGlobalContext()
 
     const listingExpenses = async () => {
         const { query } = queryParams()
@@ -55,7 +55,7 @@ export const ExpenseContextProvider = ({ children }) => {
             setExpenses({ loading: false, items: data })
 
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
 
     }
@@ -70,7 +70,7 @@ export const ExpenseContextProvider = ({ children }) => {
                 items: filteredItems,
             });
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
 
@@ -84,7 +84,7 @@ export const ExpenseContextProvider = ({ children }) => {
                 items: filteredItems
             })
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
 
@@ -95,12 +95,10 @@ export const ExpenseContextProvider = ({ children }) => {
             const { data } = await instance.get("/instituicoesfinanceiras")
             const filteredItems = data.map(e => ({ ...e, filter: false })).sort((a, b) => b.titulo.length - a.titulo.length);
 
-
             setBanks({ loading: false, items: filteredItems })
-            console.log(filteredItems)
 
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
 

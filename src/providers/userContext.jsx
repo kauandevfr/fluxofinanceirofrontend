@@ -65,8 +65,8 @@ export const UserContextProvider = ({ children }) => {
             redirect(`/dashboard?mes=${mes}&ano=${ano}`)
 
             window.location.reload()
-        } catch (erro) {
-            showError(erro)
+        } catch (error) {
+            showError(error)
         } finally {
             btn.textContent = "Iniciar sessão"
             btn.disabled = false
@@ -91,7 +91,7 @@ export const UserContextProvider = ({ children }) => {
             const html = document.querySelector('html');
             html.setAttribute('data-theme', data.tema);
         } catch (error) {
-            console.error(error)
+            showError(error)
         }
     }
 
