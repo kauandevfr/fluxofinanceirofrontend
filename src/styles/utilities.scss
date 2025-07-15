@@ -280,7 +280,7 @@
 }
 
 .text-white {
-    color: var(--white);
+    color: var(--white) !important;
 }
 
 .text-main-500 {
@@ -433,4 +433,31 @@
 
 .fx-wrap {
     flex-wrap: wrap
+}
+
+.react-joyride__tooltip {
+    background-color: var(--gray-800) !important;
+    color: var(--white) !important;
+    width: 500px !important;
+    border-radius: var(--b-radius) !important;
+    padding: 4rem !important;
+    box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.3);
+}
+
+
+.react-joyride__tooltip p {
+    color: var(--white);
+    font-size: 2rem;
+}
+
+.__floater__arrow polygon {
+    fill: var(--gray-800) !important;
+}
+
+.react-joyride__spotlight {
+    border-radius: var(--b-radius) !important;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
 }

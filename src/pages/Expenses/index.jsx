@@ -97,7 +97,7 @@ export default function Expenses() {
         <div className="horizontal-align jc-between ">
           <Link className="button" to={`/dashboard/?mes=${mes}&ano=${ano}`}>Painel</Link>
           <div className="horizontal-align gap2">
-            <button className="button" type="button" onClick={() => setExpenseModal({ open: true, item: {}, type: "Adicionar" })}>
+            <button className="button" type="button" onClick={() => setExpenseModal({ open: true, item: {}, type: "Adicionar" })} id="step-11" >
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="Edit / Add_Plus_Circle">
                   <path
@@ -111,7 +111,7 @@ export default function Expenses() {
               </svg>
               Adicionar despesa
             </button>
-            <button className="button" type="button"
+            <button className="button" type="button" id="step-12"
               onClick={() => setFiltersModal(true)}
             >
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,7 +126,7 @@ export default function Expenses() {
             </button>
           </div>
         </div>
-        <form className="w100" onSubmit={(e) => searchExpense(e)}  >
+        <form className="w100" onSubmit={(e) => searchExpense(e)} id="step-14">
           <input
             className="input"
             id="pesquisa"
@@ -136,7 +136,7 @@ export default function Expenses() {
             placeholder="Pesquisa por titulo..."
           />
         </form>
-        <header className="list-header">
+        <header className="list-header" id="step-13">
           <div className="list-cell">
             {expenses.items.length > 0 &&
               <input className="input" type="checkbox" id="status"
@@ -189,7 +189,7 @@ export default function Expenses() {
             <h1 className="list-row__title">Editar ou excluir</h1>
           </div>
         </header>
-        <ul className="list-table vertical-align gap2">
+        <ul className="list-table vertical-align gap2" id="step-10">
           {expenses.loading ? <Skeleton /> : expenses.items.length ?
             expenses.items.slice(0, visibleItems).map((element, index) => {
               const select = selected.some((el) => el.id === element.id)

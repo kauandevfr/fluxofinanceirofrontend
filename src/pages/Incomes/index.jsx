@@ -97,7 +97,7 @@ export default function Incomes() {
         <div className="horizontal-align jc-between ">
           <Link className="button" to={`/dashboard/?mes=${mes}&ano=${ano}`}>Painel</Link>
           <div className="horizontal-align gap2">
-            <button className="button" type="button" onClick={() => setIncomeModal({ open: true, type: "Adicionar", item: {} })}>
+            <button className="button" type="button" onClick={() => setIncomeModal({ open: true, type: "Adicionar", item: {} })} id="step-15">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="Edit / Add_Plus_Circle">
                   <path
@@ -113,7 +113,7 @@ export default function Incomes() {
             </button>
           </div>
         </div>
-        <form className="w100" onSubmit={(e) => searchIncome(e)}  >
+        <form className="w100" onSubmit={(e) => searchIncome(e)} id="step-16">
           <input
             className="input"
             id="pesquisa"
@@ -123,7 +123,7 @@ export default function Incomes() {
             placeholder="Pesquisa por titulo..."
           />
         </form>
-        <header className="list-header">
+        <header className="list-header" id="step-17">
           <div className="list-cell">
             {incomes.items.length > 0 &&
               <input className="input" type="checkbox" id="status"
@@ -152,7 +152,7 @@ export default function Incomes() {
             <h1 className="list-row__title">Editar ou excluir</h1>
           </div>
         </header>
-        <ul className="list-table vertical-align gap2">
+        <ul className="list-table vertical-align gap2" id="step-18">
           {incomes.loading ? <Skeleton /> : incomes.items.length ?
             incomes.items.slice(0, visibleItems).map((element, index) => {
               const select = selected.some((el) => el.id === element.id)

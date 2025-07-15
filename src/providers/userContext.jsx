@@ -12,6 +12,8 @@ export const UserContextProvider = ({ children }) => {
 
     const { currentMonthYear, redirect, showError, setAlertModal } = useGlobalContext()
 
+    const [initTutorial, setInitTutorial] = useState(false)
+
     const [user, setUser] = useState({
         loading: true,
         data: {}
@@ -99,7 +101,10 @@ export const UserContextProvider = ({ children }) => {
             loginUser,
             logoutSystem,
             listUser,
-            user
+            user,
+            setUser,
+            initTutorial,
+            setInitTutorial
         }}>
             {children}
         </UserContext.Provider>

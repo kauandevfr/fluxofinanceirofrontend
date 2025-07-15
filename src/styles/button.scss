@@ -62,3 +62,25 @@ button {
     border-radius: var(--b-radius);
     border: var(--border-standard);
 }
+
+@keyframes pulseGlow {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0px var(--main-800);
+    }
+
+    50% {
+        transform: scale(1.026);
+        box-shadow: 0 0 15px var(--main-800);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0px var(--main-800);
+    }
+}
+
+
+.button.pulse {
+    animation: pulseGlow 2.6s infinite ease-in-out;
+}

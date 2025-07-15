@@ -27,11 +27,11 @@ export default function Dashboard() {
     <Container>
       <section className="resume-expense-incomes vertical-align gap1">
         <h2 className="page-subtitle">Resumo</h2>
-        <div className="horizontal-align gap4">
+        <div className="horizontal-align gap4" id="step-3">
           <ul className="resume__item">
             <header>
               <h1 className="page-title">Despesas</h1>
-              <Link className="link" to={`/expenses/?${query.toString()}`}>Ver mais</Link>
+              <Link className="link" to={`/expenses/?${query.toString()}`} id="step-4">Ver mais</Link>
             </header>
             {expenses.loading ? <Skeleton /> : expenses.items.length ?
               expenses.items.slice(0, 5).map(element => {
@@ -63,7 +63,7 @@ export default function Dashboard() {
           </ul>
         </div>
       </section>
-      <section className="sum-categories vertical-align gap1">
+      <section className="sum-categories vertical-align gap1" id="step-5">
         <h2 className="page-subtitle">Somatória</h2>
         <div className="horizontal-align gap4">
           <ul className="resume__item">
@@ -136,6 +136,7 @@ export default function Dashboard() {
           </ul>
         </div>
       </section>
+
     </Container>
   );
 }
