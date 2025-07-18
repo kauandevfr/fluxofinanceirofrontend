@@ -94,10 +94,13 @@ export const GlobalContextProvider = ({ children }) => {
     const showError = error => {
         console.error(error)
 
-        if (error.response.status && error.response.status == 401) {
-            localStorage.clear()
-            return redirect("/")
+        if (error.response?.status === 401) {
+            if (window.location.pathname !== "/login") {
+                localStorage.clear();
+                return redirect("/");
+            }
         }
+
 
         setAlertModal({
             open: true,
