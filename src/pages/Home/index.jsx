@@ -14,7 +14,8 @@ export default function Home() {
   const { redirect } = useGlobalContext()
 
   const words = ['eficiente', 'inteligente', 'inovadora', 'moderna', 'descomplicada'];
-  const wordRef = useRef()
+  const wordRef = useRef(null)
+  const intervalId = useRef(null);
   const wordIndex = useRef(0);
 
   const [contentPrev, setContentPrev] = useState(false)
@@ -57,7 +58,7 @@ export default function Home() {
       gsap.to(wordRef.current, {
         duration: 1,
         text: word + "|",
-        ease: 'none',
+        ease: "none",
         onComplete: () => {
           gsap.to({}, { duration: 1, onComplete: deleteWord });
         }
@@ -65,51 +66,49 @@ export default function Home() {
     };
 
     const deleteWord = () => {
-      const word = words[wordIndex.current].split('');
+      const word = words[wordIndex.current].split("");
       let i = word.length;
 
-      const interval = setInterval(() => {
+      intervalId.current = setInterval(() => {
         i--;
-        wordRef.current.textContent = word.slice(0, i).join('') + '|';
+        if (wordRef.current) {
+          wordRef.current.textContent = word.slice(0, i).join("") + "|";
+        }
 
         if (i <= 0) {
-          clearInterval(interval);
+          clearInterval(intervalId.current);
           wordIndex.current = (wordIndex.current + 1) % words.length;
           animateWord();
         }
-      }, 100)
+      }, 100);
     };
 
     animateWord()
 
-    const tlPrev = gsap.timeline();
+    const ctx = gsap.context(() => {
+      const tlPrev = gsap.timeline();
+      tlPrev.to(".apresentation__preview", {
+        y: -15,
+        duration: 0.4,
+        ease: 'power3.out'
+      });
+      tlPrev.to(obj.current, {
+        numero: 1000,
+        duration: 7,
+        ease: 'power4.out',
+        onUpdate: () => setValuePrev(obj.current.numero)
+      });
+      tlPrev.to(".apresentation__preview", {
+        y: 5,
+        duration: 1.6,
+        ease: 'power2.inOut'
+      }, '-=1.6');
+      tlPrev.to(".apresentation__preview", {
+        y: 0,
+        duration: 0.3,
+        ease: 'power3.out'
+      }, '-=0.2');
 
-    tlPrev.to(".apresentation__preview", {
-      y: -15,
-      duration: 0.4,
-      ease: 'power3.out'
-    });
-
-    tlPrev.to(obj.current, {
-      numero: 1000,
-      duration: 7,
-      ease: 'power4.out',
-      onUpdate: () => setValuePrev(obj.current.numero)
-    });
-
-    tlPrev.to(".apresentation__preview", {
-      y: 5,
-      duration: 1.6,
-      ease: 'power2.inOut'
-    }, '-=1.6');
-
-    tlPrev.to(".apresentation__preview", {
-      y: 0,
-      duration: 0.3,
-      ease: 'power3.out'
-    }, '-=0.2');
-
-    gsap.context(() => {
       timelineFeatures.current = gsap.timeline({
         scrollTrigger: {
           trigger: '.features__items-item.master',
@@ -122,9 +121,7 @@ export default function Home() {
           { y: 100, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.6, ease: "power2.out", stagger: 0.2 }
         );
-    }, ".features");
 
-    gsap.context(() => {
       timelineEtapas.current = gsap.timeline({
         scrollTrigger: {
           trigger: '#howitworks__steps-step-1',
@@ -132,37 +129,21 @@ export default function Home() {
           end: "bottom center",
         }
       })
-        .fromTo('#howitworks__steps-step-1',
-          { x: 100, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
-        )
-        .fromTo('#howitworks__steps-line-1',
-          { height: 0, opacity: 0 },
-          { height: "6rem", opacity: 1, duration: 0.6, ease: "power2.out" }
-        )
-        .fromTo('#howitworks__steps-step-2',
-          { x: -100, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
-        )
-        .fromTo('#howitworks__steps-line-2',
-          { height: 0, opacity: 0 },
-          { height: "6rem", opacity: 1, duration: 0.6, ease: "power2.out" }
-        )
-        .fromTo('#howitworks__steps-step-3',
-          { x: 100, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
-        )
-        .fromTo('#howitworks__steps-line-3',
-          { height: 0, opacity: 0 },
-          { height: "6rem", opacity: 1, duration: 0.6, ease: "power2.out" }
-        )
-        .fromTo('#howitworks__steps-step-4',
-          { x: -100, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" }
-        )
+        .fromTo('#howitworks__steps-step-1', { x: 100, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" })
+        .fromTo('#howitworks__steps-line-1', { height: 0, opacity: 0 }, { height: "6rem", opacity: 1, duration: 0.6, ease: "power2.out" })
+        .fromTo('#howitworks__steps-step-2', { x: -100, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" })
+        .fromTo('#howitworks__steps-line-2', { height: 0, opacity: 0 }, { height: "6rem", opacity: 1, duration: 0.6, ease: "power2.out" })
+        .fromTo('#howitworks__steps-step-3', { x: 100, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" })
+        .fromTo('#howitworks__steps-line-3', { height: 0, opacity: 0 }, { height: "6rem", opacity: 1, duration: 0.6, ease: "power2.out" })
+        .fromTo('#howitworks__steps-step-4', { x: -100, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" });
+    });
 
-    }, ".howitworks")
-
+    return () => {
+      // ✅ Limpa interval
+      clearInterval(intervalId.current);
+      // ✅ Mata todas as animações GSAP desse elemento
+      gsap.killTweensOf(wordRef.current);
+    };
 
   }, [])
 
