@@ -2,7 +2,7 @@ import Laoder from "../Loader";
 
 export default function ButtonSubmit({ isLoading, children, ...props }) {
     return (
-        <button className="button" type="submit" {...props}>
+        <button className="button" type="submit" disabled={isLoading} {...props}>
             {isLoading ? (
                 <Laoder />
             ) : (
