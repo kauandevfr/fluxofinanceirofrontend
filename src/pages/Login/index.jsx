@@ -6,10 +6,12 @@ import loginUsers from '../../schemas/users/login';
 import { useUserContext } from '../../providers/userContext';
 import { useEffect } from 'react';
 import Alert from "../../components/Alert"
+import ButtonSubmit from '../../components/ButtonSubmit';
 
 export default function Login() {
 
-  const { register, handleSubmit } = useForm({ resolver: yupResolver(loginUsers) })
+  const { register, handleSubmit, formState: { isSubmitting }
+  } = useForm({ resolver: yupResolver(loginUsers) })
 
   const { loginUser } = useUserContext()
 
@@ -34,7 +36,8 @@ export default function Login() {
             <label className="label" htmlFor="password">Senha</label>
             <input className="input" type="password" id="password" placeholder="********" required  {...register("senha")} />
           </div>
-          <button className="button" type="submit">Iniciar Sessão</button>
+          <Link className="link text-right" to="/send-token-password">Esqueceu a senha?</Link>
+          <ButtonSubmit isLoading={isSubmitting}>Iniciar Sessão</ButtonSubmit>
           <div className="horizontal-align gap2 br bg-gray-700 p2">
             <svg
               className="w5rem"

@@ -270,6 +270,7 @@ export default function User() {
                     {errorsPass.senhaNovaRepetida && <span className="span-message error">{errorsPass.senhaNovaRepetida?.message}</span>}
                   </div>
                 </div>
+                <Link className="link" to="/send-token-password">Esqueceu a senha?</Link>
                 <div className="w100"><PasswordCriteria value={watch("senhaNova")} /></div>
                 <button className="button" type="submit">
                   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
