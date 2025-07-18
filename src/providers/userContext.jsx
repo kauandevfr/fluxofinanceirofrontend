@@ -22,10 +22,6 @@ export const UserContextProvider = ({ children }) => {
     const registerUser = async (data, e) => {
         e.preventDefault();
 
-        const btn = e.target.querySelector('button.button[type="submit"]');
-        btn.disabled = true;
-        btn.textContent = 'Aguarde...';
-
         try {
             await instance.post("/registrar", { ...data })
 
@@ -37,19 +33,11 @@ export const UserContextProvider = ({ children }) => {
 
         } catch (error) {
             showError(error);
-        } finally {
-            btn.disabled = false
-            btn.textContent = 'Registrar'
         }
     }
 
     const loginUser = async (data, e) => {
         e.preventDefault();
-
-        const btn = e.target.querySelector('button.button[type="submit"]');
-        btn.disabled = true;
-        btn.textContent = 'Aguarde...';
-
         try {
             const { data: content } = await instance.post("/login", { ...data })
             localStorage.setItem("token", content.token)
@@ -59,17 +47,14 @@ export const UserContextProvider = ({ children }) => {
             setAlertModal({
                 open: true,
                 tag: "sucess",
-                message: "Redirecionando para o seu painel financeiro."
+                message: "Redirecionando para o seu painel financeiro.",
+                onClose: () => {
+                    redirect(`/dashboard/?mes=${mes}&ano=${ano}`);
+                }
             })
 
-            redirect(`/dashboard?mes=${mes}&ano=${ano}`)
-
-            window.location.reload()
         } catch (error) {
             showError(error)
-        } finally {
-            btn.textContent = "Iniciar sessão"
-            btn.disabled = false
         }
     }
 

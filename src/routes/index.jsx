@@ -37,11 +37,9 @@ export default function MainRoutes() {
                 <Route path="/user-account" element={<User />} />
                 <Route path="/settings" element={<Settings />} />
             </Route>
-            <Route element={<PublicRoute />} >
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/" element={<Home />} />
-            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Home />} />
             <Route path="/send-token-password" element={<SendTokenPassword />} />
             <Route path="/recover-password/:token" element={<RecoverPassword />} />
             <Route path="/*" element={<NotFound />} />

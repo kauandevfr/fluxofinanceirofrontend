@@ -80,7 +80,8 @@ export const GlobalContextProvider = ({ children }) => {
         open: false,
         type: "",
         mes: "",
-        ano: ""
+        ano: "",
+        onClose: null
     })
 
 
@@ -93,7 +94,7 @@ export const GlobalContextProvider = ({ children }) => {
     const showError = error => {
         console.error(error)
 
-        if (error.response.status == 401) {
+        if (error.response.status && error.response.status == 401) {
             localStorage.clear()
             return redirect("/")
         }
@@ -101,7 +102,8 @@ export const GlobalContextProvider = ({ children }) => {
         setAlertModal({
             open: true,
             tag: "error",
-            message: error.response?.data || "Erro interno. Tente novamente"
+            message: error.response?.data || "Erro interno. Tente novamente",
+            onClose: null
         })
 
     }

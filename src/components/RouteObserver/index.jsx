@@ -8,7 +8,10 @@ export default function RouteObserver() {
 
     const location = useLocation();
     const { query, page } = queryParams();
+
     useEffect(() => {
+        if (location.pathname.startsWith("/recover-password")) return;
+
         const isOnExpensesOrIncomes = page === 'expenses' || page === 'incomes';
         const isSettings = page === 'settings';
 
