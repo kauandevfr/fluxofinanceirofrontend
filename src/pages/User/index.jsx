@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer";
@@ -12,17 +12,19 @@ import './style.scss';
 import instance from "../../utilities/instance";
 import Alert from "../../components/Alert"
 
+import ButtonSubmit from "../../components/ButtonSubmit"
+
 export default function User() {
   const [content, setContent] = useState('personalData')
-  const { currentMonthYear, showError } = useGlobalContext()
+  const { currentMonthYear, showError, setAlertModal } = useGlobalContext()
   const { listUser, user } = useUserContext()
   const { mes, ano } = currentMonthYear()
 
-  const { register: registerUser, reset: resetUser, handleSubmit: handleSubmitUser, formState: { errors: errorsUser } } = useForm({
+  const { register: registerUser, reset: resetUser, handleSubmit: handleSubmitUser, formState: { errors: errorsUser, isSubmitting: isSubUser } } = useForm({
     resolver: yupResolver(updateUsers)
   })
 
-  const { watch, register: registerPass, reset: resetPass, handleSubmit: handleSubmitPass, setError: setErrorPass, formState: { errors: errorsPass }
+  const { watch, register: registerPass, reset: resetPass, handleSubmit: handleSubmitPass, setError: setErrorPass, formState: { errors: errorsPass, isSubmitting: isSubPass }
   } = useForm();
 
   const updateUser = async data => {
@@ -33,7 +35,7 @@ export default function User() {
       await instance.put("/usuario", { ...data })
       setAlertModal({
         open: true,
-        tag: "suceess",
+        tag: "sucess",
         message: "Sucesso ao atualizar seus dados!"
       })
 
@@ -47,7 +49,7 @@ export default function User() {
     if (data.senhaNova !== data.senhaNovaRepetida) {
       setErrorPass("senhaNovaRepetida", {
         type: "manual",
-        message: "As senhas não coincidem"
+        message: "As senhas não coincidem."
       });
       return;
     }
@@ -57,7 +59,7 @@ export default function User() {
 
       setAlertModal({
         open: true,
-        tag: "suceess",
+        tag: "sucess",
         message: "Sucesso ao atualizar sua senha!"
       })
       listUser()
@@ -193,12 +195,14 @@ export default function User() {
                   <input className="input" type="text" id="name" placeholder="Kauan Rodrigues"
                     {...registerUser("nome")}
                   />
+                  {errorsUser.nome && <span className="span-message error">{errorsUser.nome?.message}</span>}
                 </div>
                 <div className="item-form">
                   <label className="label" htmlFor="email">Email</label>
                   <input className="input" type="email" id="email" placeholder="seuemail@email.com"
                     {...registerUser("email")}
                   />
+                  {errorsUser.email && <span className="span-message error">{errorsUser.email?.message}</span>}
                 </div>
               </div>
 
@@ -208,15 +212,17 @@ export default function User() {
                   <input className="input" type="number" id="phonenumber" placeholder="Ex.: (11) 91234-5678"
                     {...registerUser("numerocontato")}
                   />
+                  {errorsUser.numerocontato && <span className="span-message error">{errorsUser.numerocontato?.message}</span>}
                 </div>
                 <div className="item-form">
                   <label className="label" htmlFor="datebirth">Data de nascimento</label>
                   <input className="input" type="date" id="datebirth" placeholder="DD/MM/AAAA"
                     {...registerUser("datadenascimento")}
                   />
+                  {errorsUser.datadenascimento && <span className="span-message error">{errorsUser.datadenascimento?.message}</span>}
                 </div>
               </div>
-              <button className="button" type="submit">
+              <ButtonSubmit isLoading={isSubUser}>
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M17 21.0002L7 21M17 21.0002L17.8031 21C18.921 21 19.48 21 19.9074 20.7822C20.2837 20.5905 20.5905 20.2843 20.7822 19.908C21 19.4806 21 18.921 21 17.8031V9.21955C21 8.77072 21 8.54521 20.9521 8.33105C20.9095 8.14 20.8393 7.95652 20.7432 7.78595C20.6366 7.59674 20.487 7.43055 20.1929 7.10378L17.4377 4.04241C17.0969 3.66374 16.9242 3.47181 16.7168 3.33398C16.5303 3.21 16.3242 3.11858 16.1073 3.06287C15.8625 3 15.5998 3 15.075 3H6.2002C5.08009 3 4.51962 3 4.0918 3.21799C3.71547 3.40973 3.40973 3.71547 3.21799 4.0918C3 4.51962 3 5.08009 3 6.2002V17.8002C3 18.9203 3 19.4796 3.21799 19.9074C3.40973 20.2837 3.71547 20.5905 4.0918 20.7822C4.5192 21 5.07899 21 6.19691 21H7M17 21.0002V17.1969C17 16.079 17 15.5192 16.7822 15.0918C16.5905 14.7155 16.2837 14.4097 15.9074 14.218C15.4796 14 14.9203 14 13.8002 14H10.2002C9.08009 14 8.51962 14 8.0918 14.218C7.71547 14.4097 7.40973 14.7155 7.21799 15.0918C7 15.5196 7 16.0801 7 17.2002V21M15 7H9"
@@ -227,7 +233,7 @@ export default function User() {
                   />
                 </svg>
                 Salvar Alterações
-              </button>
+              </ButtonSubmit>
             </div>
           </form> : content === "updatePass" ?
             <form onSubmit={handleSubmitPass(updatePass)}>
@@ -272,7 +278,7 @@ export default function User() {
                 </div>
                 <Link className="link" to="/send-token-password">Esqueceu a senha?</Link>
                 <div className="w100"><PasswordCriteria value={watch("senhaNova")} /></div>
-                <button className="button" type="submit">
+                <ButtonSubmit isLoading={isSubPass}>
                   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M20 6C20 6 19.1843 6 19.0001 6C16.2681 6 13.8871 4.93485 11.9999 3C10.1128 4.93478 7.73199 6 5.00009 6C4.81589 6 4.00009 6 4.00009 6C4.00009 6 4 8 4 9.16611C4 14.8596 7.3994 19.6436 12 21C16.6006 19.6436 20 14.8596 20 9.16611C20 8 20 6 20 6Z"
@@ -282,9 +288,8 @@ export default function User() {
                       strokeLinejoin="round"
                     />
                   </svg>
-
                   Alterar senha
-                </button>
+                </ButtonSubmit>
               </div>
             </form>
             : content === "settings" ?

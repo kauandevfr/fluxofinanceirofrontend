@@ -21,7 +21,7 @@ const schemaUpdatePass = Yup.object().shape({
     .matches(/[!@#$%^&*(),.?":{}|<>]/)
     .test("no-spaces", (value) => !/\s/.test(value)),
   repitaSenha: Yup.string()
-    .oneOf([Yup.ref("senha"), null], "As senhas devem ser iguais.")
+    .oneOf([Yup.ref("senha"), null], "As senhas não coincidem.")
     .required("Este campo deve ser preenchido.")
 })
 

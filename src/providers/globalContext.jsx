@@ -75,7 +75,6 @@ export const GlobalContextProvider = ({ children }) => {
         }
     }
 
-
     const [addInModal, setAddInModal] = useState({
         open: false,
         type: "",
@@ -83,7 +82,6 @@ export const GlobalContextProvider = ({ children }) => {
         ano: "",
         onClose: null
     })
-
 
     const [alertModal, setAlertModal] = useState({
         open: false,
@@ -94,10 +92,10 @@ export const GlobalContextProvider = ({ children }) => {
     const showError = error => {
         console.error(error);
 
-        if (error.response?.status === 401) {
-            localStorage.clear();
-            return redirect("/");
-        }
+        // if (error.response?.status === 401) {
+        //     localStorage.clear();
+        //     return redirect("/");
+        // }
 
         setAlertModal({
             open: true,
