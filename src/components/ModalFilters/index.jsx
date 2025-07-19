@@ -80,10 +80,14 @@ export default function ModalFilters() {
         closeModal();
     };
 
+
     useEffect(() => {
         if (filtersModal) {
             const { mes, ano, ...removedFilters } = objQuery;
-            setSelected(prev => ({ ...prev, ...removedFilters }));
+            setSelected(prev => ({
+                ...prev,
+                ...removedFilters
+            }));
         }
     }, [filtersModal]);
 
