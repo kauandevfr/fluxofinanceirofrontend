@@ -38,26 +38,45 @@ export default function Alert() {
 
     useEffect(() => {
         if (alertModal.open) {
-            setProgress(100); // Reseta a barra sempre que abrir
-            const start = Date.now();
-            const duration = 3500;
+            setProgress(100);
+            let start = Date.now();
+            let duration = 3500;
+            let elapsed = 0;
+            let interval, timeout;
+            const startTimers = (remaining) => {
+                start = Date.now();
+                interval = setInterval(() => {
+                    const nowElapsed = Date.now() - start + elapsed;
+                    const percentage = Math.max(100 - (nowElapsed / duration) * 100, 0);
+                    setProgress(percentage);
+                }, 50);
 
-            const interval = setInterval(() => {
-                const elapsed = Date.now() - start;
-                const percentage = Math.max(100 - (elapsed / duration) * 100, 0);
-                setProgress(percentage);
-            }, 50);
-
-            const timeout = setTimeout(() => {
-                closeModal();
-            }, duration);
-
+                timeout = setTimeout(() => {
+                    closeModal();
+                }, remaining);
+            };
+            startTimers(duration);
+            const handleMouseEnter = () => {
+                elapsed += Date.now() - start;
+                clearInterval(interval);
+                clearTimeout(timeout);
+            };
+            const handleMouseLeave = () => {
+                const remaining = duration - elapsed;
+                startTimers(remaining);
+            };
+            const modalElement = document.querySelector('.alert');
+            modalElement.addEventListener('mouseenter', handleMouseEnter);
+            modalElement.addEventListener('mouseleave', handleMouseLeave);
             return () => {
                 clearTimeout(timeout);
                 clearInterval(interval);
+                modalElement.removeEventListener('mouseenter', handleMouseEnter);
+                modalElement.removeEventListener('mouseleave', handleMouseLeave);
             };
         }
     }, [alertModal.open]);
+
 
     return (
         <AnimatePresence>
@@ -86,6 +105,6 @@ export default function Alert() {
                         transition={{ duration: 0 }}
                     />
                 </motion.div>}
-        </AnimatePresence>
+        </AnimatePresence >
     );
 }
