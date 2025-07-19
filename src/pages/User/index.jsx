@@ -13,6 +13,8 @@ import instance from "../../utilities/instance";
 import Alert from "../../components/Alert"
 
 import ButtonSubmit from "../../components/ButtonSubmit"
+import { schemaUpdatePass } from "../../schemas/users/password";
+import * as yup from "yup"
 
 export default function User() {
   const [content, setContent] = useState('personalData')
@@ -25,7 +27,7 @@ export default function User() {
   })
 
   const { watch, register: registerPass, reset: resetPass, handleSubmit: handleSubmitPass, setError: setErrorPass, formState: { errors: errorsPass, isSubmitting: isSubPass }
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schemaUpdatePass) });
 
   const updateUser = async data => {
     data = Object.keys(data)
@@ -46,17 +48,9 @@ export default function User() {
   }
 
   const updatePass = async data => {
-    if (data.senhaNova !== data.senhaNovaRepetida) {
-      setErrorPass("senhaNovaRepetida", {
-        type: "manual",
-        message: "As senhas não coincidem."
-      });
-      return;
-    }
-    const { senhaNovaRepetida, ...dataToSend } = data;
+    const { repitaSenha, ...content } = data;
     try {
-      await instance.put("/usuario", dataToSend)
-
+      await instance.put("/usuario", content)
       setAlertModal({
         open: true,
         tag: "sucess",
@@ -256,24 +250,26 @@ export default function User() {
 
                 <div className="item-form">
                   <label className="label" htmlFor="currentpass">Senha atual</label>
-                  <input className="input" type="password" id="currentpass" placeholder="*************"
+                  <input className="input" type="text" id="currentpass" placeholder="*************"
                     {...registerPass("senhaAntiga")}
                   />
+                  {errorsPass.senhaAntiga && <span className="span-message error">{errorsPass.senhaAntiga?.message}</span>}
                 </div>
 
                 <div className="horizontal-align gap4 w100">
                   <div className="item-form">
                     <label className="label" htmlFor="newpass">Nova senha</label>
-                    <input className="input" type="password" id="newpass" placeholder="Digite a nova senha"
+                    <input className="input" type="text" id="newpass" placeholder="Digite a nova senha"
                       {...registerPass("senhaNova")}
                     />
+                    {errorsPass.senhaNova && <span className="span-message error">{errorsPass.senhaNova?.message}</span>}
                   </div>
                   <div className="item-form vertical-align">
                     <label className="label" htmlFor="repeatnewpaass">Repita a nova senha</label>
-                    <input className="input" type="password" id="repeatnewpaass" placeholder="Repita a nova senha"
-                      {...registerPass("senhaNovaRepetida")}
+                    <input className="input" type="text" id="repeatnewpaass" placeholder="Repita a nova senha"
+                      {...registerPass("repitaSenha")}
                     />
-                    {errorsPass.senhaNovaRepetida && <span className="span-message error">{errorsPass.senhaNovaRepetida?.message}</span>}
+                    {errorsPass.repitaSenha && <span className="span-message error">{errorsPass.repitaSenha?.message}</span>}
                   </div>
                 </div>
                 <Link className="link" to="/send-token-password">Esqueceu a senha?</Link>

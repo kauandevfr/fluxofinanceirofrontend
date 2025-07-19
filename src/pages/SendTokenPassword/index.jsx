@@ -8,13 +8,7 @@ import { useGlobalContext } from "../../providers/globalContext";
 import instance from "../../utilities/instance";
 import './style.scss';
 import ButtonSubmit from "../../components/ButtonSubmit";
-
-const schemaEmail = Yup.object().shape({
-  email: Yup
-    .string()
-    .email("E-mail inválido")
-    .required("O e-mail é obrigatório")
-});
+import { schemaEmail } from "../../schemas/users/password";
 
 export default function SendTokenPassword() {
   const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm({ resolver: yupResolver(schemaEmail) })

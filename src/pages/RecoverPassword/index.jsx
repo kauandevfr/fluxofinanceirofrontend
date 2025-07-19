@@ -4,33 +4,18 @@ import PasswordCriteria from "../../components/PasswordCriteria"
 import ButtonSubmit from "../../components/ButtonSubmit";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import * as Yup from 'yup';
 import { useGlobalContext } from "../../providers/globalContext";
 import { Link, useParams } from "react-router-dom";
 import instance from "../../utilities/instance";
 import Alert from "../../components/Alert";
-
-const schemaUpdatePass = Yup.object().shape({
-  senha: Yup.string()
-    .trim()
-    .required("Este campo deve ser preenchido.")
-    .min(8, "A senha deve ter no mínimo 8 caracteres.")
-    .matches(/[0-9]/)
-    .matches(/[a-z]/)
-    .matches(/[A-Z]/)
-    .matches(/[!@#$%^&*(),.?":{}|<>]/)
-    .test("no-spaces", (value) => !/\s/.test(value)),
-  repitaSenha: Yup.string()
-    .oneOf([Yup.ref("senha"), null], "As senhas não coincidem.")
-    .required("Este campo deve ser preenchido.")
-})
+import { schemaRecoveryPass } from "../../schemas/users/password";
 
 export default function RecoverPassword() {
   const { showError, setAlertModal, currentMonthYear, redirect } = useGlobalContext()
   const { token } = useParams()
 
   const { register, watch, handleSubmit, formState: { isSubmitting, errors } } = useForm({
-    resolver: yupResolver(schemaUpdatePass)
+    resolver: yupResolver(schemaRecoveryPass)
   })
 
   const { mes, ano } = currentMonthYear()
