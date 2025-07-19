@@ -22,6 +22,7 @@ export default function Container({ children, amount }) {
     const [viewAside, setViewAside] = useState(false)
     const [selectPeriod, setSelectPeriod] = useState({ mes: "", ano: "" })
     const { currentMonthYear, queryParams, redirect, listingResume, resume, showError, setAlertModal } = useGlobalContext()
+    const [urlExport, setURLExport] = useState('')
     const { listingExpenses } = useExpenseContext()
     const { listingIncomes } = useIncomeContext()
     const { logoutSystem, listUser, user, initTutorial, setInitTutorial } = useUserContext()
@@ -67,12 +68,14 @@ export default function Container({ children, amount }) {
         refreshData();
     }
     const exportPDF = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
+        const btn = e.currentTarget
+        btn.disabled = true
 
         setAlertModal({
             open: true,
             tag: "alert",
-            message: "Exportando relatório..."
+            message: "Gerando relatório..."
         })
 
         try {
@@ -80,20 +83,14 @@ export default function Container({ children, amount }) {
                 responseType: 'blob'
             });
 
-            const pdfURL = URL.createObjectURL(data);
+            const url = window.URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
 
-            setAlertModal({
-                open: true,
-                tag: "sucess",
-                message: "Relatório criado com sucesso!"
-            })
-
-            window.open(pdfURL, '_blank');
-
+            window.open(url, '_blank')
         } catch (error) {
             showError(error)
+        } finally {
+            btn.disabled = false
         }
-
     }
 
     const changeTheme = async () => {
@@ -259,17 +256,15 @@ export default function Container({ children, amount }) {
         const query = new URLSearchParams(location.search);
         const ano = query.has('ano') ? Number(query.get('ano')) : null;
         const mes = query.has('mes') ? months.find(e => e.id === Number(query.get('mes')) - 1)?.month : null;
-        console.log(mes, ano)
-
-
         setSelectPeriod(prev => ({
             ...prev,
-            mes,
-            ano,
+            ano: ano ?? "",
+            mes: mes ?? "",
         }));
         listUser()
         listingResume()
-    }, [location.search])
+
+    }, [location.pathname])
 
     return (
         <>
@@ -489,8 +484,9 @@ export default function Container({ children, amount }) {
                                 </svg>
                                 <span>Painel Principal</span>
                             </Link>
-
-                            <button className="button menu" type="button" data-tooltip="Exportar relatório" onClick={(e) => exportPDF(e)}>
+                            <button className="button menu" type="button" data-tooltip="Exportar relatório"
+                                onClick={(e) => exportPDF(e)}
+                            >
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M12 20C7.58172 20 4 16.4183 4 12M20 12C20 14.5264 18.8289 16.7792 17 18.2454"

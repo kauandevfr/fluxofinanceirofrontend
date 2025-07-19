@@ -25,7 +25,8 @@ button {
     box-shadow: 1px 0 50px 0.5rem rgba(0, 0, 0, 0.226);
 }
 
-.button:disabled {
+.button:disabled,
+.button.menu:disabled {
     background: var(--gray-500);
     cursor: not-allowed;
 }
