@@ -259,14 +259,18 @@ export default function Container({ children, amount }) {
         const query = new URLSearchParams(location.search);
         const ano = query.has('ano') ? Number(query.get('ano')) : null;
         const mes = query.has('mes') ? months.find(e => e.id === Number(query.get('mes')) - 1)?.month : null;
+        console.log(mes, ano)
+
+
         setSelectPeriod(prev => ({
             ...prev,
-            ano: ano ?? prev.ano,
-            mes: mes ?? prev.mes,
+            mes,
+            ano,
         }));
         listUser()
         listingResume()
-    }, [])
+    }, [location.search])
+
     return (
         <>
             <Joyride
