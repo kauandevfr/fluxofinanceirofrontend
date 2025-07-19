@@ -56,25 +56,31 @@ export default function ModalExpenseActions({ selected, setSelected }) {
 
     const changeStatusExpenses = async status => {
         try {
+            const newStatus = status ? 1 : 0;
+
             for (let i = 0; i < selectedCopy.length; i++) {
                 const element = selectedCopy[i];
-                await instance.put(`/cobranca/${element.id}`, {
-                    status: status ? 1 : 0
-                });
+
+                if (element.status !== newStatus) {
+                    await instance.put(`/cobranca/${element.id}`, { status: newStatus });
+                }
+
                 setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
             }
-            closeAndListing()
+
+            closeAndListing();
 
             setAlertModal({
                 open: true,
                 tag: "sucess",
                 message: `Sucesso ao ${status ? "pagar" : "não pagar"} ${selected.length} despesas!`
-            })
+            });
 
         } catch (error) {
-            showError(error)
+            showError(error);
         }
     };
+
 
     const addAnotherPeriod = async (e) => {
         e.preventDefault();
