@@ -9,6 +9,7 @@ import { Link, useParams } from "react-router-dom";
 import instance from "../../utilities/instance";
 import Alert from "../../components/Alert";
 import { schemaRecoveryPass } from "../../schemas/users/password";
+import FooterCopyright from "../../components/FooterCopyright";
 
 export default function RecoverPassword() {
   const { showError, setAlertModal, currentMonthYear, redirect } = useGlobalContext()
@@ -73,6 +74,7 @@ export default function RecoverPassword() {
           <Link className="span-message w100 text-center textd-none" to={`/dashboard/?mes=${mes}&ano=${ano}`}>Voltar para o painel</Link>
         </div>
       </form>
+      <FooterCopyright />
       <Alert />
     </main>
   );

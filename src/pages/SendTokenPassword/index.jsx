@@ -9,6 +9,7 @@ import instance from "../../utilities/instance";
 import './style.scss';
 import ButtonSubmit from "../../components/ButtonSubmit";
 import { schemaEmail } from "../../schemas/users/password";
+import FooterCopyright from "../../components/FooterCopyright";
 
 export default function SendTokenPassword() {
   const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm({ resolver: yupResolver(schemaEmail) })
@@ -57,6 +58,7 @@ export default function SendTokenPassword() {
       </form>
 
       <Alert />
+      <FooterCopyright />
     </main>
   );
 }
