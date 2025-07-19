@@ -14,15 +14,20 @@ import WithoutListing from '../WithoutListing';
 import './style.scss';
 import { format } from 'date-fns';
 import ButtonSubmit from "../ButtonSubmit"
+import months from '../../data/months';
 
 export default function ModalExpense() {
     const { expenseModal, setExpenseModal, categories, paymentForms, listingExpenses } = useExpenseContext();
 
-    const { queryParams, listingResume, setAlertModal, showError } = useGlobalContext()
+    const { queryParams, listingResume, setAlertModal, showError, currentMonthYear } = useGlobalContext()
 
     const { objQuery } = queryParams()
 
     const [real, setReal] = useState('R$ 0,00');
+
+    const currentPeriod = currentMonthYear()
+
+    const { mes, ano } = objQuery
 
     const isAdding = expenseModal.type
 
@@ -64,11 +69,18 @@ export default function ModalExpense() {
     };
 
     const addEditExpense = async (data) => {
-        const { mes, ano } = objQuery
         const preco = parseFloat((data.preco?.toString().replace(/\D/g, '') || '0')) / 100;
         const status = data.status === true ? 1 : 0;
         try {
-            const payload = { ...data, status, preco, mes, ano };
+
+            let payload = {}
+
+            if (isAdding === "Adicionar") {
+                payload = { ...data, status, preco, mes: !mes ? currentPeriod.mes : mes, ano: !ano ? currentPeriod.ano : ano };
+            } else {
+                const { mes, ano } = expenseModal.item
+                payload = { ...data, status, preco, mes, ano };
+            }
             const endpoint = "/cobranca";
             const method = isAdding === "Adicionar" ? "post" : "put";
             const url = isAdding === "Adicionar" ? endpoint : `${endpoint}/${expenseModal.item?.id}`;
@@ -112,6 +124,24 @@ export default function ModalExpense() {
                 parcelas: 0
 
             });
+            let message = "";
+            if (isAdding === "Adicionar") {
+                const mesId = months.find(mes => mes.id == currentPeriod.mes - 1).month;
+                if (!mes && !ano) {
+                    message = `A despesa será adicionada no período atual: ${mesId} de ${currentPeriod.ano}.`;
+                } else if (!mes) {
+                    message = `Mês não selecionado. A despesa será adicionada em: ${mesId} de ${ano}.`;
+                } else if (!ano) {
+                    message = `Mês não selecionado. A despesa será adicionada em: ${mes} de ${currentPeriod.ano}.`;
+                }
+            }
+            if (message) {
+                setAlertModal({
+                    open: true,
+                    tag: "alert",
+                    message
+                });
+            }
         }
     }, [expenseModal.open]);
     return (

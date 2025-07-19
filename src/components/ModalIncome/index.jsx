@@ -11,14 +11,19 @@ import ModalBase from '../ModalBase';
 import './style.scss';
 import { format } from 'date-fns';
 import ButtonSubmit from '../ButtonSubmit';
+import months from '../../data/months';
 
 export default function ModalIncome() {
 
     const { incomeModal, setIncomeModal, listingIncomes } = useIncomeContext()
 
-    const { queryParams, listingResume, showError, setAlertModal } = useGlobalContext()
+    const { queryParams, listingResume, showError, setAlertModal, currentMonthYear } = useGlobalContext()
 
     const { objQuery } = queryParams()
+
+    const currentPeriod = currentMonthYear()
+
+    const { mes, ano } = objQuery
 
     const [real, setReal] = useState('R$ 0,00');
 
@@ -68,11 +73,16 @@ export default function ModalIncome() {
     };
 
     const addEditincome = async data => {
-        const { mes, ano } = objQuery
         const preco = parseFloat((data.preco?.toString().replace(/\D/g, '') || '0')) / 100;
-
         try {
-            const payload = { ...data, preco, mes, ano }
+            let payload = {}
+
+            if (isAdding === "Adicionar") {
+                payload = { ...data, preco, mes: !mes ? currentPeriod.mes : mes, ano: !ano ? currentPeriod.ano : ano }
+            } else {
+                const { mes, ano } = incomeModal.item
+                payload = { ...data, preco, mes, ano }
+            }
             const endpoint = "/renda";
             const method = isAdding === "Adicionar" ? "post" : "put";
             const url = isAdding === "Adicionar" ? endpoint : `${endpoint}/${incomeModal.item?.id}`;
@@ -93,6 +103,8 @@ export default function ModalIncome() {
     }
 
     useEffect(() => {
+
+
         if (incomeModal.open) {
             const getItem = (path, fallback) => get(incomeModal, `item.${path}`, fallback);
             const formatDate = (dateStr) => dateStr?.split('T')[0] || '';
@@ -102,6 +114,24 @@ export default function ModalIncome() {
                 preco: getItem('precoBR', ''),
                 datainclusao: formatDate(getItem('datainclusao', format(new Date(), 'yyyy-MM-dd'))),
             });
+            let message = "";
+            if (isAdding === "Adicionar") {
+                const mesId = months.find(mes => mes.id == currentPeriod.mes - 1).month;
+                if (!mes && !ano) {
+                    message = `A receita será adicionada no período atual: ${mesId} de ${currentPeriod.ano}.`;
+                } else if (!mes) {
+                    message = `Mês não selecionado. A receita será adicionada em: ${mesId} de ${ano}.`;
+                } else if (!ano) {
+                    message = `Mês não selecionado. A receita será adicionada em: ${mes} de ${currentPeriod.ano}.`;
+                }
+            }
+            if (message) {
+                setAlertModal({
+                    open: true,
+                    tag: "alert",
+                    message
+                });
+            }
         }
     }, [incomeModal.open]);
 
