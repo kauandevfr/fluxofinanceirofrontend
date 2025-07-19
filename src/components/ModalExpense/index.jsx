@@ -256,7 +256,7 @@ export default function ModalExpense() {
                 {errors.datainclusao && <span className="span-message error">{errors.datainclusao?.message}</span>}
             </div>
             <div className="horizontal-align ai-center gap1 jc-end">
-                <label htmlFor="status" className="label">Paga</label>
+                <label className="label">Paga</label>
                 <input className="input" type="checkbox" id="status"
                     {...register("status")}
                 />

@@ -21,6 +21,7 @@ export default function Dashboard() {
     listingIncomes()
     listingExpenses()
     document.title = "Painel | Fluxo Financeiro";
+
   }, [])
 
   return (
@@ -125,7 +126,7 @@ export default function Dashboard() {
               resume.vencimento.map((element, index) => {
                 return (
                   <li className="list-row" key={index}>
-                    <CardCategory title={element.status == 1 ? "No prazo" : "Pendente"} color={element.status == 1 ? "var(--green-1000)" : "var(--red-1000)"} />
+                    <CardCategory title={element.status == 0 ? "No prazo" : "Pendente"} color={element.status == 0 ? "var(--green-1000)" : "var(--red-1000)"} />
                     <div className="horizontal-align gap1">
                       <span className="list-row__title">{element.somaBR}</span>
                       <span className="page-subtitle">{element.qtd}</span>

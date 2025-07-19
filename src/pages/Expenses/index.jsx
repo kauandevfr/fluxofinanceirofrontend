@@ -198,13 +198,18 @@ export default function Expenses() {
               return (
                 <motion.li
                   key={element.id}
-                  className="list-row w100"
+                  className="list-row w100 po-r"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.5 }}
                   style={{ borderLeft: select && '.4rem solid var(--main-500)' }}
                 >
+                  {element.pendente &&
+                    <div className="outofdate p1 bg-red-1000 br ">
+                      <span className="text-2xl">Fora do prazo</span>
+                    </div>
+                  }
                   <div className="list-cell">
                     <input className="input" type="checkbox" id="status"
                       checked={select}

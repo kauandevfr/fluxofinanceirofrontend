@@ -68,10 +68,10 @@ export default function WithoutListing({ tag }) {
         status: {
             title: "Os status de suas despesas aparecerão aqui quando você adicioná-las.",
             icon: <svg className="w5rem" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" fill="var(--gray-500)">
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6A6 6 0 110 6a6 6 0 0112 0zM5 3a1 1 0 012 0v3a1 1 0 01-2 0V3zm1 5a1 1 0 100 2 1 1 0 000-2z" fill="var(--gray-500)"></path>
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 6A6 6 0 110 6a6 6 0 0112 0zM5 3a1 1 0 012 0v3a1 1 0 01-2 0V3zm1 5a1 1 0 100 2 1 1 0 000-2z" fill="var(--gray-500)"></path>
                 </g>
             </svg>
         },
