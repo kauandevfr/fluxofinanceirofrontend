@@ -10,4 +10,13 @@ const instance = axios.create({
         "Access-Control-Allow-Headers": "Content-type, X-Auth-Token, Origin, Authorization"
     }
 })
+
+instance.interceptors.request.use(config => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, error => Promise.reject(error));
+
 export default instance;

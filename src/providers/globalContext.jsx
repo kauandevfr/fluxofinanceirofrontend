@@ -92,24 +92,21 @@ export const GlobalContextProvider = ({ children }) => {
     })
 
     const showError = error => {
-        console.error(error)
+        console.error(error);
 
         if (error.response?.status === 401) {
-            if (window.location.pathname !== "/login") {
-                localStorage.clear();
-                return redirect("/");
-            }
+            localStorage.clear();
+            return redirect("/");
         }
-
 
         setAlertModal({
             open: true,
             tag: "error",
             message: error.response?.data || "Erro interno. Tente novamente",
             onClose: null
-        })
+        });
+    };
 
-    }
 
     return (
         <GlobalContext.Provider value={{

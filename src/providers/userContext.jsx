@@ -39,10 +39,13 @@ export const UserContextProvider = ({ children }) => {
     const loginUser = async (data, e) => {
         e.preventDefault();
         try {
-            const { data: content } = await instance.post("/login", { ...data })
-            localStorage.setItem("token", content.token)
+            const { data: content } = await instance.post("/login", data)
 
             const { mes, ano } = currentMonthYear()
+
+            localStorage.setItem("token", content.token);
+
+            instance.defaults.headers.Authorization = `Bearer ${content.token}`;
 
             setAlertModal({
                 open: true,
@@ -54,7 +57,7 @@ export const UserContextProvider = ({ children }) => {
             })
 
         } catch (error) {
-            showError(error)
+            console.error(error)
         }
     }
 
