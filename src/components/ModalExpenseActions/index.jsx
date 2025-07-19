@@ -1,10 +1,11 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import instance from "../../utilities/instance";
-import "./style.scss"
-import ModalAddIn from "../ModalAddIn";
 import months from "../../data/months";
-import { useGlobalContext } from "../../providers/globalContext";
 import { useExpenseContext } from "../../providers/expenseContext";
+import { useGlobalContext } from "../../providers/globalContext";
+import instance from "../../utilities/instance";
+import ModalAddIn from "../ModalAddIn";
+import "./style.scss";
 
 export default function ModalExpenseActions({ selected, setSelected }) {
 
@@ -15,6 +16,8 @@ export default function ModalExpenseActions({ selected, setSelected }) {
     const { objQuery } = queryParams()
 
     const [show, setShow] = useState(true)
+
+    const [progress, setProgress] = useState(0);
 
     const [selectedCopy, setSelectedCopy] = useState(selected)
 
@@ -32,12 +35,21 @@ export default function ModalExpenseActions({ selected, setSelected }) {
         listingExpenses();
     };
 
+    const removeFromSelected = (id) => {
+        setSelectedCopy(prev => {
+            const updated = prev.filter(item => item.id !== id);
+            setProgress(((selectedCopy.length - updated.length) / selectedCopy.length) * 100);
+            return updated;
+        });
+    };
+
+
     const deleteExpenses = async () => {
         try {
             for (let i = 0; i < selectedCopy.length; i++) {
                 const element = selectedCopy[i];
                 await instance.delete(`/cobranca/${element.id}`);
-                setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
+                removeFromSelected(element.id);
             }
 
             setAlertModal({
@@ -47,7 +59,9 @@ export default function ModalExpenseActions({ selected, setSelected }) {
             })
 
             listingResume();
-            closeAndListing()
+
+            closeAndListing();
+
         } catch (error) {
             showError(error)
         }
@@ -64,8 +78,7 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                 if (element.status !== newStatus) {
                     await instance.put(`/cobranca/${element.id}`, { status: newStatus });
                 }
-
-                setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
+                removeFromSelected(element.id);
             }
 
             closeAndListing();
@@ -102,7 +115,7 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                     datainclusao: new Date()
                 };
                 await instance.post('/cobranca', payload);
-                setSelectedCopy(prev => prev.filter(item => item.id !== id));
+                removeFromSelected(id);
             }
 
             if (mustList) {
@@ -144,12 +157,21 @@ export default function ModalExpenseActions({ selected, setSelected }) {
             {show &&
                 <>
                     <ul className="actions__content p1 gap1  vertical-align">
-                        {selectedCopy.map(element =>
-                            <li className="actions__content-row bg-gray-700 br horizontal-align ai-center jc-between gap1" key={element.id}>
-                                <h1 className="actions__content-row-title">{element.titulo}</h1>
-                                <h2 className="actions__content-row-subtitle">{element.precoBR}</h2>
-                            </li>
-                        )}
+                        <AnimatePresence>
+                            {selectedCopy.map(element =>
+                                <motion.li
+                                    key={element.id}
+                                    className="actions__content-row bg-gray-700 br horizontal-align ai-center jc-between gap1"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <h1 className="actions__content-row-title">{element.titulo}</h1>
+                                    <h2 className="actions__content-row-subtitle">{element.precoBR}</h2>
+                                </motion.li>
+                            )}
+                        </AnimatePresence>
                     </ul>
                     <div className="actions__content-buttons vertical-align fx-wrap gap1 p2 bg-gray-700">
                         <div className="horizontal-align gap1">
@@ -159,8 +181,25 @@ export default function ModalExpenseActions({ selected, setSelected }) {
                         <button className="button bg-gradient-red" type="button" onClick={deleteExpenses}>Excluir</button>
                         <button className="button bg-main-500" type="button" onClick={() => setAddInModal({ open: true, mes: "", ano: "", type: "despesa" })}>Clonar</button>
                     </div>
+
                 </>
             }
+            {progress > 0 && (
+                <motion.div
+                    className="progress-bar-container"
+                    style={{ width: "100%", background: "#333", height: "6px", borderRadius: "4px", overflow: "hidden" }}
+                >
+                    <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        transition={{ duration: 0.3 }}
+                        style={{
+                            height: "100%",
+                            background: "var(--bg-gradient)"
+                        }}
+                    />
+                </motion.div>
+            )}
             <ModalAddIn callback={addAnotherPeriod} />
         </div>
     )

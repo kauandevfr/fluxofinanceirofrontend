@@ -4,6 +4,7 @@ import { useGlobalContext } from "../../providers/globalContext";
 import { useIncomeContext } from "../../providers/incomeContext";
 import ModalAddIn from "../ModalAddIn";
 import months from "../../data/months";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function ModalIncomesActions({ selected, setSelected }) {
 
@@ -12,6 +13,8 @@ export default function ModalIncomesActions({ selected, setSelected }) {
     const { listingIncomes } = useIncomeContext()
 
     const [show, setShow] = useState(true)
+
+    const [progress, setProgress] = useState(0);
 
     const [selectedCopy, setSelectedCopy] = useState(selected)
 
@@ -27,9 +30,18 @@ export default function ModalIncomesActions({ selected, setSelected }) {
         })
     }
 
+
     const closeAndListing = () => {
         closeModal();
         listingIncomes();
+    };
+
+    const removeFromSelected = (id) => {
+        setSelectedCopy(prev => {
+            const updated = prev.filter(item => item.id !== id);
+            setProgress(((selectedCopy.length - updated.length) / selectedCopy.length) * 100);
+            return updated;
+        });
     };
 
     const deleteIncomes = async () => {
@@ -37,7 +49,7 @@ export default function ModalIncomesActions({ selected, setSelected }) {
             for (let i = 0; i < selectedCopy.length; i++) {
                 const element = selectedCopy[i];
                 await instance.delete(`/renda/${element.id}`);
-                setSelectedCopy(prev => prev.filter(item => item.id !== element.id));
+                removeFromSelected(element.id);
             }
 
             setAlertModal({
@@ -74,7 +86,7 @@ export default function ModalIncomesActions({ selected, setSelected }) {
                 }
                 console.log(payload)
                 await instance.post('/renda', payload);
-                setSelectedCopy(prev => prev.filter(item => item.id !== id));
+                removeFromSelected(id);
             }
 
             if (mustList) {
@@ -110,12 +122,21 @@ export default function ModalIncomesActions({ selected, setSelected }) {
             {show &&
                 <>
                     <ul className="actions__content p1 gap1  vertical-align">
-                        {selectedCopy.map(element =>
-                            <li className="actions__content-row bg-gray-700 br horizontal-align ai-center jc-between gap1" key={element.id}>
-                                <h1 className="actions__content-row-title">{element.titulo}</h1>
-                                <h2 className="actions__content-row-subtitle">{element.precoBR}</h2>
-                            </li>
-                        )}
+                        <AnimatePresence>
+                            {selectedCopy.map(element =>
+                                <motion.li
+                                    key={element.id}
+                                    className="actions__content-row bg-gray-700 br horizontal-align ai-center jc-between gap1"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <h1 className="actions__content-row-title">{element.titulo}</h1>
+                                    <h2 className="actions__content-row-subtitle">{element.precoBR}</h2>
+                                </motion.li>
+                            )}
+                        </AnimatePresence>
                     </ul>
                     <div className="actions__content-buttons vertical-align fx-wrap gap1 p2 bg-gray-700">
                         <button className="button bg-gradient-red" type="button" onClick={deleteIncomes}>Excluir</button>
@@ -123,6 +144,22 @@ export default function ModalIncomesActions({ selected, setSelected }) {
                     </div>
                 </>
             }
+            {progress > 0 && (
+                <motion.div
+                    className="progress-bar-container"
+                    style={{ width: "100%", background: "#333", height: "6px", borderRadius: "4px", overflow: "hidden" }}
+                >
+                    <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        transition={{ duration: 0.3 }}
+                        style={{
+                            height: "100%",
+                            background: "var(--bg-gradient)"
+                        }}
+                    />
+                </motion.div>
+            )}
             <ModalAddIn callback={addAnotherPeriod} />
         </div>
     )
