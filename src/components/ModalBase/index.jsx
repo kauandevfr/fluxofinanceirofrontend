@@ -1,9 +1,8 @@
-import { motion, AnimatePresence } from "framer-motion";
-import './style.scss';
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
+import './style.scss';
 
 export default function ModalBase({ header, children, isOpen, onClose, onSubmit }) {
-
     useEffect(() => {
         document.documentElement.style.overflow = isOpen ? 'hidden' : '';
 
@@ -35,7 +34,11 @@ export default function ModalBase({ header, children, isOpen, onClose, onSubmit 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    onClick={onClose}
+                    onMouseDown={(e) => {
+                        if (e.target === e.currentTarget) {
+                            onClose();
+                        }
+                    }}
                 >
                     <motion.section
                         className="form"
@@ -43,7 +46,6 @@ export default function ModalBase({ header, children, isOpen, onClose, onSubmit 
                         animate={{ scale: 1 }}
                         exit={{ scale: 0.9 }}
                         transition={{ duration: 0.2 }}
-                        onClick={(e) => e.stopPropagation()}
                     >
                         <header className="header-form horizontal-align p2 jc-between">
                             <div className="horizontal-align gap1 ai-center">
