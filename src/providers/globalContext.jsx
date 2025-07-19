@@ -45,6 +45,7 @@ export const GlobalContextProvider = ({ children }) => {
     const queryParams = () => {
         const query = new URLSearchParams(location.search);
         const objQuery = {};
+
         query.forEach((valor, chave) => {
             if (objQuery[chave]) {
                 objQuery[chave] = [].concat(objQuery[chave], valor);
@@ -52,18 +53,24 @@ export const GlobalContextProvider = ({ children }) => {
                 objQuery[chave] = valor;
             }
         });
+
         for (const chave in objQuery) {
             if (objQuery[chave].includes(',')) {
                 objQuery[chave] = objQuery[chave].split(',');
             }
+
+            if (['formapagamentos', 'categorias'].includes(chave) && !Array.isArray(objQuery[chave])) {
+                objQuery[chave] = [objQuery[chave]];
+            }
         }
+
         return {
             query,
             objQuery,
             page: window.location.pathname.split("/")[1],
             queryStr: query.toString() ? "?" + query.toString() : ""
-        }
-    }
+        };
+    };
 
     const listingResume = async () => {
         const { query } = queryParams()
@@ -92,10 +99,10 @@ export const GlobalContextProvider = ({ children }) => {
     const showError = error => {
         console.error(error);
 
-        // if (error.response?.status === 401) {
-        //     localStorage.clear();
-        //     return redirect("/");
-        // }
+        if (error.response?.status === 401) {
+            localStorage.clear();
+            return redirect("/");
+        }
 
         setAlertModal({
             open: true,

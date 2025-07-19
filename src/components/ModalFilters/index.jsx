@@ -29,13 +29,11 @@ export default function ModalFilters() {
 
     const handleSelectToggle = (field, id) => {
         setSelected(prev => {
-            const alreadySelected = prev[field].includes(id);
-            return {
-                ...prev,
-                [field]: alreadySelected
-                    ? prev[field].filter(itemId => itemId !== id)
-                    : [...prev[field], id]
-            };
+            const current = Array.isArray(prev[field]) ? prev[field] : [];
+            const updated = current.includes(id)
+                ? current.filter(item => item !== id)
+                : [...current, id];
+            return { ...prev, [field]: updated };
         });
     };
 
