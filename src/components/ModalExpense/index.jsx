@@ -13,6 +13,7 @@ import Skeleton from '../Skeleton';
 import WithoutListing from '../WithoutListing';
 import './style.scss';
 import { format } from 'date-fns';
+import ButtonSubmit from "../ButtonSubmit"
 
 export default function ModalExpense() {
     const { expenseModal, setExpenseModal, categories, paymentForms, listingExpenses } = useExpenseContext();
@@ -25,7 +26,7 @@ export default function ModalExpense() {
 
     const isAdding = expenseModal.type
 
-    const { reset, register, watch, setValue, handleSubmit, formState: { errors } } =
+    const { reset, register, watch, setValue, handleSubmit, formState: { errors, isSubmitting } } =
         useForm({
             resolver: yupResolver(isAdding === "Adicionar" ? registerExpense : updateExpense),
         })
@@ -231,7 +232,10 @@ export default function ModalExpense() {
                 />
                 {errors.status && <span className="span-message error">{errors.status?.message}</span>}
             </div>
-            <button className="button" type="submit" >{isAdding} despesa</button>
+
+            <ButtonSubmit isLoading={isSubmitting}>
+                {isAdding}
+            </ButtonSubmit>
         </ModalBase>
     );
 }

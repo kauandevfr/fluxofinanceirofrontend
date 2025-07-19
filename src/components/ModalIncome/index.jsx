@@ -10,6 +10,7 @@ import instance from '../../utilities/instance';
 import ModalBase from '../ModalBase';
 import './style.scss';
 import { format } from 'date-fns';
+import ButtonSubmit from '../ButtonSubmit';
 
 export default function ModalIncome() {
 
@@ -23,7 +24,7 @@ export default function ModalIncome() {
 
     const isAdding = incomeModal.type
 
-    const { reset, register, watch, setValue, handleSubmit, formState: { errors } } =
+    const { reset, register, watch, setValue, handleSubmit, formState: { errors, isSubmitting } } =
         useForm({
             resolver: yupResolver(isAdding === "Adicionar" ? registerIncome : updateIncome),
         })
@@ -150,9 +151,9 @@ export default function ModalIncome() {
                 />
                 {errors.datainclusao && <span className="span-message error">{errors.datainclusao?.message}</span>}
             </div>
-
-            <button className="button" type="submit"> {isAdding} </button>
-
+            <ButtonSubmit isLoading={isSubmitting}>
+                {isAdding}
+            </ButtonSubmit>
         </ModalBase>
     );
 }

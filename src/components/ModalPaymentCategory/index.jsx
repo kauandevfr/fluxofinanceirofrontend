@@ -9,6 +9,7 @@ import updatePaymentCategory from '../../schemas/paymentcategory/update';
 import { useEffect } from 'react';
 import instance from '../../utilities/instance';
 import { useGlobalContext } from '../../providers/globalContext';
+import ButtonSubmit from '../ButtonSubmit';
 
 export default function ModalPaymentCategory() {
 
@@ -16,7 +17,7 @@ export default function ModalPaymentCategory() {
 
     const { showError, setAlertModal } = useGlobalContext()
 
-    const { reset, register, handleSubmit, formState: { errors } } =
+    const { reset, register, handleSubmit, formState: { errors, isSubmitting } } =
         useForm({
             resolver: yupResolver(paymentCategory.type === "Adicionar" ? registerPaymentCategory : updatePaymentCategory),
         })
@@ -108,9 +109,7 @@ export default function ModalPaymentCategory() {
                     {...register("status")}
                 />
             </div>
-
-            <button type="submit" className="button">{paymentCategory.type}</button>
-
+            <ButtonSubmit isLoading={isSubmitting}>{paymentCategory.type}</ButtonSubmit>
         </ModalBase>
     );
 }
