@@ -14,6 +14,8 @@ export const UserContextProvider = ({ children }) => {
 
     const [initTutorial, setInitTutorial] = useState(false)
 
+    const [justVerified, setJustVerified] = useState(false);
+
     const [user, setUser] = useState({
         loading: true,
         data: {}
@@ -70,18 +72,33 @@ export const UserContextProvider = ({ children }) => {
     const listUser = async () => {
 
         try {
+
             const { data } = await instance.get("/usuario")
+
+            const dataFormatted = {
+                ...data, datadenascimento: data.datadenascimento ? data.datadenascimento.split("T")[0] : "",
+            }
+
+            if (dataFormatted.emailverified == 0) {
+                redirect("/verify-email")
+            }
+
+            if (dataFormatted.emailverified == 1) {
+                setJustVerified(true)
+            }
+
+
             setUser({
-                loading: false, data: {
-                    ...data, datadenascimento: data.datadenascimento ? data.datadenascimento.split("T")[0] : ""
-                }
+                loading: false, data: dataFormatted
             })
+
             const html = document.querySelector('html');
             html.setAttribute('data-theme', data.tema);
         } catch (error) {
             showError(error)
         }
     }
+
 
     return (
         <UserContext.Provider value={{
@@ -92,7 +109,8 @@ export const UserContextProvider = ({ children }) => {
             user,
             setUser,
             initTutorial,
-            setInitTutorial
+            setInitTutorial,
+            justVerified
         }}>
             {children}
         </UserContext.Provider>

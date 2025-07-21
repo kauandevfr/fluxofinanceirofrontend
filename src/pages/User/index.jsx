@@ -95,7 +95,7 @@ export default function User() {
           <div className="user-account__menu-avatar"></div>
           <div className="center-align w100 gap1">
             <h1 className="page-title text-center">{user.data.nome}</h1>
-            <h2 className="page-subtitle">Membro desde 2021.</h2>
+            <h2 className="page-subtitle">Membro desde {new Date(user.data.createdin).getFullYear()}.</h2>
           </div>
           <div className="vertical-align gap1 w100">
             <button className="button menu" type="button"

@@ -444,7 +444,6 @@
     box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.3);
 }
 
-
 .react-joyride__tooltip p {
     color: var(--white);
     font-size: 2rem;
@@ -464,4 +463,23 @@
 
 .textd-none {
     text-decoration: none;
+}
+
+.link:disabled {
+    color: var(--gray-500);
+    cursor: not-allowed;
+}
+
+.block-page {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(.4rem);
+}
+
+.block-page__icon {
+    width: 10rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.7);
+    box-sizing: content-box;
 }

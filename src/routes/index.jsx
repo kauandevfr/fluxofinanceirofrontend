@@ -10,6 +10,7 @@ import Register from "../pages/Register";
 import SendTokenPassword from "../pages/SendTokenPassword";
 import Settings from "../pages/Settings";
 import User from "../pages/User";
+import VerifyEmail from "../pages/VerifyEmail";
 
 export default function MainRoutes() {
     const date = new Date();
@@ -36,6 +37,7 @@ export default function MainRoutes() {
                 <Route path="/incomes" element={<Incomes />} />
                 <Route path="/user-account" element={<User />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
