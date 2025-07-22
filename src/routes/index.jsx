@@ -3,30 +3,21 @@ import Dashboard from "../pages/Dashboard";
 import Expenses from "../pages/Expenses";
 import Home from "../pages/Home";
 import Incomes from "../pages/Incomes";
-import Login from "../pages/Login";
+import AccessAccount from "../pages/AccessAccount";
 import NotFound from "../pages/NotFound";
 import RecoverPassword from "../pages/RecoverPassword";
-import Register from "../pages/Register";
 import SendTokenPassword from "../pages/SendTokenPassword";
 import Settings from "../pages/Settings";
 import User from "../pages/User";
 import VerifyEmail from "../pages/VerifyEmail";
 
 export default function MainRoutes() {
-    const date = new Date();
-    const mes = date.getMonth() + 1;
-    const ano = date.getFullYear();
-
     const isAuthenticated = () => {
         return !!localStorage.getItem("token");
     };
 
     function PrivateRoute() {
-        return isAuthenticated() ? <Outlet /> : <Navigate to="/login" replace />;
-    }
-
-    function PublicRoute() {
-        return !isAuthenticated() ? <Outlet /> : <Navigate to={`/dashboard/?mes=${mes}&ano=${ano}`} replace />;
+        return isAuthenticated() ? <Outlet /> : <Navigate to="/access-account" replace />;
     }
 
     return (
@@ -39,8 +30,7 @@ export default function MainRoutes() {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/verify-email" element={<VerifyEmail />} />
             </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/access-account" element={<AccessAccount />} />
             <Route path="/" element={<Home />} />
             <Route path="/send-token-password" element={<SendTokenPassword />} />
             <Route path="/recover-password/:token" element={<RecoverPassword />} />

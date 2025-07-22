@@ -28,7 +28,7 @@ export default function Home() {
   const redirectToLogin = () => {
     setContentPrev(true)
     gsap.timeline({
-      onComplete: () => redirect("/login")
+      onComplete: () => redirect("/access-account")
     }).set('.apresentation__preview', {
       justifyContent: 'center'
     })
