@@ -10,7 +10,7 @@ import { useGlobalContext } from '../../providers/globalContext';
 export default function ModalFilters() {
     const { filtersModal, setFiltersModal, categories, paymentForms, listingExpenses } = useExpenseContext()
 
-    const { redirect, queryParams } = useGlobalContext()
+    const { redirect, queryParams, listingResume } = useGlobalContext()
 
     const { query, objQuery } = queryParams();
 
@@ -58,7 +58,8 @@ export default function ModalFilters() {
         });
 
         redirect(`expenses/?${newQuery.toString()}`);
-        listingExpenses()
+        listingResume();
+        listingExpenses();
         closeModal();
     };
 
@@ -74,10 +75,10 @@ export default function ModalFilters() {
         if (ano) newQuery.append('ano', ano);
 
         redirect(`expenses/?${newQuery.toString()}`);
-        listingExpenses()
+        listingResume();
+        listingExpenses();
         closeModal();
     };
-
 
     useEffect(() => {
         if (filtersModal) {

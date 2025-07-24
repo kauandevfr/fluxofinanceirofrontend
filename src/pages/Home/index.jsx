@@ -18,7 +18,6 @@ export default function Home() {
   const intervalId = useRef(null);
   const wordIndex = useRef(0);
 
-  const [contentPrev, setContentPrev] = useState(false)
   const [valuePrev, setValuePrev] = useState(0)
   const obj = useRef({ numero: 0 });
 
@@ -26,7 +25,6 @@ export default function Home() {
   const timelineEtapas = gsap.timeline();
 
   const redirectToLogin = () => {
-    setContentPrev(true)
     gsap.timeline({
       onComplete: () => redirect("/access-account")
     }).set('.apresentation__preview', {
